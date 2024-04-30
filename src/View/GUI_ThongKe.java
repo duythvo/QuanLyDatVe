@@ -19,6 +19,15 @@ public class GUI_ThongKe extends JPanel {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTable table;
+    private JPanel panel;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+    private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_2_1;
+    private JButton btnNewButton;
+    private JButton btnTmNhnVin;
+	private DefaultTableModel dtm;
+	private JScrollPane scrollPane;
 
 	/**
 	 * Create the panel.
@@ -27,25 +36,25 @@ public class GUI_ThongKe extends JPanel {
 		setSize(1350,900);
 		setLayout(null);
 		
-		JPanel panel = new JPanel();
+		panel = new JPanel();
 		panel.setLocation(0, 0);
 		panel.setSize(1350,900);
 		panel.setBackground(new Color(24, 28, 44));
 		add(panel);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel = new JLabel("");
 		lblNewLabel.setIcon(new ImageIcon(GUI_ThongKe.class.getResource("/img/graph-bar-increase--up-product-performance-increase-arrow-graph-business-chart.png")));
 		lblNewLabel.setBounds(617, 49, 47, 56);
 		panel.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("THỐNG KÊ");
+		lblNewLabel_1 = new JLabel("THỐNG KÊ");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 25));
 		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(676, 49, 147, 65);
 		panel.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Nhập ngày :");
+		lblNewLabel_2 = new JLabel("Nhập ngày :");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_2.setBounds(196, 179, 102, 25);
@@ -58,7 +67,7 @@ public class GUI_ThongKe extends JPanel {
 		panel.add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Mã Nhân Viên:");
+		lblNewLabel_2_1 = new JLabel("Mã Nhân Viên:");
 		lblNewLabel_2_1.setForeground(Color.WHITE);
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_2_1.setBounds(751, 179, 122, 25);
@@ -71,7 +80,7 @@ public class GUI_ThongKe extends JPanel {
 		textField_1.setBounds(880, 181, 180, 24);
 		panel.add(textField_1);
 		
-		JButton btnNewButton = new JButton("Thống kê theo ngày");
+		btnNewButton = new JButton("Thống kê theo ngày");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -81,7 +90,7 @@ public class GUI_ThongKe extends JPanel {
 		btnNewButton.setBounds(242, 237, 217, 34);
 		panel.add(btnNewButton);
 		
-		JButton btnTmNhnVin = new JButton("Tìm nhân viên theo mã");
+		btnTmNhnVin = new JButton("Tìm nhân viên theo mã");
 		btnTmNhnVin.setForeground(Color.BLACK);
 		btnTmNhnVin.setBackground(new Color(255, 165, 0));
 		btnTmNhnVin.setBounds(803, 237, 217, 34);
@@ -89,12 +98,12 @@ public class GUI_ThongKe extends JPanel {
 		
 		
 
-		DefaultTableModel dtm = new DefaultTableModel();
+		dtm = new DefaultTableModel();
 		dtm.addColumn("Tên Nhân Viên");
 		dtm.addColumn("Tổng doanh thu");
 
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(36, 380, 1270, 500);
 		panel.add(scrollPane);
 		
@@ -109,10 +118,5 @@ public class GUI_ThongKe extends JPanel {
 			}
 		));
 		scrollPane.setViewportView(table);
-		
-		
-
-		
-		
 	}
 }

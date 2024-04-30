@@ -13,6 +13,11 @@ public class GUI_Login extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
+	private JLabel lblNewLabel;
+	private JLabel lblNewLabel_1;
+	private JLabel lblNewLabel_2;
+	private JLabel lblNewLabel_2_1;
+	private JButton btnNewButton;
 
 	/**
 	 * Create the panel.
@@ -21,18 +26,18 @@ public class GUI_Login extends JPanel {
 		setBackground(new Color(24, 28, 44));
 		setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Đăng Nhập");
+		lblNewLabel = new JLabel("Đăng Nhập");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(173, 47, 112, 37);
 		add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("New label");
+		lblNewLabel_1 = new JLabel("New label");
 		lblNewLabel_1.setIcon(new ImageIcon(GUI_Login.class.getResource("/img/user-multiple-group--close-geometric-human-multiple-person-up-user.png")));
 		lblNewLabel_1.setBounds(123, 42, 47, 42);
 		add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Tài Khoản :");
+		lblNewLabel_2 = new JLabel("Tài Khoản :");
 		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_2.setBounds(23, 156, 118, 14);
@@ -44,7 +49,7 @@ public class GUI_Login extends JPanel {
 		add(textField);
 		textField.setColumns(10);
 		
-		JLabel lblNewLabel_2_1 = new JLabel("Mật khẩu :");
+		lblNewLabel_2_1 = new JLabel("Mật khẩu :");
 		lblNewLabel_2_1.setForeground(Color.WHITE);
 		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
 		lblNewLabel_2_1.setBounds(23, 256, 118, 22);
@@ -56,7 +61,7 @@ public class GUI_Login extends JPanel {
 		textField_1.setBounds(44, 289, 318, 37);
 		add(textField_1);
 		
-		JButton btnNewButton = new JButton("Đăng nhập");
+		btnNewButton = new JButton("Đăng nhập");
 		btnNewButton.setBackground(new Color(255, 165, 0));
 		btnNewButton.setBounds(266, 400, 96, 37);
 		add(btnNewButton);

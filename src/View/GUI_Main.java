@@ -7,30 +7,33 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.Frame;
 
-import javax.swing.JSeparator;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import javax.swing.Box;
 import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.Color;
-import java.awt.GridLayout;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
-import java.awt.Button;
+import java.awt.Container;
 
 public class GUI_Main extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panel;
+	private Container panel_6;
+    private JLabel lblTiKhon;
+	private JButton btn_VePhim_1_1;
+    private JLabel labe12;
+    private JButton btn_VePhim_1;
+    private JLabel lblVPhim;
+    private JLabel lblSuatChieu;
+    private JButton btn_VePhim;
+    private JButton btn_SuatChieu;
+    private JLabel lblPhim;
+    private JButton btn_Phim;
+    private JLabel lblNewLabel;
 
 	/**
 	 * Launch the application.
@@ -47,15 +50,7 @@ public class GUI_Main extends JFrame {
 			}
 		});
 	}
-	/**
-	 * width:219
-	 * height:810
-	 */
-	/**
-	 * Create the frame.
-	 */
 	public GUI_Main() {
-		//setExtendedState(MAXIMIZED_BOTH);
 		//setExtendedState(MAXIMIZED_BOTH);
 		setSize(1600,900);
 		contentPane = new JPanel();
@@ -68,18 +63,18 @@ public class GUI_Main extends JFrame {
 		
 		
 		
-		JPanel panel_6 = new JPanel();
+		 panel_6 = new JPanel();
 		panel_6.setBackground(new Color(32, 44, 92));
 		panel_6.setBounds(0, 2, 219, 898);
 		contentPane.add(panel_6);
 		panel_6.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("New label");
+		lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/logo-removebg-preview.png")));
 		lblNewLabel.setBounds(38, 47, 123, 93);
 		panel_6.add(lblNewLabel);
 		
-		JButton btn_Phim = new JButton("");
+		btn_Phim = new JButton("");
 		btn_Phim.setBackground(new Color(32, 44, 92));
 		btn_Phim.addActionListener(new ActionListener() {
 			
@@ -89,8 +84,7 @@ public class GUI_Main extends JFrame {
 				GUI_Phim viewPhim = new GUI_Phim();
 				panel.add(viewPhim);
 				panel.repaint();
-				panel.revalidate();
-				
+				panel.revalidate();	
 			}
 		});
 		
@@ -129,7 +123,7 @@ public class GUI_Main extends JFrame {
 		
 		btn_Phim.setBorderPainted(false);
 		btn_Phim.setBounds(0, 217, 219, 64);
-		JLabel lblPhim = new JLabel();
+		lblPhim = new JLabel();
 		lblPhim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPhim.setText("PHIM");
 		lblPhim.setForeground(Color.WHITE);
@@ -138,7 +132,7 @@ public class GUI_Main extends JFrame {
 		btn_Phim.setFont(new Font("Arial",Font.BOLD,20));
 		panel_6.add(btn_Phim);
 		
-		JButton btn_SuatChieu = new JButton("");
+		btn_SuatChieu = new JButton("");
 		btn_SuatChieu.setForeground(new Color(255, 255, 255));
 		btn_SuatChieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -186,7 +180,7 @@ public class GUI_Main extends JFrame {
 		btn_SuatChieu.setBorderPainted(false);
 		btn_SuatChieu.setBackground(new Color(32, 44, 92));
 		btn_SuatChieu.setBounds(0, 291, 219, 64);
-		JLabel lblSuatChieu = new JLabel();
+		lblSuatChieu = new JLabel();
 		lblSuatChieu.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblSuatChieu.setText(" SUẤT CHIẾU");
 		lblSuatChieu.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/blank-calendar--blank-calendar-date-day-month-empty.png")));
@@ -194,7 +188,7 @@ public class GUI_Main extends JFrame {
 		btn_SuatChieu.add(lblSuatChieu);
 		panel_6.add(btn_SuatChieu);
 		
-		JButton btn_VePhim = new JButton("");
+		btn_VePhim = new JButton("");
 		btn_VePhim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
@@ -243,7 +237,7 @@ public class GUI_Main extends JFrame {
 		btn_VePhim.setBorderPainted(false);
 		btn_VePhim.setBackground(new Color(32, 44, 92));
 		btn_VePhim.setBounds(0, 365, 219, 64);
-		JLabel lblVPhim = new JLabel();
+		lblVPhim = new JLabel();
 		lblVPhim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblVPhim.setText(" VÉ PHIM");
 		lblVPhim.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/ticket-1--hobby-ticket-event-entertainment-stub-theater-entertainment-culture_3.png")));
@@ -251,7 +245,7 @@ public class GUI_Main extends JFrame {
 		btn_VePhim.add(lblVPhim);
 		panel_6.add(btn_VePhim);
 		
-		JButton btn_VePhim_1 = new JButton("");
+		btn_VePhim_1 = new JButton("");
 		btn_VePhim_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
@@ -299,7 +293,7 @@ public class GUI_Main extends JFrame {
 		btn_VePhim_1.setBorderPainted(false);
 		btn_VePhim_1.setBackground(new Color(32, 44, 92));
 		btn_VePhim_1.setBounds(0, 447, 219, 64);
-		JLabel labe12 = new JLabel();
+		labe12 = new JLabel();
 		labe12.setForeground(new Color(255, 255, 255));
 		labe12.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		labe12.setText("THỐNG KÊ");
@@ -307,7 +301,7 @@ public class GUI_Main extends JFrame {
 		btn_VePhim_1.add(labe12);
 		panel_6.add(btn_VePhim_1);
 		
-		JButton btn_VePhim_1_1 = new JButton("");
+		btn_VePhim_1_1 = new JButton("");
 		btn_VePhim_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
@@ -363,7 +357,7 @@ public class GUI_Main extends JFrame {
 				
 			}
 		});
-		JLabel lblTiKhon = new JLabel();
+		lblTiKhon = new JLabel();
 		lblTiKhon.setForeground(new Color(255, 255, 255));
 		lblTiKhon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTiKhon.setText("TÀI KHOẢN");
