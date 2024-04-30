@@ -45,10 +45,10 @@ public class JPanelQLPhim extends JPanel implements ActionListener{
 	private JLabel jlbImg;
 
 	public JPanelQLPhim() {
-//		this.setPreferredSize(new Dimension(219, 900));
+	//	this.setPreferredSize(new Dimension(1000, 400));
 		this.setBackground(new Color(24, 28, 44));
 		
-		JPanel jPlForm = new JPanel();
+		//JPanel jPlForm = new JPanel();
 		
 		Box A = Box.createVerticalBox();
 		
@@ -129,12 +129,12 @@ public class JPanelQLPhim extends JPanel implements ActionListener{
 		a3.add(Box.createHorizontalStrut(20));
 		a3.add(a6);
 		
-		JLabel jlbCate = new JLabel("Thể loại");
+		//JLabel jlbCate = new JLabel("Thể loại");
 		FlowLayout fl = new FlowLayout();
 		fl.setAlignment(FlowLayout.LEFT);
 		JPanel jplCate = new JPanel();
 		jplCate.setLayout(fl);
-		Box C = Box.createVerticalBox();
+		//Box C = Box.createVerticalBox();
 		Box c1 = Box.createHorizontalBox();
 		Box c2 = Box.createHorizontalBox();
 		Box c3 = Box.createHorizontalBox();

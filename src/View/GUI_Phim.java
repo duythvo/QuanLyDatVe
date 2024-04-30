@@ -32,11 +32,20 @@ public class GUI_Phim extends JPanel {
 		lblNewLabel.setBounds(630, 21, 142, 33);
 		add(lblNewLabel);
 
+		//btnQLVe
 		JButton QLVe = new JButton("Quản lý Phim");
 		QLVe.setBackground(new Color(255, 165, 0));
 		QLVe.setFont(new Font("Arial", Font.PLAIN, 20));
 		QLVe.setBounds(1100, 21, 160, 33);
 		add(QLVe);
+		QLVe.addActionListener(e -> {
+			this.removeAll();
+			JPanelQLPhim viewQLPhim = new JPanelQLPhim();
+			this.add(viewQLPhim);
+			this.repaint();
+			this.revalidate();
+		});
+
 
 		
 		JScrollPane scrollPane = new JScrollPane();
