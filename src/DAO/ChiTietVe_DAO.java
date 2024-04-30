@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.ChiTietVe;
-import entity.SuatChieu;
+// import entity.SuatChieu;
 
 public class ChiTietVe_DAO {
 	private static ChiTietVe_DAO instance = new ChiTietVe_DAO(); 

@@ -1,4 +1,11 @@
+<<<<<<< HEAD
 /Test/
+=======
+/View/
+/Controller/
+/Test/
+/img/
+>>>>>>> master
 /DAO/
 /connectDB/
 /entity/

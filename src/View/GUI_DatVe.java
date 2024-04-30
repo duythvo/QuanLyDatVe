@@ -1,366 +1,216 @@
 package View;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.Frame;
-
-import javax.swing.JSeparator;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
-import java.awt.Button;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
-public class GUI_DatVe extends JFrame {
+public class GUI_DatVe extends JPanel {
 
-	private JPanel contentPane;
 	private JPanel panel;
+	private JComboBox comboBox;
+	private JComboBox comboBox_1;
+	private JPanel panel_1;
+    private JLabel label_SuatChieu;
+    private JLabel label_NgayChieu;
+    private JPanel panel_3;
+	private JLabel label_ManHinh;
+    private JLabel label_DayA;
+	private JLabel label_DayB;
+	private JLabel label_DayD;
+	private JLabel label_DayC;
+	private JPanel panel_GheDon;
+	private JPanel panel_5;
+	private JButton btns[] = new JButton[24];
+	private JLabel lblNewLabel_6;
+	private JLabel lblNewLabel_6_1;
+	private JLabel lblNewLabel_6_2;
+	private JPanel panel_2;
+	private JLabel lblNewLabel_1;
+	private JSeparator separator;
+	private JLabel lblNewLabel_2_1;
+	private JLabel lblNewLabel_2_1_1;
+	private JLabel lblNewLabel_2;
+	private JButton btnNewButton_2_3;
+	private JButton btnNewButton_2_3_1;
+	private JLabel lblNewLabel_2_1_1_1;
+	private JComboBox comboBox_2;
+	private JLabel lblNewLabel;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI_DatVe frame = new GUI_DatVe();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	/**
-	 * width:219
-	 * height:810
-	 */
-	/**
-	 * Create the frame.
+	 * Create the panel.
 	 */
 	public GUI_DatVe() {
-		//setExtendedState(MAXIMIZED_BOTH);
-		//setExtendedState(MAXIMIZED_BOTH);
-		setSize(1600,900);
-		contentPane = new JPanel();
-		contentPane.setBackground(new Color(24, 28, 44));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
-		contentPane.setLayout(null);
-		
-		getContentPane().add(contentPane);
-		
-		
-		
-		JPanel panel_6 = new JPanel();
-		panel_6.setBackground(new Color(32, 44, 92));
-		panel_6.setBounds(0, 2, 219, 898);
-		contentPane.add(panel_6);
-		panel_6.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/logo-removebg-preview.png")));
-		lblNewLabel.setBounds(38, 47, 123, 93);
-		panel_6.add(lblNewLabel);
-		
-		JButton btn_Phim = new JButton("");
-		btn_Phim.setBackground(new Color(32, 44, 92));
-		btn_Phim.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panel.removeAll();
-				GUI_Phim viewPhim = new GUI_Phim();
-				panel.add(viewPhim);
-				panel.repaint();
-				panel.revalidate();
-				
-			}
-		});
-		
-		btn_Phim.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn_Phim.setBackground(new Color(255,165,0));
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn_Phim.setBackground(new Color(32, 44, 92));
-				
-			}
-			
-		});
-		
-		btn_Phim.setBorderPainted(false);
-		btn_Phim.setBounds(0, 217, 219, 64);
-		JLabel lblPhim = new JLabel();
-		lblPhim.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblPhim.setText("PHIM");
-		lblPhim.setForeground(Color.WHITE);
-		lblPhim.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/film-regular-24_1.png")));
-		btn_Phim.add(lblPhim);
-		btn_Phim.setFont(new Font("Arial",Font.BOLD,20));
-		panel_6.add(btn_Phim);
-		
-		JButton btn_SuatChieu = new JButton("");
-		btn_SuatChieu.setForeground(new Color(255, 255, 255));
-		btn_SuatChieu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btn_SuatChieu.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn_SuatChieu.setBackground(new Color(255,165,0));
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn_SuatChieu.setBackground(new Color(32, 44, 92));
-				
-			}
-			
-		});
-		btn_SuatChieu.setFont(new Font("Arial", Font.BOLD, 20));
-		btn_SuatChieu.setBorderPainted(false);
-		btn_SuatChieu.setBackground(new Color(32, 44, 92));
-		btn_SuatChieu.setBounds(0, 291, 219, 64);
-		JLabel lblSuatChieu = new JLabel();
-		lblSuatChieu.setFont(new Font("Tahoma", Font.PLAIN, 19));
-		lblSuatChieu.setText(" SUẤT CHIẾU");
-		lblSuatChieu.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/blank-calendar--blank-calendar-date-day-month-empty.png")));
-		lblSuatChieu.setForeground(Color.WHITE);
-		btn_SuatChieu.add(lblSuatChieu);
-		panel_6.add(btn_SuatChieu);
-		
-		JButton btn_VePhim = new JButton("");
-		btn_VePhim.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
-		btn_VePhim.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn_VePhim.setBackground(new Color(255,165,0));
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn_VePhim.setBackground(new Color(32, 44, 92));
-				
-			}
-			
-		});
-		btn_VePhim.setForeground(Color.WHITE);
-		btn_VePhim.setFont(new Font("Arial", Font.BOLD, 20));
-		btn_VePhim.setBorderPainted(false);
-		btn_VePhim.setBackground(new Color(32, 44, 92));
-		btn_VePhim.setBounds(0, 365, 219, 64);
-		JLabel lblVPhim = new JLabel();
-		lblVPhim.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblVPhim.setText(" VÉ PHIM");
-		lblVPhim.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/ticket-1--hobby-ticket-event-entertainment-stub-theater-entertainment-culture_3.png")));
-		lblVPhim.setForeground(Color.WHITE);
-		btn_VePhim.add(lblVPhim);
-		panel_6.add(btn_VePhim);
-		
-		JButton btn_VePhim_1 = new JButton("");
-		btn_VePhim_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btn_VePhim_1.addMouseListener( new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn_VePhim_1.setBackground(new Color(255,165,0));
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn_VePhim_1.setBackground(new Color(32, 44, 92));
-				
-			}
-			
-		});
-		btn_VePhim_1.setForeground(Color.WHITE);
-		btn_VePhim_1.setFont(new Font("Arial", Font.BOLD, 20));
-		btn_VePhim_1.setBorderPainted(false);
-		btn_VePhim_1.setBackground(new Color(32, 44, 92));
-		btn_VePhim_1.setBounds(0, 447, 219, 64);
-		JLabel labe12 = new JLabel();
-		labe12.setForeground(new Color(255, 255, 255));
-		labe12.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		labe12.setText("THỐNG KÊ");
-		labe12.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/graph-bar-increase--up-product-performance-increase-arrow-graph-business-chart.png")));
-		btn_VePhim_1.add(labe12);
-		panel_6.add(btn_VePhim_1);
-		
-		JButton btn_VePhim_1_1 = new JButton("");
-		btn_VePhim_1_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
-		btn_VePhim_1_1.addMouseListener(new MouseListener() {
-
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				btn_VePhim_1_1.setBackground(new Color(255,165,0));
-				
-			}
-
-			@Override
-			public void mouseExited(MouseEvent e) {
-				btn_VePhim_1_1.setBackground(new Color(32, 44, 92));
-				
-			}
-			
-		});
-		btn_VePhim_1_1.setForeground(Color.WHITE);
-		btn_VePhim_1_1.setFont(new Font("Arial", Font.BOLD, 20));
-		btn_VePhim_1_1.setBorderPainted(false);
-		btn_VePhim_1_1.setBackground(new Color(32, 44, 92));
-		btn_VePhim_1_1.setBounds(0, 532, 219, 64);
-		btn_VePhim_1_1.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				panel.removeAll();
-				GUI_TaiKhoan viewTaiKhoan = new GUI_TaiKhoan();
-				panel.add(viewTaiKhoan);
-				panel.repaint();
-				panel.revalidate();
-				
-			}
-		});
-		JLabel lblTiKhon = new JLabel();
-		lblTiKhon.setForeground(new Color(255, 255, 255));
-		lblTiKhon.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblTiKhon.setText("TÀI KHOẢN");
-		lblTiKhon.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/user-multiple-group--close-geometric-human-multiple-person-up-user.png")));
-		btn_VePhim_1_1.add(lblTiKhon);
-		panel_6.add(btn_VePhim_1_1);
-		
+		setBackground(new Color(24, 28, 44));
+		setLayout(null);
+		setSize(1350,900);
 		panel = new JPanel();
-		panel.setBounds(218, 2, 1322, 861);
-		contentPane.add(panel);
+		panel.setBounds(40, 102, 829, 157);
+		add(panel);
 		panel.setLayout(null);
 		
+		comboBox = new JComboBox();
+		comboBox.setBounds(198, 22, 527, 38);
+		panel.add(comboBox);
+		
+		comboBox_1 = new JComboBox();
+		comboBox_1.setBounds(198, 85, 527, 38);
+		panel.add(comboBox_1);
+		
+		label_NgayChieu = new JLabel("Ngày chiếu");
+		label_NgayChieu.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_NgayChieu.setBounds(46, 27, 119, 22);
+		panel.add(label_NgayChieu);
+		
+		label_SuatChieu = new JLabel("Suất chiếu");
+		label_SuatChieu.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_SuatChieu.setBounds(46, 90, 119, 22);
+		panel.add(label_SuatChieu);
+		
+		panel_1 = new JPanel();
+		panel_1.setBounds(40, 295, 829, 419);
+		add(panel_1);
+		panel_1.setLayout(null);
+		
+		panel_3 = new JPanel();
+		panel_3.setBackground(new Color(192, 192, 192));
+		panel_3.setBounds(31, 10, 741, 39);
+		panel_1.add(panel_3);
+		panel_3.setLayout(null);
+		
+		label_ManHinh = new JLabel("Màn hình");
+		label_ManHinh.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_ManHinh.setBounds(323, 10, 139, 19);
+		panel_3.add(label_ManHinh);
+		
+		label_DayA = new JLabel("Dãy A");
+		label_DayA.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_DayA.setBounds(10, 126, 77, 22);
+		panel_1.add(label_DayA);
+		
+		label_DayB = new JLabel("Dãy B");
+		label_DayB.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_DayB.setBounds(10, 177, 77, 22);
+		panel_1.add(label_DayB);
+		
+		label_DayC = new JLabel("Dãy C");
+		label_DayC.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_DayC.setBounds(10, 234, 77, 22);
+		panel_1.add(label_DayC);
+		
+		label_DayD = new JLabel("Dãy D");
+		label_DayD.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		label_DayD.setBounds(10, 293, 77, 22);
+		panel_1.add(label_DayD);
+		
+		panel_GheDon = new JPanel();
+		panel_GheDon.setBounds(97, 117, 675, 150);
+		panel_1.add(panel_GheDon);
+		panel_GheDon.setLayout(new GridLayout(3, 7, 20, 10));
+		
+		panel_5 = new JPanel();
+		panel_5.setBounds(97, 277, 675, 45);
+		panel_1.add(panel_5);
+		panel_5.setLayout(new GridLayout(1, 3, 0, 0));
+		
+		for(int i=0;i<21;i++) {
+			btns[i] = new JButton();
+			btns[i].setIcon(new ImageIcon("src/img/ghetrong.png"));
+			btns[i].setBackground(new Color(236, 236, 236));
+			btns[i].setBorderPainted(false);
+			panel_GheDon.add(btns[i]);
+		}
+		
+		for(int i=21;i<24;i++) {
+			btns[i] = new JButton();
+			btns[i].setIcon(new ImageIcon("src/img/ghedoitrang.png"));
+			btns[i].setBackground(new Color(236, 236, 236));
+			btns[i].setBorderPainted(false);
+			panel_5.add(btns[i]);
+		}
+		
+		lblNewLabel_6 = new JLabel("Ghế trống");
+		lblNewLabel_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_6.setForeground(new Color(255, 255, 255));
+		lblNewLabel_6.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/ghetrong.png")));
+		lblNewLabel_6.setBounds(103, 765, 130, 32);
+		add(lblNewLabel_6);
+		
+		lblNewLabel_6_1 = new JLabel("Ghế đang chọn");
+		lblNewLabel_6_1.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/ghedangchon.png")));
+		lblNewLabel_6_1.setForeground(Color.WHITE);
+		lblNewLabel_6_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_6_1.setBounds(537, 764, 172, 34);
+		add(lblNewLabel_6_1);
+		
+		lblNewLabel_6_2 = new JLabel("Ghế đã chọn");
+		lblNewLabel_6_2.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/ghedachon.png")));
+		lblNewLabel_6_2.setForeground(Color.WHITE);
+		lblNewLabel_6_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_6_2.setBounds(316, 765, 151, 33);
+		add(lblNewLabel_6_2);
+		
+		
+		panel_2 = new JPanel();
+		panel_2.setBounds(891, 295, 365, 419);
+		add(panel_2);
+		panel_2.setLayout(null);
+		
+		lblNewLabel_1 = new JLabel("Tên Phim");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_1.setBounds(40, 21, 89, 22);
+		panel_2.add(lblNewLabel_1);
+		
+		lblNewLabel_2 = new JLabel("Ngày/Giờ");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_2.setBounds(40, 73, 89, 22);
+		panel_2.add(lblNewLabel_2);
+		
+		lblNewLabel_2_1 = new JLabel("Ghế");
+		lblNewLabel_2_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_2_1.setBounds(40, 127, 89, 22);
+		panel_2.add(lblNewLabel_2_1);
+		
+		separator = new JSeparator();
+		separator.setBounds(0, 197, 362, 2);
+		panel_2.add(separator);
+		
+		lblNewLabel_2_1_1 = new JLabel("Tổng tiền");
+		lblNewLabel_2_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_2_1_1.setBounds(40, 300, 89, 22);
+		panel_2.add(lblNewLabel_2_1_1);
+		
+		btnNewButton_2_3 = new JButton("Tạo Hóa Đơn");
+		btnNewButton_2_3.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton_2_3.setBounds(42, 332, 131, 44);
+		panel_2.add(btnNewButton_2_3);
+		
+		btnNewButton_2_3_1 = new JButton("Hủy");
+		btnNewButton_2_3_1.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btnNewButton_2_3_1.setBounds(205, 332, 131, 44);
+		panel_2.add(btnNewButton_2_3_1);
+		
+		lblNewLabel_2_1_1_1 = new JLabel("Phương thức thanh toán");
+		lblNewLabel_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblNewLabel_2_1_1_1.setBounds(40, 209, 235, 31);
+		panel_2.add(lblNewLabel_2_1_1_1);
+		
+		comboBox_2 = new JComboBox();
+		comboBox_2.setBounds(40, 250, 312, 31);
+		panel_2.add(comboBox_2);
+		
+		lblNewLabel = new JLabel("PHIM");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/film-regular-24_1.png")));
+		lblNewLabel.setBounds(491, 29, 130, 51);
+		add(lblNewLabel);
 	}
+
 }
