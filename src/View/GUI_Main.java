@@ -137,7 +137,7 @@ public class GUI_Main extends JFrame {
 		btn_SuatChieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
-				GUI_XuatChieu viewXuatChieu = new GUI_XuatChieu();
+				GUI_SuatChieu viewXuatChieu = new GUI_SuatChieu();
 				panel.add(viewXuatChieu);
 				panel.repaint();
 				panel.revalidate();
