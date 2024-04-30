@@ -27,7 +27,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
 import java.awt.Button;
 
-public class GUI_DatVe extends JFrame {
+public class GUI_Main extends JFrame {
 
 	private JPanel contentPane;
 	private JPanel panel;
@@ -39,7 +39,7 @@ public class GUI_DatVe extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUI_DatVe frame = new GUI_DatVe();
+					GUI_Main frame = new GUI_Main();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -54,7 +54,7 @@ public class GUI_DatVe extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GUI_DatVe() {
+	public GUI_Main() {
 		//setExtendedState(MAXIMIZED_BOTH);
 		//setExtendedState(MAXIMIZED_BOTH);
 		setSize(1600,900);
@@ -75,7 +75,7 @@ public class GUI_DatVe extends JFrame {
 		panel_6.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/logo-removebg-preview.png")));
+		lblNewLabel.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/logo-removebg-preview.png")));
 		lblNewLabel.setBounds(38, 47, 123, 93);
 		panel_6.add(lblNewLabel);
 		
@@ -133,7 +133,7 @@ public class GUI_DatVe extends JFrame {
 		lblPhim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblPhim.setText("PHIM");
 		lblPhim.setForeground(Color.WHITE);
-		lblPhim.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/film-regular-24_1.png")));
+		lblPhim.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/film-regular-24_1.png")));
 		btn_Phim.add(lblPhim);
 		btn_Phim.setFont(new Font("Arial",Font.BOLD,20));
 		panel_6.add(btn_Phim);
@@ -142,7 +142,11 @@ public class GUI_DatVe extends JFrame {
 		btn_SuatChieu.setForeground(new Color(255, 255, 255));
 		btn_SuatChieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				panel.removeAll();
+				GUI_XuatChieu viewXuatChieu = new GUI_XuatChieu();
+				panel.add(viewXuatChieu);
+				panel.repaint();
+				panel.revalidate();
 			}
 		});
 		btn_SuatChieu.addMouseListener(new MouseListener() {
@@ -185,7 +189,7 @@ public class GUI_DatVe extends JFrame {
 		JLabel lblSuatChieu = new JLabel();
 		lblSuatChieu.setFont(new Font("Tahoma", Font.PLAIN, 19));
 		lblSuatChieu.setText(" SUẤT CHIẾU");
-		lblSuatChieu.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/blank-calendar--blank-calendar-date-day-month-empty.png")));
+		lblSuatChieu.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/blank-calendar--blank-calendar-date-day-month-empty.png")));
 		lblSuatChieu.setForeground(Color.WHITE);
 		btn_SuatChieu.add(lblSuatChieu);
 		panel_6.add(btn_SuatChieu);
@@ -193,6 +197,11 @@ public class GUI_DatVe extends JFrame {
 		JButton btn_VePhim = new JButton("");
 		btn_VePhim.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panel.removeAll();
+				GUI_VePhim viewVePhim = new GUI_VePhim();
+				panel.add(viewVePhim);
+				panel.repaint();
+				panel.revalidate();
 			}
 		});
 		
@@ -237,7 +246,7 @@ public class GUI_DatVe extends JFrame {
 		JLabel lblVPhim = new JLabel();
 		lblVPhim.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblVPhim.setText(" VÉ PHIM");
-		lblVPhim.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/ticket-1--hobby-ticket-event-entertainment-stub-theater-entertainment-culture_3.png")));
+		lblVPhim.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/ticket-1--hobby-ticket-event-entertainment-stub-theater-entertainment-culture_3.png")));
 		lblVPhim.setForeground(Color.WHITE);
 		btn_VePhim.add(lblVPhim);
 		panel_6.add(btn_VePhim);
@@ -245,6 +254,11 @@ public class GUI_DatVe extends JFrame {
 		JButton btn_VePhim_1 = new JButton("");
 		btn_VePhim_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				panel.removeAll();
+				GUI_ThongKe viewThongKe = new GUI_ThongKe();
+				panel.add(viewThongKe);
+				panel.repaint();
+				panel.revalidate();
 			}
 		});
 		btn_VePhim_1.addMouseListener( new MouseListener() {
@@ -289,7 +303,7 @@ public class GUI_DatVe extends JFrame {
 		labe12.setForeground(new Color(255, 255, 255));
 		labe12.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		labe12.setText("THỐNG KÊ");
-		labe12.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/graph-bar-increase--up-product-performance-increase-arrow-graph-business-chart.png")));
+		labe12.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/graph-bar-increase--up-product-performance-increase-arrow-graph-business-chart.png")));
 		btn_VePhim_1.add(labe12);
 		panel_6.add(btn_VePhim_1);
 		
@@ -353,7 +367,7 @@ public class GUI_DatVe extends JFrame {
 		lblTiKhon.setForeground(new Color(255, 255, 255));
 		lblTiKhon.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblTiKhon.setText("TÀI KHOẢN");
-		lblTiKhon.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/user-multiple-group--close-geometric-human-multiple-person-up-user.png")));
+		lblTiKhon.setIcon(new ImageIcon(GUI_Main.class.getResource("/img/user-multiple-group--close-geometric-human-multiple-person-up-user.png")));
 		btn_VePhim_1_1.add(lblTiKhon);
 		panel_6.add(btn_VePhim_1_1);
 		

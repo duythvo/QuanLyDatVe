@@ -7,13 +7,13 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
 
-import View.GUI_DatVe;
+import View.GUI_Main;
 
 public class controlDatVe implements ActionListener,MouseListener{
-	private GUI_DatVe viewDatVe;
+	private GUI_Main viewDatVe;
 	
 	
-	public controlDatVe(GUI_DatVe viewDatVe) {
+	public controlDatVe(GUI_Main viewDatVe) {
 		this.viewDatVe=viewDatVe;
 	}
 
