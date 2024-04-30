@@ -31,6 +31,13 @@ public class GUI_Phim extends JPanel {
 		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(630, 21, 142, 33);
 		add(lblNewLabel);
+
+		JButton QLVe = new JButton("Quản lý Phim");
+		QLVe.setBackground(new Color(255, 165, 0));
+		QLVe.setFont(new Font("Arial", Font.PLAIN, 20));
+		QLVe.setBounds(1100, 21, 160, 33);
+		add(QLVe);
+
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
