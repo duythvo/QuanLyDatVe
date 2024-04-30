@@ -44,6 +44,10 @@ public class Phim {
 		this.maPhim = maPhim;
 		this.loaiPhim = loaiPhim;
 	}
+
+	public Phim(){
+		
+	}
 	
 	
 	public Phim(ResultSet rs) throws SQLException{
