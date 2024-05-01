@@ -75,7 +75,6 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
     private Box btn;
     private JPanel empty1;
 	private Box ct;
-    private JScrollPane jScrollPane;
 	private DefaultTableModel model;
 	private JTable table_Phim;
 	private JScrollPane sc;
@@ -557,7 +556,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			boolean found = false;
 			for (int i = 0; i < dsPhim.size(); i++) {
 				Phim phim = dsPhim.get(i);
-				if (phim.getTenPhim().toLowerCase().contains(jtfTen.getText().toLowerCase())) {
+				if (phim.getTenPhim().toLowerCase().indexOf(jtfTen.getText().toLowerCase()) != -1) {
 					jtfMa.setText(phim.getMaPhim());
 					jtfTen.setText(phim.getTenPhim());
 					jtfDaoDien.setText(phim.getDaoDien());
