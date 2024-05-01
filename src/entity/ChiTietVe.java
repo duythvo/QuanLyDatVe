@@ -34,7 +34,7 @@ public class ChiTietVe {
 		ChiTietVe ctve = ct_dao.getChiTietVe(maVe, maHD);
 		setVe(ctve.getVe());
 		setHoaDon(ctve.getHoaDon());
-		setSoLuongGhe(ctve.getSoLuongVe());
+		setSoLuongGhe(ctve.getSoLuongGhe());
 		setNgayGioDat(ctve.getNgayGioDat());
 	}
     
@@ -61,7 +61,7 @@ public class ChiTietVe {
 		this.hoaDon = hoaDon;
 	}
 
-	public int getSoLuongVe() {
+	public int getSoLuongGhe() {
 		return soLuongGhe;
 	}
 
