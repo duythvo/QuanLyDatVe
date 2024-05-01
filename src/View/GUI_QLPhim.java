@@ -81,6 +81,8 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 	private JComboBox<String> jcbType;
 	private ArrayList<Phim> dsPhim;
 	private ArrayList<LoaiPhim> dsLoaiPhim;
+	private JLabel jlbLinkPhim;
+	private JTextField jtfLinkPhim;
 
 	public GUI_QLPhim() {
 		this.setBackground(new Color(25, 28, 44));
@@ -124,6 +126,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jlbThoiLuong.setFont(new Font("Arial", Font.BOLD, 16));
 		jtfThoiLuong.setSize(230,30);
 		
+		
 		a1.add(jlbMa);
 		a1.add(Box.createVerticalStrut(45));
 		a1.add(jlbTen);
@@ -134,7 +137,8 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		a2.add(jtfMa);
 		a2.add(Box.createVerticalStrut(30));
 		a2.add(jtfTen);
-		a2.add(Box.createVerticalStrut(30));
+		//a2.add(Box.createVerticalStrut(30));
+		a2.add(Box.createVerticalStrut(45));
 		a2.add(jtfThoiLuong);
 		a2.add(Box.createVerticalStrut(30));
 		a3.add(a1);
@@ -156,35 +160,53 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jtfDaoDien.setSize(230, 30);
 
 
+		//Label Link Phim
+		jlbLinkPhim = new JLabel("Link Phim:");
+		jlbLinkPhim.setForeground(Color.WHITE);
+		jlbLinkPhim.setFont(new Font("Arial", Font.BOLD, 16));
+		jtfLinkPhim = new JTextField();
+		jtfLinkPhim.setSize(230, 30);
+
+
 		// jlbNgayKT = new JLabel("Ngày kết thúc:");
 		// jtfNgayKT = new JTextField();
 		// jtfNgayKT.setSize(230,30);
+		//a4.add(Box.createVerticalStrut(30));
 		
+		a4.add(Box.createVerticalStrut(30));
 		a4.add(jlbQuocGia);
 		a4.add(Box.createVerticalStrut(45));
 		a4.add(jlbDaoDien);
 		a4.add(Box.createVerticalStrut(45));
-		a4.add(Box.createVerticalStrut(45));
-		// a4.add(jlbNgayKT);
+		a4.add(jlbLinkPhim);
 		a4.add(Box.createVerticalStrut(5));
+		a4.add(Box.createVerticalStrut(30));
+		//a4.add(Box.createVerticalStrut(45));
+		// a4.add(jlbNgayKT);
+		// a4.add(Box.createVerticalStrut(5));
 		a5.add(Box.createVerticalStrut(30));
 		a5.add(jtfQuocGia);
 		a5.add(Box.createVerticalStrut(30));
 		a5.add(jtfDaoDien);
 		a5.add(Box.createVerticalStrut(30));
+		a5.add(jtfLinkPhim);
 		a5.add(Box.createVerticalStrut(30));
-		// a5.add(jtfNgayKT);
-		a5.add(Box.createVerticalStrut(30));
-		a3.add(Box.createHorizontalStrut(80));
+		a3.add(Box.createHorizontalStrut(45));
 		a3.add(a4);
 		a3.add(Box.createHorizontalStrut(15));
 		a3.add(a5);
+
+		
+		
+		
+		
+		
 		
 		jlbImg = new JLabel();
 		jlbImg.setForeground(Color.WHITE);
-		jlbImg.setFont(new Font("Arial", Font.BOLD, 16));
-		jlbImg.setSize(181,217);
-		jlbImg.setMaximumSize(new Dimension(181, 217));
+		jlbImg.setFont(new Font("Arial", Font.BOLD, 20));
+		jlbImg.setSize(125,150);
+		jlbImg.setMaximumSize(new Dimension(125, 150));
 		jlbImg.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		jlbImg.setBackground(Color.WHITE);
 		btnImg = new JButton("Chọn ảnh");
@@ -195,7 +217,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		a6.add(jlbImg);
 		a6.add(Box.createVerticalStrut(15));
 		a6.add(btnImg);
-		a3.add(Box.createHorizontalStrut(20));
+		a3.add(Box.createHorizontalStrut(60));
 		a3.add(a6);
 		
 		jlbCate = new JLabel("Thể loại");
@@ -391,6 +413,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		phim.setDaoDien(jtfDaoDien.getText());
 		phim.setQuocGia(jtfQuocGia.getText());
 		phim.setThoiLuongPhim(Integer.parseInt(jtfThoiLuong.getText()));
+		phim.setLinkPhim(jtfLinkPhim.getText());
 		phim.setLoaiPhim(dsLoaiPhim.get(jcbType.getSelectedIndex()));
 		if(phim_DAO.themPhim(phim)){
 			dsPhim.add(phim);
@@ -410,7 +433,9 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jtfThoiLuong.setText("");
 		jtfQuocGia.setText("");
 		jtfDaoDien.setText("");
+		jtfLinkPhim.setText("");
 		jcbType.setSelectedIndex(0);
+		jlbImg.setIcon(null);
 		jtfMa.requestFocus();
 	}
 
@@ -432,6 +457,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			phim.setDaoDien(jtfDaoDien.getText());
 			phim.setQuocGia(jtfQuocGia.getText());
 			phim.setThoiLuongPhim(Integer.parseInt(jtfThoiLuong.getText()));
+			phim.setLinkPhim(jtfLinkPhim.getText());
 			phim.setLoaiPhim(dsLoaiPhim.get(jcbType.getSelectedIndex()));
 			if(phim_DAO.suaPhim(phim)){
 				model.setValueAt(phim.getMaPhim(), row, 0);
@@ -463,6 +489,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			String maPhim = model.getValueAt(row, 0).toString();
 			if(phim_DAO.xoaPhim(maPhim)){
 				model.removeRow(row);
+				lamRong();
 				JOptionPane.showMessageDialog(null, "Xóa thành công");
 			}else{
 				JOptionPane.showMessageDialog(null, "Xóa thất bại");
@@ -478,22 +505,36 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jtfDaoDien.setText(model.getValueAt(row, 2).toString());
 		jtfQuocGia.setText(model.getValueAt(row, 3).toString());
 		jtfThoiLuong.setText(model.getValueAt(row, 4).toString());
+		jtfLinkPhim.setText(dsPhim.get(row).getLinkPhim());
+		// xài cho bên kia chắc được
+		jlbImg.setPreferredSize(new Dimension(125, 150));
+		jlbImg.setIcon(new ImageIcon(new ImageIcon(dsPhim.get(row).getLinkPhim()).getImage().getScaledInstance(125, 150, Image.SCALE_DEFAULT)));
 		jcbType.setSelectedItem(model.getValueAt(row, 5).toString());
 	}
 
 	public void getImg() {
 		File file;
 		JFileChooser c = new JFileChooser();
+		String chuoiFile = "";
 		
 		javax.swing.filechooser.FileFilter imgFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
 		c.setFileFilter(imgFilter);
 		int rVal = c.showOpenDialog(new JPanel());
 		
 		if(rVal == JFileChooser.APPROVE_OPTION) {
+			//lấy file
 			file = c.getSelectedFile();
-//			System.out.println(file);
-			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.toString()).getImage().getScaledInstance(125, 150, Image.SCALE_DEFAULT));
+			chuoiFile = file.toString();
+			//lấy chuỗi từ src trở đi
+			//System.out.println(chuoiFile.substring(chuoiFile.indexOf("\\img")));
+			//chuoiFile.substring(chuoiFile.indexOf("\\img"));
+			jlbImg.setPreferredSize(new Dimension(125, 150));
+			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.toString()).getImage()
+			.getScaledInstance(125, 150, Image.SCALE_DEFAULT));
 			jlbImg.setIcon(imageIcon);
+			
+			// revalidate();
+			jtfLinkPhim.setText(chuoiFile);
 		}
 	}
 

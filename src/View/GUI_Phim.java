@@ -12,6 +12,7 @@ import javax.swing.JScrollPane;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JButton;
@@ -115,7 +116,11 @@ public class GUI_Phim extends JPanel {
 		panel_2.setLayout(null);
 		
 		lblNewLabel_2 = new JLabel("");
-		lblNewLabel_2.setIcon(new ImageIcon(GUI_Phim.class.getResource("/img/pororo.jpg")));
+		// String file = "C:\Users\votha\Desktop\qlve\QuanLyDatVe\src\img\digimon.jpg";
+		// String fileChange = file.replace("\\", "/");
+		// File f = new File("C:\\Users\\votha\\Desktop\\qlve\\QuanLyDatVe\\src\\img\\camap.jpg");
+		
+		lblNewLabel_2.setIcon(new ImageIcon(GUI_Phim.class.getResource("/img/katak.jpg")));
 		lblNewLabel_2.setBounds(50, 29, 181, 217);
 		panel_2.add(lblNewLabel_2);
 		

@@ -86,15 +86,16 @@ public class Phim_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-            String sql = "insert into dbo.Phim (MaPhim, TenPhim, DaoDien, QuocGia, ThoiLuongPhim,MaLoaiPhim)"
-                    + " values (?, ?, ?, ?, ?, ?)";
+            String sql = "insert into dbo.Phim (MaPhim, TenPhim, DaoDien, QuocGia, ThoiLuongPhim, LinkPhim,MaLoaiPhim)"
+                    + " values (?, ?, ?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, phim.getMaPhim());
             stmt.setString(2, phim.getTenPhim());
             stmt.setString(3, phim.getDaoDien());
             stmt.setString(4, phim.getQuocGia());
             stmt.setInt(5, phim.getThoiLuongPhim());
-            stmt.setString(6, phim.getLoaiPhim().getMaLoaiPhim());
+            stmt.setString(6, phim.getLinkPhim());
+            stmt.setString(7, phim.getLoaiPhim().getMaLoaiPhim());
             n = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -173,7 +174,7 @@ public class Phim_DAO {
         PreparedStatement stmt = null;
         ConnectDB.getInstance();
         Connection con = ConnectDB.getConnection();
-        String query = "update dbo.Phim set TenPhim = ?, DaoDien = ?, QuocGia = ?, ThoiLuongPhim = ?, MaLoaiPhim = ?"
+        String query = "update dbo.Phim set TenPhim = ?, DaoDien = ?, QuocGia = ?, ThoiLuongPhim = ?, LinkPhim = ?, MaLoaiPhim = ?"
                 + " Where MaPhim = ?";
         try {
             stmt = con.prepareStatement(query);
@@ -181,8 +182,9 @@ public class Phim_DAO {
             stmt.setString(2, phim.getDaoDien());
             stmt.setString(3, phim.getQuocGia());
             stmt.setInt(4, phim.getThoiLuongPhim());
-            stmt.setString(5, phim.getLoaiPhim().getMaLoaiPhim());
-            stmt.setString(6, phim.getMaPhim());
+            stmt.setString(5, phim.getLinkPhim());
+            stmt.setString(6, phim.getLoaiPhim().getMaLoaiPhim());
+            stmt.setString(7, phim.getMaPhim());
             n = stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
