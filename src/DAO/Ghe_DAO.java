@@ -21,7 +21,7 @@ public class Ghe_DAO {
 	 * @return Danh sách Ghe <ArrayList>
 	 * 
 	 */
-	public ArrayList<Ghe> getDSHoaDon() {
+	public ArrayList<Ghe> getDSGhe() {
 		ArrayList<Ghe> dataList = new ArrayList<Ghe> ();
         ConnectDB.getInstance();
         Statement stmt = null;
@@ -75,27 +75,5 @@ public class Ghe_DAO {
         }
         return ghe;
     }
-	/**
-	 * <B>Note:</B> Thêm Ghe khi truyền vào 1 đối tượng vào Ghe
-	 * @param Ghe ghe
-	 *@return true (khi thêm thành công)
-	 * Có data rồi muốn thêm thì viết
-	 */
-	public boolean themGhe() {
-		return true;
-	}
 	
-	/**
-	 *<B>Note:</B> Cập nhật Trang Thai Ghe
-	 *@author Khong biet
-	 *@param 
-	 *@param 
-	 *@return 
-	 * 
-	 */
-	public boolean capNhatTrangThaiGhe() {
-		int n = 0;
-
-        return n > 0;
-	}
 }

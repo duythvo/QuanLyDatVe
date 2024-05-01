@@ -3,7 +3,6 @@ go
 
 create database DatVe
 go
-
 --drop database DatVe
 use DatVe
 go
@@ -88,19 +87,37 @@ CREATE TABLE ChiTietVe(
 )
 go
 
+--CREATE TABLE Ghe (
+--    MaGhe NVARCHAR(20) PRIMARY KEY,
+--    MaSuatChieu NVARCHAR(20),
+--    MaVe NVARCHAR(20),
+--    MaLoaiGhe int,
+--	--0 chưa đặt
+--	--1 đặt rồi
+--    trangthai bit default 0,
+--    FOREIGN KEY (MaSuatChieu) REFERENCES SuatChieu(MaSuatChieu),
+--    FOREIGN KEY (MaVe) REFERENCES Ve(MaVe),
+--    FOREIGN KEY (MaLoaiGhe) REFERENCES LoaiGhe(MaLoaiGhe)
+--)
 CREATE TABLE Ghe (
-    MaGhe NVARCHAR(20) PRIMARY KEY,
-    MaPhongChieu NVARCHAR(20),
-    MaVe NVARCHAR(20),
-    MaLoaiGhe int,
-	--0 chưa đặt
-	--1 đặt rồi
-    trangthai bit default 0,
-    FOREIGN KEY (MaPhongChieu) REFERENCES PhongChieu(MaPhongChieu),
-    FOREIGN KEY (MaVe) REFERENCES Ve(MaVe),
+	MaGhe nvarchar(20) primary key,
+	MaPhongChieu nvarchar(20),
+	MaLoaiGhe int,
+	FOREIGN KEY (MaPhongChieu) REFERENCES PhongChieu(MaPhongChieu),
     FOREIGN KEY (MaLoaiGhe) REFERENCES LoaiGhe(MaLoaiGhe)
 )
 go
+
+CREATE TABLE TrangThaiGhe(
+	MaGhe nvarchar(20),
+	MaSuatChieu nvarchar(20),
+	MaVe nvarchar(20),
+	PRIMARY KEY (MaGhe, MaSuatChieu),
+    FOREIGN KEY (MaGhe) REFERENCES Ghe(MaGhe),
+    FOREIGN KEY (MaSuatChieu) REFERENCES SuatChieu(MaSuatChieu),
+	FOREIGN KEY (MaVe) REFERENCES Ve(MaVe),
+	trangthai bit default 0,
+)
 
 INSERT INTO NhanVien (MaNV, TenNV, MatKhau, NgaySinh, SDT, CCCD)
 VALUES 
@@ -130,12 +147,11 @@ VALUES
     (10000, N'Ghế Đôi'),
     (5000, N'Ghế Thường');
 
-
-
 INSERT INTO SuatChieu (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)
 VALUES 
     ('SC01', '2024-04-30', '18:00:00', 'P01', 'PC01'),
-    ('SC02', '2024-05-01', '20:00:00', 'P02', 'PC02');
+    ('SC02', '2024-05-01', '20:00:00', 'P02', 'PC02'),
+	('SC03', '2024-05-01', '20:00:00', 'P02', 'PC01');
 
 INSERT INTO HoaDon (MaHD, MaNV, TrangThai, NgayLap, GiaHoaDon)
 VALUES 
@@ -152,55 +168,135 @@ VALUES
     ('V01', 'HD01', 2, '2024-04-29 15:00:00'),
     ('V02', 'HD02', 3, '2024-04-30 10:00:00');
 
-INSERT INTO Ghe (MaGhe, MaPhongChieu, MaVe, MaLoaiGhe, trangthai)
+INSERT INTO Ghe (MaGhe, MaPhongChieu, MaLoaiGhe)
 VALUES 
-    ('A1.1', 'PC01', NULL, 1, 0),
-    ('A1.2', 'PC01', NULL, 1, 0),
-    ('A1.3', 'PC01', NULL, 1, 0),
-	('A1.4', 'PC01', NULL, 1, 0),
-    ('A1.5', 'PC01', NULL, 1, 0),
-    ('A1.6', 'PC01', NULL, 1, 0),
-	('A1.7', 'PC01', NULL, 1, 0),
-    ('B1.1', 'PC01', NULL, 1, 0),
-    ('B1.2', 'PC01', NULL, 1, 0),
-    ('B1.3', 'PC01', NULL, 1, 0),
-	('B1.4', 'PC01', NULL, 1, 0),
-    ('B1.5', 'PC01', NULL, 1, 0),
-    ('B1.6', 'PC01', NULL, 1, 0),
-	('B1.7', 'PC01', NULL, 1, 0),
-	('C1.1', 'PC01', NULL, 1, 0),
-    ('C1.2', 'PC01', NULL, 1, 0),
-    ('C1.3', 'PC01', NULL, 1, 0),
-	('C1.4', 'PC01', NULL, 1, 0),
-    ('C1.5', 'PC01', NULL, 1, 0),
-    ('C1.6', 'PC01', NULL, 1, 0),
-	('C1.7', 'PC01', NULL, 1, 0),
-    ('D1.1', 'PC01', NULL, 1, 0),
-    ('D1.2', 'PC01', NULL, 1, 0),
-	('D1.3', 'PC01', NULL, 1, 0),
+    ('A1.1', 'PC01', 1),
+    ('A1.2', 'PC01', 1),
+    ('A1.3', 'PC01', 1),
+	('A1.4', 'PC01', 1),
+    ('A1.5', 'PC01', 1),
+    ('A1.6', 'PC01', 1),
+	('A1.7', 'PC01', 1),
+    ('B1.1', 'PC01', 1),
+    ('B1.2', 'PC01', 1),
+    ('B1.3', 'PC01', 1),
+	('B1.4', 'PC01', 1),
+    ('B1.5', 'PC01', 1),
+    ('B1.6', 'PC01', 1),
+	('B1.7', 'PC01', 1),
+	('C1.1', 'PC01', 1),
+    ('C1.2', 'PC01', 1),
+    ('C1.3', 'PC01', 1),
+	('C1.4', 'PC01', 1),
+    ('C1.5', 'PC01', 1),
+    ('C1.6', 'PC01', 1),
+	('C1.7', 'PC01', 1),
+    ('D1.1', 'PC01', 2),
+    ('D1.2', 'PC01', 2),
+	('D1.3', 'PC01', 2),
 
-	('A2.1', 'PC02', NULL, 1, 0),
-    ('A2.2', 'PC02', NULL, 1, 0),
-    ('A2.3', 'PC02', NULL, 1, 0),
-	('A2.4', 'PC02', NULL, 1, 0),
-    ('A2.5', 'PC02', NULL, 1, 0),
-    ('A2.6', 'PC02', NULL, 1, 0),
-	('A2.7', 'PC02', NULL, 1, 0),
-    ('B2.1', 'PC02', NULL, 1, 0),
-    ('B2.2', 'PC02', NULL, 1, 0),
-    ('B2.3', 'PC02', NULL, 1, 0),
-	('B2.4', 'PC02', NULL, 1, 0),
-    ('B2.5', 'PC02', NULL, 1, 0),
-    ('B2.6', 'PC02', NULL, 1, 0),
-	('B2.7', 'PC02', NULL, 1, 0),
-	('C2.1', 'PC02', NULL, 1, 0),
-    ('C2.2', 'PC02', NULL, 1, 0),
-    ('C2.3', 'PC02', NULL, 1, 0),
-	('C2.4', 'PC02', NULL, 1, 0),
-    ('C2.5', 'PC02', NULL, 1, 0),
-    ('C2.6', 'PC02', NULL, 1, 0),
-	('C2.7', 'PC02', NULL, 1, 0),
-    ('D2.1', 'PC02', NULL, 1, 0),
-    ('D2.2', 'PC02', NULL, 1, 0),
-	('D2.3', 'PC02', NULL, 1, 0);
+	('A2.1', 'PC02', 1),
+    ('A2.2', 'PC02', 1),
+    ('A2.3', 'PC02', 1),
+	('A2.4', 'PC02', 1),
+    ('A2.5', 'PC02', 1),
+    ('A2.6', 'PC02', 1),
+	('A2.7', 'PC02', 1),
+    ('B2.1', 'PC02', 1),
+    ('B2.2', 'PC02', 1),
+    ('B2.3', 'PC02', 1),
+	('B2.4', 'PC02', 1),
+    ('B2.5', 'PC02', 1),
+    ('B2.6', 'PC02', 1),
+	('B2.7', 'PC02', 1),
+	('C2.1', 'PC02', 1),
+    ('C2.2', 'PC02', 1),
+    ('C2.3', 'PC02', 1),
+	('C2.4', 'PC02', 1),
+    ('C2.5', 'PC02', 1),
+    ('C2.6', 'PC02', 1),
+	('C2.7', 'PC02', 1),
+    ('D2.1', 'PC02', 2),
+    ('D2.2', 'PC02', 2),
+	('D2.3', 'PC02', 2);
+
+INSERT INTO TrangThaiGhe (MaGhe,MaSuatChieu)
+values
+	('A1.1', 'SC01'),
+    ('A1.2', 'SC01'),
+    ('A1.3', 'SC01'),
+	('A1.4', 'SC01'),
+    ('A1.5', 'SC01'),
+    ('A1.6', 'SC01'),
+	('A1.7', 'SC01'),
+    ('B1.1', 'SC01'),
+    ('B1.2', 'SC01'),
+    ('B1.3', 'SC01'),
+	('B1.4', 'SC01'),
+    ('B1.5', 'SC01'),
+    ('B1.6', 'SC01'),
+	('B1.7', 'SC01'),
+	('C1.1', 'SC01'),
+    ('C1.2', 'SC01'),
+    ('C1.3', 'SC01'),
+	('C1.4', 'SC01'),
+    ('C1.5', 'SC01'),
+    ('C1.6', 'SC01'),
+	('C1.7', 'SC01'),
+    ('D1.1', 'SC01'),
+    ('D1.2', 'SC01'),
+	('D1.3', 'SC01'),
+
+	('A1.1', 'SC02'),
+    ('A1.2', 'SC02'),
+    ('A1.3', 'SC02'),
+	('A1.4', 'SC02'),
+    ('A1.5', 'SC02'),
+    ('A1.6', 'SC02'),
+	('A1.7', 'SC02'),
+    ('B1.1', 'SC02'),
+    ('B1.2', 'SC02'),
+    ('B1.3', 'SC02'),
+	('B1.4', 'SC02'),
+    ('B1.5', 'SC02'),
+    ('B1.6', 'SC02'),
+	('B1.7', 'SC02'),
+	('C1.1', 'SC02'),
+    ('C1.2', 'SC02'),
+    ('C1.3', 'SC02'),
+	('C1.4', 'SC02'),
+    ('C1.5', 'SC02'),
+    ('C1.6', 'SC02'),
+	('C1.7', 'SC02'),
+    ('D1.1', 'SC02'),
+    ('D1.2', 'SC02'),
+	('D1.3', 'SC02'),
+
+	('A1.1', 'SC03'),
+    ('A1.2', 'SC03'),
+    ('A1.3', 'SC03'),
+	('A1.4', 'SC03'),
+    ('A1.5', 'SC03'),
+    ('A1.6', 'SC03'),
+	('A1.7', 'SC03'),
+    ('B1.1', 'SC03'),
+    ('B1.2', 'SC03'),
+    ('B1.3', 'SC03'),
+	('B1.4', 'SC03'),
+    ('B1.5', 'SC03'),
+    ('B1.6', 'SC03'),
+	('B1.7', 'SC03'),
+	('C1.1', 'SC03'),
+    ('C1.2', 'SC03'),
+    ('C1.3', 'SC03'),
+	('C1.4', 'SC03'),
+    ('C1.5', 'SC03'),
+    ('C1.6', 'SC03'),
+	('C1.7', 'SC03'),
+    ('D1.1', 'SC03'),
+    ('D1.2', 'SC03'),
+	('D1.3', 'SC03');
+
+
+	
 
