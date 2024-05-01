@@ -14,13 +14,13 @@ import DAO.ChiTietVe_DAO;
 public class ChiTietVe {
 	private Ve ve;
     private HoaDon hoaDon;
-    private int soLuongVe;
+    private int soLuongGhe;
     private LocalDateTime ngayGioDat;
-	public ChiTietVe(Ve ve, HoaDon hoaDon, int soLuongVe, LocalDateTime ngayGioDat) {
+	public ChiTietVe(Ve ve, HoaDon hoaDon, int soLuongGhe, LocalDateTime ngayGioDat) {
 		super();
 		setVe(ve);
 		setHoaDon(hoaDon);
-		setSoLuongVe(soLuongVe);
+		setSoLuongGhe(soLuongGhe);
 		setNgayGioDat(ngayGioDat);
 	}
     
@@ -34,14 +34,14 @@ public class ChiTietVe {
 		ChiTietVe ctve = ct_dao.getChiTietVe(maVe, maHD);
 		setVe(ctve.getVe());
 		setHoaDon(ctve.getHoaDon());
-		setSoLuongVe(ctve.getSoLuongVe());
+		setSoLuongGhe(ctve.getSoLuongVe());
 		setNgayGioDat(ctve.getNgayGioDat());
 	}
     
     public ChiTietVe(ResultSet rs) throws SQLException {
     	 this.ve = new Ve(rs.getString("MaVe"));
     	 this.hoaDon = new HoaDon(rs.getString("MaHD"));
-		 this.soLuongVe = rs.getInt("SoLuongVe");
+		 this.soLuongGhe = rs.getInt("SoLuongGhe");
 		 this.ngayGioDat= rs.getTimestamp("NgayGioDat").toLocalDateTime();
 	}
 
@@ -62,11 +62,11 @@ public class ChiTietVe {
 	}
 
 	public int getSoLuongVe() {
-		return soLuongVe;
+		return soLuongGhe;
 	}
 
-	public void setSoLuongVe(int soLuongVe) {
-		this.soLuongVe = soLuongVe;
+	public void setSoLuongGhe(int soLuongGhe) {
+		this.soLuongGhe = soLuongGhe;
 	}
 
 	public LocalDateTime getNgayGioDat() {
@@ -79,7 +79,7 @@ public class ChiTietVe {
 
 	@Override
 	public String toString() {
-		return "ChiTietVe [Ve=" +ve + ", hoaDon=" + hoaDon + ", soLuongVe=" + soLuongVe + ", ngayGioDat="
+		return "ChiTietVe [Ve=" +ve + ", hoaDon=" + hoaDon + ", soLuongGhe=" + soLuongGhe + ", ngayGioDat="
 				+ ngayGioDat + "]";
 	}
 

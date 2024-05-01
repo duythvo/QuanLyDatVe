@@ -90,7 +90,7 @@ public class ChiTietVe_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-            String sql = "insert into dbo.ChiTietVe (MaVe, MaHD, SoLuongVe, NgayGioDat)"
+            String sql = "insert into dbo.ChiTietVe (MaVe, MaHD, SoLuongGhe, NgayGioDat)"
                     + " values (?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, ctVe.getVe().getMaVe());

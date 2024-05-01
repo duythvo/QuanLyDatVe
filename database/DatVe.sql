@@ -82,7 +82,7 @@ CREATE TABLE ChiTietVe(
     PRIMARY KEY (MaVe, MaHD),
     FOREIGN KEY (MaVe) REFERENCES Ve(MaVe),
     FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
-	SoLuongVe INT,
+	SoLuongGhe INT,
     NgayGioDat DATETIME
 )
 go
@@ -163,7 +163,7 @@ VALUES
     ('V01', 'SC01'),
     ('V02', 'SC02');
 
-INSERT INTO ChiTietVe (MaVe, MaHD, SoLuongVe, NgayGioDat)
+INSERT INTO ChiTietVe (MaVe, MaHD, SoLuongGhe, NgayGioDat)
 VALUES 
     ('V01', 'HD01', 2, '2024-04-29 15:00:00'),
     ('V02', 'HD02', 3, '2024-04-30 10:00:00');
