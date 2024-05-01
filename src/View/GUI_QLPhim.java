@@ -349,9 +349,6 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			model.addRow(new Object[] {phim.getMaPhim(), phim.getTenPhim(), phim.getDaoDien(), phim.getQuocGia(), phim.getThoiLuongPhim(), phim.getLoaiPhim().getTenLoaiPhim()});
 		} 
 
-		
-		
-		
 		this.add(jplForm);
 		this.add(sc);
 
@@ -363,7 +360,9 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		Object ac = e.getSource();
 		
 		if(ac.equals(btnAdd)) {
-			themPhim();
+			if(validData()) {
+				themPhim();
+			}
 		}else if(ac.equals(btnDelete)) {
 			xoaPhim();
 		}else if(ac.equals(btnFix)) {
@@ -434,6 +433,69 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			//System.out.println(dsLoaiPhim.get(jcbType.getSelectedIndex()));
 		}
 		ConnectDB.getInstance().disconnect();
+	}
+
+	public boolean validData(){
+		if(jtfMa.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Mã phim không được để trống");
+			jtfMa.requestFocus();
+			return false;
+		}else{
+			if(!(jtfMa.getText().matches("^[A-Z]\\d{1,5}"))){
+				JOptionPane.showMessageDialog(null, "Mã phim không hợp lệ(1 Chữ cái đầu và 1-5 chữ số)");
+				jtfMa.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfTen.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Tên phim không được để trống");
+			jtfTen.requestFocus();
+			return false;
+		}else{
+			if(!(jtfTen.getText().matches("\\w{1,50}"))){
+				JOptionPane.showMessageDialog(null, "Tên phim không hợp lệ");
+				jtfTen.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfQuocGia.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Quốc gia không được để trống");
+			jtfQuocGia.requestFocus();
+			return false;
+		}else{
+			if(!(jtfQuocGia.getText().matches("\\w{1,50}"))){
+				JOptionPane.showMessageDialog(null, "Quốc gia không hợp lệ");
+				jtfQuocGia.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfDaoDien.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Đạo diễn không được để trống");
+			jtfDaoDien.requestFocus();
+			return false;
+		}else{
+			if(!(jtfDaoDien.getText().matches("\\w{1,50}"))){
+				JOptionPane.showMessageDialog(null, "Đạo diễn không hợp lệ");
+				jtfDaoDien.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfThoiLuong.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Thời lượng không được để trống");
+			jtfThoiLuong.requestFocus();
+			return false;
+		}else{
+			if(Integer.parseInt(jtfThoiLuong.getText()) <=0){
+				JOptionPane.showMessageDialog(null, "Thời lượng lớn hơn 0");
+				jtfThoiLuong.requestFocus();
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void lamRong(){

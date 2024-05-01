@@ -117,7 +117,7 @@ public class GUI_Phim extends JPanel {
 		Phim_DAO phim_DAO = new Phim_DAO();
 		ArrayList<Phim> listPhim = phim_DAO.getDSPhim();
 
-		panel.setLayout(new GridLayout(5, 2, 0, 0));
+		panel.setLayout(new GridLayout(listPhim.size()/2+1, 2, 0, 0));
 		//panel2
 
 		for (Phim phim : listPhim) {
@@ -176,11 +176,13 @@ public class GUI_Phim extends JPanel {
 				if (jtfTimKiem.getText().isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Nhập tên phim cần tìm");
 			} else {
+				scrollPane.getVerticalScrollBar().setValue(0);
 				boolean found = false;
+				panel.removeAll();
+				panel.setLayout(new GridLayout(listPhim.size()/2+1, 2, 0, 0));
 				for (Phim phim2 : listPhim) {
 					if (phim2.getTenPhim().toLowerCase().indexOf(jtfTimKiem.getText().toLowerCase()) != -1) {
 						found = true;
-						panel.removeAll();
 						JPanel panelPhim = new JPanel();
 						panelPhim.setBackground(new Color(0, 0, 128));
 						panelPhim.setPreferredSize(new Dimension(300,280));
@@ -231,7 +233,7 @@ public class GUI_Phim extends JPanel {
 							}
 							
 						});
-						break;
+						
 					}
 				}
 			if (!found) {
