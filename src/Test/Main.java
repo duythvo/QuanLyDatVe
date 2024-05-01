@@ -1,11 +1,12 @@
 package Test;
 
 import java.sql.SQLException;
-
+import java.util.ArrayList;
 
 import DAO.Ghe_DAO;
-
+import DAO.TrangThaiGhe_DAO;
 import connectDB.ConnectDB;
+import entity.TrangThaiGhe;
 
 
 public class Main {
@@ -16,7 +17,11 @@ public class Main {
             e.printStackTrace();
         }
 
-        Ghe_DAO ghe_dao = Ghe_DAO.getInstance();
-        System.out.println(ghe_dao.getGhe("A1.2"));
+        TrangThaiGhe_DAO ghe_dao = new TrangThaiGhe_DAO();
+        // System.out.println(ghe_dao.getTrangThaiGhe("A1.1", "SC01"));
+        ArrayList<TrangThaiGhe> list = ghe_dao.getDSTrangThaiGhe();
+        for (TrangThaiGhe ghe : list) {
+            System.out.println(ghe.getGhe().getMaGhe()+ ghe.isTrangThai());
+        }
     }
 }
