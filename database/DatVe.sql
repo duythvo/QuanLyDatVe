@@ -114,11 +114,11 @@ VALUES
 
 INSERT INTO Phim (MaPhim, TenPhim, DaoDien, QuocGia, ThoiLuongPhim,LinkPhim,MaLoaiPhim)
 VALUES 
-    ('P01', 'Poporo', 'Justin Lin', 'USA', 150,'C:\Users\votha\Desktop\qlve\QuanLyDatVe\src\img\pororo.jpg' ,'LP01'),
-    ('P02', 'CaMap', 'Frank Darabont', 'USA', 142,'C:\Users\votha\Desktop\qlve\QuanLyDatVe\src\img\camap.jpg', 'LP02'),
-	('P03', 'DiGimon', 'Frank Gia Huy', 'USA', 142,'C:\Users\votha\Desktop\qlve\QuanLyDatVe\src\img\digimon.jpg' ,'LP01'),
-	('P04', 'Katak', 'Frank Darabont', 'USA', 142, 'C:\Users\votha\Desktop\qlve\QuanLyDatVe\src\img\katak.jpg','LP03'),
-	('P05', 'Spyx', 'Frank Darabont', 'USA', 142,'C:\Users\votha\Desktop\qlve\QuanLyDatVe\src\img\spyx.jpg' ,'LP01');
+    ('P01', 'Poporo', 'Justin Lin', 'USA', 150,'/img/pororo.jpg' ,'LP01'),
+    ('P02', 'CaMap', 'Frank Darabont', 'USA', 142,'/img/camap.jpg', 'LP02'),
+	('P03', 'DiGimon', 'Frank Gia Huy', 'USA', 142,'/img/digimon.jpg' ,'LP01'),
+	('P04', 'Katak', 'Frank Darabont', 'USA', 142, '/img/katak.jpg','LP03'),
+	('P05', 'Spyx', 'Frank Darabont', 'USA', 142,'/img/spyx.jpg' ,'LP01');
 
 INSERT INTO PhongChieu (MaPhongChieu, TenPhongChieu, ViTri, SucChua)
 VALUES 

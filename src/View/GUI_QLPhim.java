@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -83,6 +84,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 	private ArrayList<LoaiPhim> dsLoaiPhim;
 	private JLabel jlbLinkPhim;
 	private JTextField jtfLinkPhim;
+	private JButton btnSearch;
 
 	public GUI_QLPhim() {
 		this.setBackground(new Color(25, 28, 44));
@@ -181,9 +183,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		a4.add(jlbLinkPhim);
 		a4.add(Box.createVerticalStrut(5));
 		a4.add(Box.createVerticalStrut(30));
-		//a4.add(Box.createVerticalStrut(45));
-		// a4.add(jlbNgayKT);
-		// a4.add(Box.createVerticalStrut(5));
+
 		a5.add(Box.createVerticalStrut(30));
 		a5.add(jtfQuocGia);
 		a5.add(Box.createVerticalStrut(30));
@@ -191,7 +191,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		a5.add(Box.createVerticalStrut(30));
 		a5.add(jtfLinkPhim);
 		a5.add(Box.createVerticalStrut(30));
-		a3.add(Box.createHorizontalStrut(45));
+		a3.add(Box.createHorizontalStrut(20));
 		a3.add(a4);
 		a3.add(Box.createHorizontalStrut(15));
 		a3.add(a5);
@@ -205,8 +205,9 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jlbImg = new JLabel();
 		jlbImg.setForeground(Color.WHITE);
 		jlbImg.setFont(new Font("Arial", Font.BOLD, 20));
-		jlbImg.setSize(125,150);
-		jlbImg.setMaximumSize(new Dimension(125, 150));
+		// jlbImg.setSize(181,217);
+		// jlbImg.setMaximumSize(new Dimension(125, 150));
+		jlbImg.setPreferredSize(new Dimension(150, 150));
 		jlbImg.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		jlbImg.setBackground(Color.WHITE);
 		btnImg = new JButton("Chọn ảnh");
@@ -289,6 +290,10 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		btnDelete = new JButton("Xoá");
 		btnDelete.setBackground(new Color(255, 165, 0));
 		btnDelete.addActionListener(this);
+
+		btnSearch = new JButton("Tìm kiếm");
+		btnSearch.setBackground(new Color(255, 165, 0));
+		btnSearch.addActionListener(this);
 		
 		btn = Box.createHorizontalBox();
 		btn.add(btnAdd);
@@ -298,6 +303,8 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		btn.add(btnFix);
 		btn.add(Box.createHorizontalStrut(8));
 		btn.add(btnDelete);
+		btn.add(Box.createHorizontalStrut(8));
+		btn.add(btnSearch);
 		btn.add(Box.createHorizontalStrut(600));
 		
 		empty1 = new JPanel();
@@ -366,6 +373,9 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			getImg();
 		}else if(ac.equals(btnReset)) {
 			lamRong();
+		}else if(ac.equals(btnSearch)) {
+			timPhim();
+			// tìm kiếm phim
 		}
 		
 	}
@@ -436,6 +446,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jtfLinkPhim.setText("");
 		jcbType.setSelectedIndex(0);
 		jlbImg.setIcon(null);
+		table_Phim.clearSelection();
 		jtfMa.requestFocus();
 	}
 
@@ -507,8 +518,8 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jtfThoiLuong.setText(model.getValueAt(row, 4).toString());
 		jtfLinkPhim.setText(dsPhim.get(row).getLinkPhim());
 		// xài cho bên kia chắc được
-		jlbImg.setPreferredSize(new Dimension(125, 150));
-		jlbImg.setIcon(new ImageIcon(new ImageIcon(dsPhim.get(row).getLinkPhim()).getImage().getScaledInstance(125, 150, Image.SCALE_DEFAULT)));
+		//jlbImg.setPreferredSize(new Dimension(125, 150));
+		jlbImg.setIcon(new ImageIcon(new ImageIcon(GUI_QLPhim.class.getResource(dsPhim.get(row).getLinkPhim())).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
 		jcbType.setSelectedItem(model.getValueAt(row, 5).toString());
 	}
 
@@ -528,13 +539,46 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 			//lấy chuỗi từ src trở đi
 			//System.out.println(chuoiFile.substring(chuoiFile.indexOf("\\img")));
 			//chuoiFile.substring(chuoiFile.indexOf("\\img"));
-			jlbImg.setPreferredSize(new Dimension(125, 150));
+			//jlbImg.setPreferredSize(new Dimension(125, 150));
 			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.toString()).getImage()
-			.getScaledInstance(125, 150, Image.SCALE_DEFAULT));
+			.getScaledInstance(150, 150, Image.SCALE_DEFAULT));
 			jlbImg.setIcon(imageIcon);
 			
+			String chuoiDoi = chuoiFile.substring(chuoiFile.indexOf("\\img")).replace("\\", "/");
 			// revalidate();
-			jtfLinkPhim.setText(chuoiFile);
+			jtfLinkPhim.setText(chuoiDoi);
+		}
+	}
+
+	public void timPhim() {
+		if (jtfTen.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Nhập tên phim cần tìm");
+		} else {
+			boolean found = false;
+			for (int i = 0; i < dsPhim.size(); i++) {
+				Phim phim = dsPhim.get(i);
+				if (phim.getTenPhim().toLowerCase().contains(jtfTen.getText().toLowerCase())) {
+					jtfMa.setText(phim.getMaPhim());
+					jtfTen.setText(phim.getTenPhim());
+					jtfDaoDien.setText(phim.getDaoDien());
+					jtfQuocGia.setText(phim.getQuocGia());
+					jtfThoiLuong.setText(String.valueOf(phim.getThoiLuongPhim()));
+					jtfLinkPhim.setText(phim.getLinkPhim());
+					jcbType.setSelectedItem(phim.getLoaiPhim().getTenLoaiPhim());
+					jlbImg.setIcon(new ImageIcon(new ImageIcon(GUI_QLPhim.class.getResource(phim.getLinkPhim())).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
+	
+					// Cuộn và bôi đen dòng tìm thấy trong JTable
+					table_Phim.setRowSelectionInterval(i, i);
+					Rectangle rect = table_Phim.getCellRect(i, 0, true);
+					table_Phim.scrollRectToVisible(rect);
+	
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				JOptionPane.showMessageDialog(null, "Không tìm thấy phim");
+			}
 		}
 	}
 
