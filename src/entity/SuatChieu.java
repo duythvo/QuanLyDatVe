@@ -8,8 +8,6 @@ import java.util.Objects;
 
 import DAO.SuatChieu_DAO;
 
-//import java.sql.*;
-//import DAO.*;
 
 
 public class SuatChieu {
@@ -31,7 +29,7 @@ public class SuatChieu {
 	}
 	
 	public SuatChieu() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public SuatChieu(String maSuatChieu, Phim phim, PhongChieu phongChieu) {

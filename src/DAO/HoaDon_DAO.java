@@ -121,7 +121,7 @@ public class HoaDon_DAO {
 	 *@return 
 	 * 
 	 */
-	public boolean capNhatHoaDon(String maHD, String trangThai) {
+	public boolean capNhatHoaDon(HoaDon hd) {
 		int n = 0;
 
         return n > 0;

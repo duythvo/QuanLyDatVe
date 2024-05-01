@@ -15,17 +15,19 @@ public class Phim {
 	private String daoDien;
 	private String quocGia;
 	private int thoiLuongPhim;
+	private String linkPhim;
 	private LoaiPhim loaiPhim;
 	
 	
 	
-	public Phim(String maPhim, String tenPhim, String daoDien, String quocGia, int thoiLuongPhim,LoaiPhim loaiPhim) {
+	public Phim(String maPhim, String tenPhim, String daoDien, String quocGia, int thoiLuongPhim,String linkPhim, LoaiPhim loaiPhim) {
 		super();
 		setMaPhim(maPhim);
 		setTenPhim(tenPhim);
 		setDaoDien(daoDien);
 		setQuocGia(quocGia);
 		setThoiLuongPhim(thoiLuongPhim);
+		setLinkPhim(linkPhim);
 		setLoaiPhim(loaiPhim);
 	}
 	
@@ -37,12 +39,17 @@ public class Phim {
 		setDaoDien(phim.getDaoDien());
 		setQuocGia(phim.getQuocGia());
 		setThoiLuongPhim(phim.getThoiLuongPhim());
+		setLinkPhim(phim.getLinkPhim());
 		setLoaiPhim(phim.getLoaiPhim());
 	}
 	
 	public Phim(String maPhim, LoaiPhim loaiPhim) {
 		this.maPhim = maPhim;
 		this.loaiPhim = loaiPhim;
+	}
+
+	public Phim(){
+		
 	}
 	
 	
@@ -52,6 +59,7 @@ public class Phim {
 		 this.daoDien = rs.getString("DaoDien");
 		 this.quocGia = rs.getString("QuocGia");
 		 this.thoiLuongPhim = rs.getInt("ThoiLuongPhim");
+		 this.linkPhim = rs.getString("LinkPhim");
 		 this.loaiPhim = new LoaiPhim(rs.getString("MaLoaiPhim"));
 	}
 	
@@ -98,12 +106,14 @@ public class Phim {
 	
 	
 	
+	
 	@Override
-	public String toString() {
-		return "Phim [maPhim=" + maPhim + ", tenPhim=" + tenPhim + ", daoDien=" + daoDien + ", quocGia=" + quocGia
-				+ ", thoiLuongPhim=" + thoiLuongPhim + ", loaiPhim=" + loaiPhim + "]";
-	}
-	@Override
+    public String toString() {
+        return "Phim [maPhim=" + maPhim + ", tenPhim=" + tenPhim + ", daoDien=" + daoDien + ", quocGia=" + quocGia
+                + ", thoiLuongPhim=" + thoiLuongPhim + ", linkPhim=" + linkPhim + ", loaiPhim=" + loaiPhim + "]";
+    }
+
+    @Override
 	public int hashCode() {
 		return Objects.hash(maPhim, tenPhim, thoiLuongPhim);
 	}
@@ -118,6 +128,14 @@ public class Phim {
 		Phim other = (Phim) obj;
 		return Objects.equals(maPhim, other.maPhim) && Objects.equals(tenPhim, other.tenPhim)
 				&& thoiLuongPhim == other.thoiLuongPhim;
+	}
+
+	public String getLinkPhim() {
+		return linkPhim;
+	}
+
+	public void setLinkPhim(String linkPhim) {
+		this.linkPhim = linkPhim;
 	}
 
 	

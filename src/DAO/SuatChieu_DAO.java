@@ -75,6 +75,35 @@ public class SuatChieu_DAO {
         }
         return suatchieu;
     }
+
+    public ArrayList<SuatChieu> getdsSuatChieuBangMaPhim(String maPhim){
+        ArrayList<SuatChieu> dataList = new ArrayList<SuatChieu>();
+        ConnectDB.getInstance();
+        Statement stmt = null;
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT * FROM dbo.SuatChieu WHERE MaPhim = ?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, maPhim);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+            	SuatChieu suatchieu = new SuatChieu(rs);
+                dataList.add(suatchieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+ 		        if (stmt != null) {
+ 		            stmt.close();
+ 		        }
+ 		    } catch (SQLException e) {
+ 		        e.printStackTrace();
+ 		    }
+        }
+        return dataList;
+    }
 	/**
 	 * <B>Note:</B> Thêm Suất chiếu khi truyền vào 1 đối tượng Suất Chiếu
 	 * @param SuatChieu suatchieu
