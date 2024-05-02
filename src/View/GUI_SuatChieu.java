@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.Dimension;
 
 import javax.swing.JPanel;
@@ -66,6 +67,10 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	public JButton btnLamMoi;
 	static int count;
 	private JPanel panel;
+	private JPanel panel1;
+	private JPanel panel2;
+	private JPanel panel3;
+	private JPanel panel4;
 	boolean flat1 = false;
     boolean flat2 = false;
 	private DefaultTableModel model;
@@ -80,6 +85,11 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	int size;
 	private JTextField textFieldMaSC;
 	public JButton btnTim;
+	private JPanel panelDay_1;
+	private JPanel panelDay_2;
+	private JPanel panelDay_3;
+	private Container panelDay_4;
+	private JPanel panelDay_5;
 
 	/**	
 	 * Create the panel.
@@ -121,7 +131,53 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panel = new JPanel();
 		panel.setBackground(new Color(102, 51, 153));
 		scrollPane.setViewportView(panel);
-		panel.setLayout(new GridLayout(5, 1, 0, 0));
+		panel.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		panel1 = new JPanel();
+		panel1.setBackground(new Color(102, 51, 153));
+		
+		panel1.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		panel2 = new JPanel();
+		panel2.setBackground(new Color(102, 51, 153));
+//		scrollPane.setViewportView(panel2);
+		panel2.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		panel3 = new JPanel();
+		panel3.setBackground(new Color(102, 51, 153));
+//		scrollPane.setViewportView(panel3);
+		panel3.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		panel4 = new JPanel();
+		panel4.setBackground(new Color(102, 51, 153));
+//		scrollPane.setViewportView(panel4);
+		panel4.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		//AddItem
+		ArrayList<Phim> dsPSC = getDsPhimSC();
+		ArrayList<LocalTime> gioSC = new ArrayList<>();
+		ArrayList<LocalDate> ngaySC = new ArrayList<>();
+		int co = 2;
+		LocalDate dateCurr = LocalDate.parse("30/04/2024", dtf);
+		for (Phim phim : dsPSC) {
+			ngaySC = getDsNgayChieu(phim);
+			for (LocalDate localDate : ngaySC) {
+				gioSC = getDsGioChieu(phim, localDate);
+				System.out.println(phim.getTenPhim() + localDate + gioSC);
+				if(localDate.format(dtf).equals(dateCurr.format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel);
+				}else if(localDate.format(dtf).equals(dateCurr.plusDays(1).format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel1);
+				}else if(localDate.format(dtf).equals(dateCurr.plusDays(2).format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel2);
+				}else if(localDate.format(dtf).equals(dateCurr.plusDays(3).format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel3);
+				}else if(localDate.format(dtf).equals(dateCurr.plusDays(4).format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel4);
+				}
+				co++;
+			}
+		}
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBackground(new Color(240, 240, 240));
@@ -390,12 +446,14 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panel_main.add(panel_day);
 		panel_day.setLayout(new GridLayout(1, 5, 0, 0));
 		
-		JPanel panelDay_1 = new JPanel();
+		panelDay_1 = new JPanel();
 		panelDay_1.setBackground(new Color(128, 0, 255));
 		panel_day.add(panelDay_1);
 		panelDay_1.setLayout(null);
+		panelDay_1.addMouseListener(this);
 		
-		LocalDate date = LocalDate.now();
+		
+		LocalDate date = LocalDate.parse("30/04/2024", dtf);
 		JLabel lblDay_1 = new JLabel("New label");
 		lblDay_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDay_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -412,10 +470,11 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		lblDayWeek_1.setBounds(45, 54, 64, 26);
 		panelDay_1.add(lblDayWeek_1);
 		
-		JPanel panelDay_2 = new JPanel();
+		panelDay_2 = new JPanel();
 		panelDay_2.setForeground(new Color(0, 0, 0));
 		panelDay_2.setLayout(null);
 		panelDay_2.setBackground(new Color(250, 250, 250));
+		panelDay_2.addMouseListener(this);
 		panel_day.add(panelDay_2);
 		
 		JLabel lblDay_2 = new JLabel("New label");
@@ -435,9 +494,10 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		lblDayWeek_2.setBounds(45, 54, 77, 26);
 		panelDay_2.add(lblDayWeek_2);
 		
-		JPanel panelDay_3 = new JPanel();
+		panelDay_3 = new JPanel();
 		panelDay_3.setLayout(null);
 		panelDay_3.setBackground(new Color(255, 255, 255));
+		panelDay_3.addMouseListener(this);
 		panel_day.add(panelDay_3);
 		
 		JLabel lblDay_3 = new JLabel("New label");
@@ -457,9 +517,10 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		lblDayWeek_3.setBounds(45, 54, 64, 26);
 		panelDay_3.add(lblDayWeek_3);
 		
-		JPanel panelDay_4 = new JPanel();
+		panelDay_4 = new JPanel();
 		panelDay_4.setLayout(null);
 		panelDay_4.setBackground(new Color(250, 250, 250));
+		panelDay_4.addMouseListener(this);
 		panel_day.add(panelDay_4);
 		
 		JLabel lblDay_4 = new JLabel("New label");
@@ -479,9 +540,10 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		lblDayWeek_4.setBounds(45, 54, 64, 26);
 		panelDay_4.add(lblDayWeek_4);
 		
-		JPanel panelDay_5 = new JPanel();
+		panelDay_5 = new JPanel();
 		panelDay_5.setLayout(null);
 		panelDay_5.setBackground(new Color(255, 255, 255));
+		panelDay_5.addMouseListener(this);
 		panel_day.add(panelDay_5);
 		
 		JLabel lblDay_5 = new JLabel("New label");
@@ -749,6 +811,8 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		
 		panel_day.setVisible(true);
 		panel_form.setVisible(false);
+		
+		
 	}
 	
 	public String getDayWeeks(String day) {
@@ -970,18 +1034,37 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		if(textFieldTim.getText().equals("")) {
 			JOptionPane.showMessageDialog(this, "Chưa nhập thông tin tìm kiếm!");
 		}else {
-			resetTabel();
-			
-			int length_row = model.getRowCount();
-			for(int i = 0; i < length_row; i++) {
-				String tenPhim = model.getValueAt(i, 3) + "";
-				System.out.println(tenPhim + i);
-				if(!tenPhim.equalsIgnoreCase(textFieldTim.getText())) {
-					model.removeRow(i);
-					i--;
-					length_row--;
-				}
+			if(rdbtnChinhSua.isSelected()) {
+				resetTabel();
 				
+				int length_row = model.getRowCount();
+				for(int i = 0; i < length_row; i++) {
+					String tenPhim = model.getValueAt(i, 3) + "";
+					System.out.println(tenPhim + i);
+					if(!tenPhim.equalsIgnoreCase(textFieldTim.getText())) {
+						model.removeRow(i);
+						i--;
+						length_row--;
+					}
+					
+				}
+			}else {
+				for (SuatChieu suatChieu : listSuatChieus) {
+					if(suatChieu.getPhim().getTenPhim().equalsIgnoreCase(textFieldTim.getText())) {
+						Phim phim = suatChieu.getPhim();
+						ArrayList<LocalDate> localDate = getDsNgayChieu(phim);
+						for (LocalDate localDate2 : localDate) {
+							ArrayList<LocalTime> localTimes = getDsGioChieu(phim, localDate2);
+							JPanel panelTim = new JPanel();
+							panelTim.setBackground(new Color(102, 51, 153));
+							scrollPane.setViewportView(panelTim);
+							panelTim.setLayout(new GridLayout(7, 1, 0, 0));
+							crePanelItem(phim.getTenPhim(), localDate, localTimes, 2, panelTim);
+						}
+					}else {
+						
+					}
+				}
 			}
 		}
 	}
@@ -1101,58 +1184,33 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		comboBoxPhongChieu.setSelectedIndex(-1);
 	}
 	
-	public void crePanelItem() {
+	public void crePanelItem(String tenPhim, ArrayList<LocalDate> ngayChieu, ArrayList<LocalTime> gioChieu, int flat, JPanel panel) {
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(240, 240, 240));
+		if(flat % 2 == 0) panel_1.setBackground(new Color(240, 240, 240));
+		else panel_1.setBackground(new Color(250, 250, 250));
 		panel_1.setForeground(new Color(64, 0, 64));
 		panel_1.setPreferredSize(new Dimension(700, 250));
 		panel.add(panel_1);
 		panel_1.setLayout(null);
 		
-		JLabel lblPhim_1 = new JLabel("Spirited Away – Vùng đất linh hồn");
+		JLabel lblPhim_1 = new JLabel(tenPhim);
 		lblPhim_1.setFont(new Font("Tahoma", Font.BOLD, 24));
 		lblPhim_1.setBounds(20, 22, 431, 40);
 		panel_1.add(lblPhim_1);
 		
-		JLabel lblXC_1_1 = new JLabel("17:15");
-		lblXC_1_1.setOpaque(true);
-		lblXC_1_1.setBackground(new Color(0, 255, 128));
-		lblXC_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblXC_1_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXC_1_1.setBounds(30, 97, 77, 33);
-		panel_1.add(lblXC_1_1);
+		int arr[] = new int[] {30, 156, 277, 396, 513};
 		
-		JLabel lblXC_1_2 = new JLabel("18:15");
-		lblXC_1_2.setOpaque(true);
-		lblXC_1_2.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXC_1_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblXC_1_2.setBackground(new Color(0, 255, 128));
-		lblXC_1_2.setBounds(156, 97, 77, 33);
-		panel_1.add(lblXC_1_2);
-		
-		JLabel lblXC_1_3 = new JLabel("19:20");
-		lblXC_1_3.setOpaque(true);
-		lblXC_1_3.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXC_1_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblXC_1_3.setBackground(new Color(0, 255, 128));
-		lblXC_1_3.setBounds(277, 97, 77, 33);
-		panel_1.add(lblXC_1_3);
-		
-		JLabel lblXC_1_4 = new JLabel("20:20");
-		lblXC_1_4.setOpaque(true);
-		lblXC_1_4.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXC_1_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblXC_1_4.setBackground(new Color(0, 255, 128));
-		lblXC_1_4.setBounds(396, 97, 77, 33);
-		panel_1.add(lblXC_1_4);
-		
-		JLabel lblXC_1_5 = new JLabel("21:25");
-		lblXC_1_5.setOpaque(true);
-		lblXC_1_5.setHorizontalAlignment(SwingConstants.CENTER);
-		lblXC_1_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblXC_1_5.setBackground(new Color(0, 255, 128));
-		lblXC_1_5.setBounds(513, 97, 77, 33);
-		panel_1.add(lblXC_1_5);
+		int i = 0;
+		for (LocalTime localTime : gioChieu) {
+			JLabel lblXC_1_1 = new JLabel(localTime.toString());
+			lblXC_1_1.setOpaque(true);
+			lblXC_1_1.setBackground(new Color(0, 255, 128));
+			lblXC_1_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+			lblXC_1_1.setHorizontalAlignment(SwingConstants.CENTER);
+			lblXC_1_1.setBounds(arr[i], 97, 77, 33);
+			panel_1.add(lblXC_1_1);
+			i++;
+		}
 	}
 	
 	
@@ -1196,16 +1254,76 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panel_form.setVisible(false);
 	}
 	
+	public ArrayList<Phim> getDsPhimSC() {
+		ArrayList<Phim> dsPhim = listPhims;
+		ArrayList<Phim> dsP = new ArrayList<>();
+//		dsP.add(listSuatChieus.get(0).getPhim());
+		for (SuatChieu suatChieu : listSuatChieus) {
+			System.out.println("size: " + dsP.size());
+			for (Phim phim : dsPhim) {
+				if(phim.equals(suatChieu.getPhim())) {
+					dsP.add(phim);
+					dsPhim.remove(phim);
+					break;
+				}
+			}
+		}
+		return dsP;
+	}
+	
+	public ArrayList<LocalTime> getDsGioChieu(Phim phim, LocalDate ngayChieu) {
+		ArrayList<LocalTime> n = new ArrayList<>();
+		
+		int i = 0;
+		for (SuatChieu suatChieu : listSuatChieus) {
+			if(suatChieu.getPhim().equals(phim) && suatChieu.getNgayChieu().format(dtf).equals(ngayChieu.format(dtf))) {
+				n.add(suatChieu.getGioChieu());
+			}
+		}
+		
+		return n;
+	}
+	
+	public ArrayList<LocalDate> getDsNgayChieu(Phim phim) {
+		ArrayList<LocalDate> n = new ArrayList<>();
+		
+		
+		for (SuatChieu suatChieu : listSuatChieus) {
+			int i = 0;
+			if(suatChieu.getPhim().equals(phim)) {
+				for (LocalDate localDate : n) {
+					if(suatChieu.getNgayChieu().format(dtf).equals(localDate.format(dtf))) i++;
+				}
+				if(i == 0) n.add(suatChieu.getNgayChieu());
+			}
+		}
+		
+		return n;
+	}
+	
 	
 	//Sự kiện click chuột jtabel
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int i_row = table_VePhim.getSelectedRow();
-		textFieldMaSC.setText(model.getValueAt(i_row, 0) + "");
-		textFieldNgayChieu.setText(model.getValueAt(i_row, 1) + "");
-		textFieldThoiGian.setText(model.getValueAt(i_row, 2) + "");
-		textFieldPhim.setText(model.getValueAt(i_row, 3) + "");
-		comboBoxPhongChieu.setSelectedItem(model.getValueAt(i_row, 4));
+		Object ac = e.getSource();
+		if(ac.equals(panelDay_1)) {
+			scrollPane.setViewportView(panel);
+		}else if(ac.equals(panelDay_2)) {
+			scrollPane.setViewportView(panel1);
+		}else if(ac.equals(panelDay_3)) {
+			scrollPane.setViewportView(panel2);
+		}else if(ac.equals(panelDay_4)) {
+			scrollPane.setViewportView(panel3);
+		}else if(ac.equals(panelDay_5)) {
+			scrollPane.setViewportView(panel4);
+		}else {
+			int i_row = table_VePhim.getSelectedRow();
+			textFieldMaSC.setText(model.getValueAt(i_row, 0) + "");
+			textFieldNgayChieu.setText(model.getValueAt(i_row, 1) + "");
+			textFieldThoiGian.setText(model.getValueAt(i_row, 2) + "");
+			textFieldPhim.setText(model.getValueAt(i_row, 3) + "");
+			comboBoxPhongChieu.setSelectedItem(model.getValueAt(i_row, 4));
+		}
 		
 	}
 
