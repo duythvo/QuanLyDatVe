@@ -55,15 +55,15 @@ public class SuatChieu_DAO {
 	 *@return Về 1 đối tượng suất chiếu hoặc null
 	 * 
 	 */
-	public SuatChieu getSuatChieuBangMa(String maSuatChieu) {
+	public SuatChieu getSuatChieuBangMa(String tenPhim) {
         SuatChieu suatchieu = null;
         try {
             ConnectDB.getInstance();
             Connection conn = ConnectDB.getConnection();
 
-            String sql = "Select * from SuatChieu where MaSuatChieu = ?";
+            String sql = "Select * from Phim p JOIN SuatChieu s ON p.MaPhim = s.MaPhim where TenPhim = " + tenPhim;
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, maSuatChieu);
+            statement.setString(1, tenPhim);
             ResultSet rs = statement.executeQuery();
 
             if (!rs.next())
@@ -87,7 +87,7 @@ public class SuatChieu_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-            String sql = "insert into dbo.Phim (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)"
+            String sql = "insert into dbo.SuatChieu (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)"
                     + " values (?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, suatChieu.getMaSuatChieu());
@@ -112,6 +112,37 @@ public class SuatChieu_DAO {
 	}
 	
 	/**
+	 *<B>Note:</B> Xoá Suất Chiếu
+	 *@param 
+	 *@param 
+	 *@return 
+	 * 
+	 */
+	public boolean xoaSuatChieu(String maSuatChieu) {
+		ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement stmt = null;
+		int n = 0;
+		try {
+            String sql = "DELETE SuatChieu WHERE MaSuatChieu = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, maSuatChieu);
+            n = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+ 		        if (stmt != null) {
+ 		            stmt.close();
+ 		        }
+ 		    } catch (SQLException e) {
+ 		        e.printStackTrace();
+ 		    }
+        }
+        return n > 0;
+	}
+	
+	/**
 	 *<B>Note:</B> Cập nhật Suất Chiếu
 	 *@author Khoa
 	 *@param 
@@ -119,9 +150,8 @@ public class SuatChieu_DAO {
 	 *@return 
 	 * 
 	 */
-	public boolean capNhatSuatChieu(String maPhim, String tenPhim) {
-		int n = 0;
-
-        return n > 0;
+	public void capNhatSuatChieu(SuatChieu suatChieu) {
+		xoaSuatChieu(suatChieu.getMaSuatChieu());
+		themSuatChieu(suatChieu);
 	}
 }
