@@ -8,19 +8,19 @@ use DatVe
 go
 
 create table NhanVien(
-	MaNV nvarchar(20) PRIMARY KEY,
-	TenNV NVARCHAR(100) NOT NULL,
+	MaNV nvarchar(20) not null PRIMARY KEY,
+	TenNV NVARCHAR(20) NOT NULL,
 	MatKhau nvarchar(20) not null,
 	NgaySinh DATETIME NOT NULL,
 	SDT nvarchar(12) not null,
-	CCCD VARCHAR(50) NOT NULL,	
+	CCCD VARCHAR(15) NOT NULL,	
 )
 go
 
 create table PhongChieu(
-	MaPhongChieu nvarchar(20) primary key,
+	MaPhongChieu nvarchar(20) not null primary key,
 	TenPhongChieu nvarchar(20) not null,
-	ViTri nvarchar(50) not  null,
+	ViTri nvarchar(30) not  null,
 	SucChua int not null
 )
 go
@@ -33,25 +33,25 @@ create table LoaiGhe(
 go
 
 create table LoaiPhim(
-	MaLoaiPhim nvarchar(20) primary key,
+	MaLoaiPhim nvarchar(20) not null primary key,
 	TenLoaiPhim nvarchar(20) not null,
 )
 go
 
 create table Phim(
-	MaPhim nvarchar(20) primary key,
+	MaPhim nvarchar(20) not null primary key,
 	TenPhim nvarchar(50) not null,
 	DaoDien nvarchar(30) not null,
 	QuocGia nvarchar(30) not null,
 	ThoiLuongPhim int not null,
 	LinkPhim nvarchar(100),
-	MaLoaiPhim nvarchar(20),
-	FOREIGN KEY (MaLoaiPhim) REFERENCES LoaiPhim(MaLoaiPhim)
+	MaLoaiPhim nvarchar(20) not null,
+	FOREIGN KEY (MaLoaiPhim) REFERENCES LoaiPhi m(MaLoaiPhim)
 )
 go
 
 create table SuatChieu(
-	MaSuatChieu nvarchar(20) primary key,
+	MaSuatChieu nvarchar(20) not null primary key,
 	NgayChieu date,
 	GioChieu datetime,
 	MaPhim nvarchar(20) REFERENCES Phim(MaPhim) ON DELETE SET NULL,
@@ -60,7 +60,7 @@ create table SuatChieu(
 go
 
 CREATE TABLE HoaDon (
-    MaHD NVARCHAR(20) PRIMARY KEY,
+    MaHD NVARCHAR(20) not null PRIMARY KEY,
     MaNV NVARCHAR(20) REFERENCES NhanVien(MaNV) ON DELETE SET NULL,
     -- 0. đã đặt | 1. đã nhận | 2. đã thanh toán
     TrangThai INT,
@@ -71,7 +71,7 @@ CREATE TABLE HoaDon (
 go
 
 CREATE TABLE Ve(
-	MaVe nvarchar(20) primary key,
+	MaVe nvarchar(20) not null primary key,
 	MaSuatChieu nvarchar(20) REFERENCES SuatChieu(MaSuatChieu) ON DELETE SET NULL,
 )
 go
@@ -100,7 +100,7 @@ go
 --    FOREIGN KEY (MaLoaiGhe) REFERENCES LoaiGhe(MaLoaiGhe)
 --)
 CREATE TABLE Ghe (
-	MaGhe nvarchar(20) primary key,
+	MaGhe nvarchar(20) not null primary key,
 	MaPhongChieu nvarchar(20),
 	MaLoaiGhe int,
 	FOREIGN KEY (MaPhongChieu) REFERENCES PhongChieu(MaPhongChieu),
