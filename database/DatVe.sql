@@ -1,4 +1,4 @@
-﻿﻿﻿use master
+﻿﻿use master
 go
 
 create database DatVe
@@ -8,19 +8,19 @@ use DatVe
 go
 
 create table NhanVien(
-	MaNV nvarchar(20) PRIMARY KEY,
-	TenNV NVARCHAR(100) NOT NULL,
+	MaNV nvarchar(20) not null PRIMARY KEY,
+	TenNV NVARCHAR(20) NOT NULL,
 	MatKhau nvarchar(20) not null,
 	NgaySinh DATETIME NOT NULL,
 	SDT nvarchar(12) not null,
-	CCCD VARCHAR(50) NOT NULL,	
+	CCCD VARCHAR(15) NOT NULL,	
 )
 go
 
 create table PhongChieu(
-	MaPhongChieu nvarchar(20) primary key,
+	MaPhongChieu nvarchar(20) not null primary key,
 	TenPhongChieu nvarchar(20) not null,
-	ViTri nvarchar(50) not  null,
+	ViTri nvarchar(30) not  null,
 	SucChua int not null
 )
 go
@@ -33,25 +33,25 @@ create table LoaiGhe(
 go
 
 create table LoaiPhim(
-	MaLoaiPhim nvarchar(20) primary key,
+	MaLoaiPhim nvarchar(20) not null primary key,
 	TenLoaiPhim nvarchar(20) not null,
 )
 go
 
 create table Phim(
-	MaPhim nvarchar(20) primary key,
+	MaPhim nvarchar(20) not null primary key,
 	TenPhim nvarchar(50) not null,
 	DaoDien nvarchar(30) not null,
 	QuocGia nvarchar(30) not null,
 	ThoiLuongPhim int not null,
 	LinkPhim nvarchar(100),
-	MaLoaiPhim nvarchar(20),
-	FOREIGN KEY (MaLoaiPhim) REFERENCES LoaiPhim(MaLoaiPhim)
+	MaLoaiPhim nvarchar(20) not null,
+	FOREIGN KEY (MaLoaiPhim) REFERENCES LoaiPhim (MaLoaiPhim)
 )
 go
 
 create table SuatChieu(
-	MaSuatChieu nvarchar(20) primary key,
+	MaSuatChieu nvarchar(20) not null primary key,
 	NgayChieu date,
 	GioChieu datetime,
 	MaPhim nvarchar(20) REFERENCES Phim(MaPhim) ON DELETE SET NULL,
@@ -60,7 +60,7 @@ create table SuatChieu(
 go
 
 CREATE TABLE HoaDon (
-    MaHD NVARCHAR(20) PRIMARY KEY,
+    MaHD NVARCHAR(20) not null PRIMARY KEY,
     MaNV NVARCHAR(20) REFERENCES NhanVien(MaNV) ON DELETE SET NULL,
     -- 0. đã đặt | 1. đã nhận | 2. đã thanh toán
     TrangThai INT,
@@ -71,7 +71,7 @@ CREATE TABLE HoaDon (
 go
 
 CREATE TABLE Ve(
-	MaVe nvarchar(20) primary key,
+	MaVe nvarchar(20) not null primary key,
 	MaSuatChieu nvarchar(20) REFERENCES SuatChieu(MaSuatChieu) ON DELETE SET NULL,
 )
 go
@@ -82,7 +82,7 @@ CREATE TABLE ChiTietVe(
     PRIMARY KEY (MaVe, MaHD),
     FOREIGN KEY (MaVe) REFERENCES Ve(MaVe),
     FOREIGN KEY (MaHD) REFERENCES HoaDon(MaHD),
-	SoLuongVe INT,
+	SoLuongGhe INT,
     NgayGioDat DATETIME
 )
 go
@@ -100,7 +100,7 @@ go
 --    FOREIGN KEY (MaLoaiGhe) REFERENCES LoaiGhe(MaLoaiGhe)
 --)
 CREATE TABLE Ghe (
-	MaGhe nvarchar(20) primary key,
+	MaGhe nvarchar(20) not null primary key,
 	MaPhongChieu nvarchar(20),
 	MaLoaiGhe int,
 	FOREIGN KEY (MaPhongChieu) REFERENCES PhongChieu(MaPhongChieu),
@@ -118,7 +118,6 @@ CREATE TABLE TrangThaiGhe(
 	FOREIGN KEY (MaVe) REFERENCES Ve(MaVe),
 	trangthai bit default 0,
 )
-
 INSERT INTO NhanVien (MaNV, TenNV, MatKhau, NgaySinh, SDT, CCCD)
 VALUES 
     ('NV01', N'Nguyễn Văn A', 'NV01', '1990-01-01', '0123456789', '1234567890'),
@@ -163,7 +162,7 @@ VALUES
     ('V01', 'SC01'),
     ('V02', 'SC02');
 
-INSERT INTO ChiTietVe (MaVe, MaHD, SoLuongVe, NgayGioDat)
+INSERT INTO ChiTietVe (MaVe, MaHD, SoLuongGhe, NgayGioDat)
 VALUES 
     ('V01', 'HD01', 2, '2024-04-29 15:00:00'),
     ('V02', 'HD02', 3, '2024-04-30 10:00:00');
@@ -219,7 +218,6 @@ VALUES
     ('D2.1', 'PC02', 2),
     ('D2.2', 'PC02', 2),
 	('D2.3', 'PC02', 2);
-
 INSERT INTO TrangThaiGhe (MaGhe,MaSuatChieu)
 values
 	('A1.1', 'SC01'),
@@ -247,30 +245,30 @@ values
     ('D1.2', 'SC01'),
 	('D1.3', 'SC01'),
 
-	('A1.1', 'SC02'),
-    ('A1.2', 'SC02'),
-    ('A1.3', 'SC02'),
-	('A1.4', 'SC02'),
-    ('A1.5', 'SC02'),
-    ('A1.6', 'SC02'),
-	('A1.7', 'SC02'),
-    ('B1.1', 'SC02'),
-    ('B1.2', 'SC02'),
-    ('B1.3', 'SC02'),
-	('B1.4', 'SC02'),
-    ('B1.5', 'SC02'),
-    ('B1.6', 'SC02'),
-	('B1.7', 'SC02'),
-	('C1.1', 'SC02'),
-    ('C1.2', 'SC02'),
-    ('C1.3', 'SC02'),
-	('C1.4', 'SC02'),
-    ('C1.5', 'SC02'),
-    ('C1.6', 'SC02'),
-	('C1.7', 'SC02'),
-    ('D1.1', 'SC02'),
-    ('D1.2', 'SC02'),
-	('D1.3', 'SC02'),
+	('A2.1', 'SC02'),
+    ('A2.2', 'SC02'),
+    ('A2.3', 'SC02'),
+	('A2.4', 'SC02'),
+    ('A2.5', 'SC02'),
+    ('A2.6', 'SC02'),
+	('A2.7', 'SC02'),
+    ('B2.1', 'SC02'),
+    ('B2.2', 'SC02'),
+    ('B2.3', 'SC02'),
+	('B2.4', 'SC02'),
+    ('B2.5', 'SC02'),
+    ('B2.6', 'SC02'),
+	('B2.7', 'SC02'),
+	('C2.1', 'SC02'),
+    ('C2.2', 'SC02'),
+    ('C2.3', 'SC02'),
+	('C2.4', 'SC02'),
+    ('C2.5', 'SC02'),
+    ('C2.6', 'SC02'),
+	('C2.7', 'SC02'),
+    ('D2.1', 'SC02'),
+    ('D2.2', 'SC02'),
+	('D2.3', 'SC02'),
 
 	('A1.1', 'SC03'),
     ('A1.2', 'SC03'),
@@ -296,6 +294,3 @@ values
     ('D1.1', 'SC03'),
     ('D1.2', 'SC03'),
 	('D1.3', 'SC03');
-
-
-	

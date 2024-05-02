@@ -16,9 +16,9 @@ import java.time.LocalDate;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JComponent;
+// import javax.swing.JComponent;
 
-public class GUI_XuatChieu extends JPanel {
+public class GUI_SuatChieu extends JPanel {
 	private JTextField textField;
 	private JTextField textFieldNgayChieu;
 	private JTextField textFieldPhim;
@@ -96,7 +96,7 @@ public class GUI_XuatChieu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GUI_XuatChieu() {
+	public GUI_SuatChieu() {
 		setSize(1380, 900);
 		setBackground(new Color(24, 28, 44));
 		setLayout(null);
@@ -104,7 +104,7 @@ public class GUI_XuatChieu extends JPanel {
 		lblNewLabel = new JLabel(" XUẤT CHIẾU");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setIcon(new ImageIcon(GUI_XuatChieu.class.getResource("/img/blank-calendar--blank-calendar-date-day-month-empty.png")));
+		lblNewLabel.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/blank-calendar--blank-calendar-date-day-month-empty.png")));
 		lblNewLabel.setBounds(575, 25, 183, 41);
 		add(lblNewLabel);
 		
@@ -569,13 +569,13 @@ public class GUI_XuatChieu extends JPanel {
 		
 		btnDate = new JButton("");
 		btnDate.setBackground(new Color(102, 51, 150));
-		btnDate.setIcon(new ImageIcon(GUI_XuatChieu.class.getResource("/img/icons8-date-26.png")));
+		btnDate.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/icons8-date-26.png")));
 		btnDate.setBounds(349, 133, 28, 28);
 		panel_form.add(btnDate);
 		
 		btnTime = new JButton("");
 		btnTime.setBackground(new Color(102, 51, 150));
-		btnTime.setIcon(new ImageIcon(GUI_XuatChieu.class.getResource("/img/icons8-time-26.png")));
+		btnTime.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/icons8-time-26.png")));
 		btnTime.setBounds(349, 206, 28, 28);
 		panel_form.add(btnTime);
 		
@@ -598,7 +598,7 @@ public class GUI_XuatChieu extends JPanel {
 		
 		btnNewButton = new JButton("");
 		btnNewButton.setBackground(new Color(102, 51, 120));
-		btnNewButton.setIcon(new ImageIcon(GUI_XuatChieu.class.getResource("/img/icons8-find-30.png")));
+		btnNewButton.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/icons8-find-30.png")));
 		btnNewButton.setBounds(352, 40, 34, 34);
 		panel_find.add(btnNewButton);
 	}

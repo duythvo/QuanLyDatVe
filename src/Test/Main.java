@@ -1,16 +1,8 @@
 package Test;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 
-import DAO.LoaiPhim_DAO;
-import DAO.Phim_DAO;
-import DAO.SuatChieu_DAO;
+import View.GUI_Login;
 import View.GUI_SplashScreen;
-import connectDB.ConnectDB;
-import entity.LoaiPhim;
-import entity.Phim;
-import entity.SuatChieu;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,6 +15,7 @@ public class Main {
                 if(i==100){
                     Thread.sleep(1000);
                     sc.dispose();
+                    new GUI_Login();
                 }
                 
             }

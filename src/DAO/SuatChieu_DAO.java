@@ -116,7 +116,7 @@ public class SuatChieu_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-            String sql = "insert into dbo.Phim (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)"
+            String sql = "insert into dbo.SuatChieu (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)"
                     + " values (?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, suatChieu.getMaSuatChieu());

@@ -3,12 +3,25 @@ package View;
 import javax.swing.JPanel;
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JTextField;
-import javax.swing.JButton;
 
-public class GUI_Login extends JPanel {
+import Controller.controlLogin;
+import DAO.NhanVien_DAO;
+import connectDB.ConnectDB;
+import entity.NhanVien;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class GUI_Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
@@ -18,14 +31,33 @@ public class GUI_Login extends JPanel {
 	private JLabel lblNewLabel_2;
 	private JLabel lblNewLabel_2_1;
 	private JButton btnNewButton;
+	private NhanVien nhanVienLogIn;
+	NhanVien_DAO nhanVien_DAO = new NhanVien_DAO();
+	ArrayList<NhanVien> liNhanViens;
 
 	/**
 	 * Create the panel.
 	 */
+
 	public GUI_Login() {
-		setBackground(new Color(24, 28, 44));
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		liNhanViens = nhanVien_DAO.getDSNhanVien();
+		
+		setTitle("Đăng nhập");
+		setSize(400, 630);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+//		setBackground(new Color(24, 28, 44));
+		getContentPane().setBackground(new Color(24, 28, 44));
 		setLayout(null);
 		
+
+
 		lblNewLabel = new JLabel("Đăng Nhập");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
@@ -46,6 +78,8 @@ public class GUI_Login extends JPanel {
 		textField = new JTextField();
 		textField.setBackground(new Color(102, 51, 153));
 		textField.setBounds(44, 181, 318, 37);
+		textField.setForeground(Color.white);
+		textField.setCaretColor(Color.WHITE);
 		add(textField);
 		textField.setColumns(10);
 		
@@ -58,13 +92,40 @@ public class GUI_Login extends JPanel {
 		textField_1 = new JTextField();
 		textField_1.setColumns(10);
 		textField_1.setBackground(new Color(102, 51, 153));
+		textField_1.setForeground(Color.white);
+		textField_1.setCaretColor(Color.WHITE);
 		textField_1.setBounds(44, 289, 318, 37);
 		add(textField_1);
 		
+		ActionListener ac = new controlLogin(this);
+		
 		btnNewButton = new JButton("Đăng nhập");
-		btnNewButton.setBackground(new Color(255, 165, 0));
+btnNewButton.setBackground(new Color(255, 165, 0));
 		btnNewButton.setBounds(266, 400, 96, 37);
+		btnNewButton.addActionListener(ac);
 		add(btnNewButton);
 
+		
+		setUndecorated(true);
+		setVisible(true);
+		
 	}
+	public boolean checkUser() {
+		//Nguuyễn Văn A NV01
+		
+		for (NhanVien nhanVien : liNhanViens) {
+			if(textField.getText().equals(nhanVien.getMaNV()) && textField_1.getText().equals(nhanVien.getMatKhau())) {
+				nhanVienLogIn = new NhanVien(nhanVien.getMaNV());
+				return true;
+			}
+		}
+		JOptionPane.showMessageDialog(this, "Sai tài khoản hoặc mật khẩu!");
+		return false;
+		
+	}
+	public NhanVien getLogNhanVien() {
+		return nhanVienLogIn;
+	}
+
+	
 }

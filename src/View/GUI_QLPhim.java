@@ -3,44 +3,55 @@ package View;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import java.io.File;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.border.TitledBorder;
+// import javax.swing.ScrollPaneConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-public class GUI_QLPhim extends JPanel implements ActionListener{
+import DAO.LoaiPhim_DAO;
+import DAO.Phim_DAO;
+import connectDB.ConnectDB;
+import entity.LoaiPhim;
+import entity.Phim;
+
+public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 	
 	private JTextField jtfMa;
 	private JTextField jtfTen;
 	private JTextField jtfThoiLuong;
 	private JTextField jtfQuocGia;
-	private JTextField jtfNgayKC;
-	private JTextField jtfNgayKT;
+	private JTextField jtfDaoDien;
 	private JButton btnImg;
-	private JCheckBox[] cbCate;
-	private JLabel[] jlbType;
 	private JButton btnAdd;
 	private JButton btnReset;
 	private JButton btnFix;
 	private JButton btnDelete;
-	private JTable jTable;
 	private JLabel jlbImg;
     private JLabel jlbMa;
     private JLabel jlbTen;
@@ -53,32 +64,38 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 	private Box a5;
 	private Box a6;
     private JLabel jlbQuocGia;
-	private JLabel jlbNgayKC;
-	private JLabel jlbNgayKT;
-    private JLabel jlbCate;
+	private JLabel jlbDaoDien;
+	private JLabel jlbCate;
 	private FlowLayout fl;
 	private JPanel jplCate;
 	private Box C;
 	private Box c1;
-    private Box c2;
-	private Box c3;
-    private Box c4;
-    private Box c5;
-	private Box c6;
-    private Box c7;
-	private Box c8;
 	private JPanel jPanel;
 	private JPanel jplForm;
     private Box btn;
     private JPanel empty1;
 	private Box ct;
-    private JScrollPane jScrollPane;
+	private DefaultTableModel model;
+	private JTable table_Phim;
+	private JScrollPane sc;
+	private JComboBox<String> jcbType;
+	private ArrayList<Phim> dsPhim;
+	private ArrayList<LoaiPhim> dsLoaiPhim;
+	private JLabel jlbLinkPhim;
+	private JTextField jtfLinkPhim;
+	private JButton btnSearch;
 
 	public GUI_QLPhim() {
-		this.setBackground(new Color(24, 28, 44));
+		this.setBackground(new Color(25, 28, 44));
 		this.setLayout(null);
 		setSize(1350,900);
 		
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 		
 		A = Box.createVerticalBox();
 		
@@ -89,15 +106,27 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 		a5 = Box.createVerticalBox();
 		a6 = Box.createVerticalBox();
 		
+		//Label Mã
 		jlbMa = new JLabel("Mã phim:");
+		jlbMa.setForeground(Color.WHITE);
+		jlbMa.setFont(new Font("Arial", Font.BOLD, 16));	
 		jtfMa = new JTextField();
 		jtfMa.setSize(230,30);
+
+		//Label Tên
 		jlbTen = new JLabel("Tên phim:");
 		jtfTen = new JTextField();
+		jlbTen.setForeground(Color.WHITE);
+		jlbTen.setFont(new Font("Arial", Font.BOLD, 16));
 		jtfTen.setSize(230,30);
+
+		//Label Thời lượng
 		jlbThoiLuong = new JLabel("Thời lượng:");
 		jtfThoiLuong = new JTextField();
+		jlbThoiLuong.setForeground(Color.WHITE);
+		jlbThoiLuong.setFont(new Font("Arial", Font.BOLD, 16));
 		jtfThoiLuong.setSize(230,30);
+		
 		
 		a1.add(jlbMa);
 		a1.add(Box.createVerticalStrut(45));
@@ -109,54 +138,86 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 		a2.add(jtfMa);
 		a2.add(Box.createVerticalStrut(30));
 		a2.add(jtfTen);
-		a2.add(Box.createVerticalStrut(30));
+		//a2.add(Box.createVerticalStrut(30));
+		a2.add(Box.createVerticalStrut(45));
 		a2.add(jtfThoiLuong);
 		a2.add(Box.createVerticalStrut(30));
 		a3.add(a1);
 		a3.add(Box.createHorizontalStrut(15));
 		a3.add(a2);
 		
+		//Label Quốc gia
 		jlbQuocGia = new JLabel("Quốc gia:");
+		jlbQuocGia.setForeground(Color.WHITE);
+		jlbQuocGia.setFont(new Font("Arial", Font.BOLD, 16));
 		jtfQuocGia = new JTextField();
 		jtfQuocGia.setSize(230,30);
-		jlbNgayKC = new JLabel("Ngày Khởi chiếu:");
-		jtfNgayKC = new JTextField();
-		jtfNgayKC.setSize(230, 30);
-		jlbNgayKT = new JLabel("Ngày kết thúc:");
-		jtfNgayKT = new JTextField();
-		jtfNgayKT.setSize(230,30);
+
+		//Label Đao diễn
+		jlbDaoDien = new JLabel("Đạo diễn:");
+		jlbDaoDien.setForeground(Color.WHITE);
+		jlbDaoDien.setFont(new Font("Arial", Font.BOLD, 16));
+		jtfDaoDien = new JTextField();
+		jtfDaoDien.setSize(230, 30);
+
+
+		//Label Link Phim
+		jlbLinkPhim = new JLabel("Link Phim:");
+		jlbLinkPhim.setForeground(Color.WHITE);
+		jlbLinkPhim.setFont(new Font("Arial", Font.BOLD, 16));
+		jtfLinkPhim = new JTextField();
+		jtfLinkPhim.setSize(230, 30);
+
+
+		// jlbNgayKT = new JLabel("Ngày kết thúc:");
+		// jtfNgayKT = new JTextField();
+		// jtfNgayKT.setSize(230,30);
+		//a4.add(Box.createVerticalStrut(30));
 		
+		a4.add(Box.createVerticalStrut(30));
 		a4.add(jlbQuocGia);
 		a4.add(Box.createVerticalStrut(45));
-		a4.add(jlbNgayKC);
+		a4.add(jlbDaoDien);
 		a4.add(Box.createVerticalStrut(45));
-		a4.add(jlbNgayKT);
+		a4.add(jlbLinkPhim);
 		a4.add(Box.createVerticalStrut(5));
+		a4.add(Box.createVerticalStrut(30));
+
 		a5.add(Box.createVerticalStrut(30));
 		a5.add(jtfQuocGia);
 		a5.add(Box.createVerticalStrut(30));
-		a5.add(jtfNgayKC);
+		a5.add(jtfDaoDien);
 		a5.add(Box.createVerticalStrut(30));
-		a5.add(jtfNgayKT);
+		a5.add(jtfLinkPhim);
 		a5.add(Box.createVerticalStrut(30));
-		a3.add(Box.createHorizontalStrut(80));
+		a3.add(Box.createHorizontalStrut(20));
 		a3.add(a4);
 		a3.add(Box.createHorizontalStrut(15));
 		a3.add(a5);
+
+		
+		
+		
+		
+		
 		
 		jlbImg = new JLabel();
-		jlbImg.setSize(125,150);
-		jlbImg.setMaximumSize(new Dimension(130, 150));
+		jlbImg.setForeground(Color.WHITE);
+		jlbImg.setFont(new Font("Arial", Font.BOLD, 20));
+		// jlbImg.setSize(181,217);
+		// jlbImg.setMaximumSize(new Dimension(125, 150));
+		jlbImg.setPreferredSize(new Dimension(150, 150));
 		jlbImg.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		jlbImg.setBackground(Color.CYAN);
+		jlbImg.setBackground(Color.WHITE);
 		btnImg = new JButton("Chọn ảnh");
+		btnImg.setBackground(new Color(255, 165, 0));
 		btnImg.addActionListener(this);
 		
 		a6.add(Box.createVerticalStrut(20));
 		a6.add(jlbImg);
 		a6.add(Box.createVerticalStrut(15));
 		a6.add(btnImg);
-		a3.add(Box.createHorizontalStrut(20));
+		a3.add(Box.createHorizontalStrut(60));
 		a3.add(a6);
 		
 		jlbCate = new JLabel("Thể loại");
@@ -166,82 +227,72 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 		jplCate.setLayout(fl);
 		C = Box.createVerticalBox();
 		c1 = Box.createHorizontalBox();
-		c2 = Box.createHorizontalBox();
-		c3 = Box.createHorizontalBox();
-		c4 = Box.createHorizontalBox();
-		c5 = Box.createHorizontalBox();
-		c6 = Box.createHorizontalBox();
-		c7 = Box.createHorizontalBox();
-		c8 = Box.createHorizontalBox();
 		
 		
-		cbCate = new JCheckBox[8];
+
+		// lấy tên thể loại phim từ database
 		
-		String[] cate = new String[]{"Chính kịch", "Tình yêu" , "Kinh dị", "Hoạt hình", "Hài", "Sinh tồn", "Phiêu lưu", "Siêu anh hùng"};
-		jlbType = new JLabel[8];
+		LoaiPhim_DAO loaiPhim_DAO = new LoaiPhim_DAO();
+		dsLoaiPhim = loaiPhim_DAO.getDSLoaiPhim();
 		
-		jPanel = new JPanel(new GridLayout(4, 2));
-		for(int i = 0; i < 8; i++) {
-			cbCate[i] = new JCheckBox();
-			jlbType[i] = new JLabel(cate[i]);
+
+		String[] cate = new String[dsLoaiPhim.size()];
+		for(int i = 0; i < dsLoaiPhim.size(); i++) {
+			cate[i] = dsLoaiPhim.get(i).getTenLoaiPhim();
 		}
-		c1.add(Box.createHorizontalStrut(30));
-		c1.add(cbCate[0]);
-		c1.add(Box.createHorizontalStrut(5));
-		c1.add(jlbType[0]);
-		c2.add(Box.createHorizontalStrut(30));
-		c2.add(cbCate[1]);
-		c2.add(Box.createHorizontalStrut(5));
-		c2.add(jlbType[1]);
-		c3.add(Box.createHorizontalStrut(30));
-		c3.add(cbCate[2]);
-		c3.add(Box.createHorizontalStrut(5));
-		c3.add(jlbType[2]);
-		c4.add(Box.createHorizontalStrut(30));
-		c4.add(cbCate[3]);
-		c4.add(Box.createHorizontalStrut(5));
-		c4.add(jlbType[3]);
-		c5.add(Box.createHorizontalStrut(30));
-		c5.add(cbCate[4]);
-		c5.add(Box.createHorizontalStrut(5));
-		c5.add(jlbType[4]);
-		c6.add(Box.createHorizontalStrut(30));
-		c6.add(cbCate[5]);
-		c6.add(Box.createHorizontalStrut(5));
-		c6.add(jlbType[5]);
-		c7.add(Box.createHorizontalStrut(30));
-		c7.add(cbCate[6]);
-		c7.add(Box.createHorizontalStrut(5));
-		c7.add(jlbType[6]);
-		c8.add(Box.createHorizontalStrut(30));
-		c8.add(cbCate[7]);
-		c8.add(Box.createHorizontalStrut(5));
-		c8.add(jlbType[7]);
+		// tạo jcombobox để chọn thể loại phim
+		jcbType = new JComboBox<String>(cate);
+		jcbType.setSize(250,40);
+		jcbType.setBounds(200, 100, 250, 40);
+		//jcbType.setMaximumSize(new Dimension(230, 30));
+		jcbType.setBackground(new Color(32, 44, 92));
+		jcbType.setForeground(Color.WHITE);
+		jcbType.setFont(new Font("Arial", Font.BOLD, 16));
+		jcbType.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		jcbType.setSelectedIndex(0);
+		jcbType.addActionListener(this);
 		
-		jPanel.add(c1);
-		jPanel.add(c2);
-		jPanel.add(c3);
-		jPanel.add(c4);
-		jPanel.add(c5);
-		jPanel.add(c6);
-		jPanel.add(c7);
-		jPanel.add(c8);
+		
+		jPanel = new JPanel(new GridLayout(1, 1));
+		jPanel.setBackground(new Color(32, 44, 92));
+		
+		
+		c1.add(Box.createHorizontalStrut(100));
+		c1.add(jcbType);
+		
+		 jPanel.add(c1);
+
 		
 		jplCate.add(jPanel);
-		jplCate.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.CYAN), "Thể loại"));
+		TitledBorder titledBorder = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.WHITE), "Thể loại");
+		titledBorder.setTitleColor(Color.WHITE);
+		jplCate.setBorder(titledBorder);
+
 		jplCate.setSize(340,120);
 		jplCate.setMaximumSize(new Dimension(350, 120));
+		jplCate.setBackground(new Color(32, 44, 92));
 		
 		jplForm = new JPanel();
 		
 		btnAdd = new JButton("Thêm");
+		btnAdd.setBackground(new Color(255, 165, 0));
 		btnAdd.addActionListener(this);
+
 		btnReset = new JButton("Làm mới");
+		btnReset.setBackground(new Color(255, 165, 0));
 		btnReset.addActionListener(this);
+
 		btnFix = new JButton("Sửa");
+		btnFix.setBackground(new Color(255, 165, 0));
 		btnFix.addActionListener(this);
+
 		btnDelete = new JButton("Xoá");
+		btnDelete.setBackground(new Color(255, 165, 0));
 		btnDelete.addActionListener(this);
+
+		btnSearch = new JButton("Tìm kiếm");
+		btnSearch.setBackground(new Color(255, 165, 0));
+		btnSearch.addActionListener(this);
 		
 		btn = Box.createHorizontalBox();
 		btn.add(btnAdd);
@@ -251,6 +302,8 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 		btn.add(btnFix);
 		btn.add(Box.createHorizontalStrut(8));
 		btn.add(btnDelete);
+		btn.add(Box.createHorizontalStrut(8));
+		btn.add(btnSearch);
 		btn.add(Box.createHorizontalStrut(600));
 		
 		empty1 = new JPanel();
@@ -267,25 +320,39 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 		A.add(btn);
 		
 		jplForm.add(A);
-		jplForm.setSize(1000,400);
+		jplForm.setBounds(100, 40, 1180, 400);
+		jplForm.setPreferredSize(new Dimension(1180,300));
+		jplForm.setBackground(new Color(32, 44, 92));
+		//btn_Phim.setBackground(new Color(32, 44, 92));
+
+		model = new DefaultTableModel();
+		model.addColumn("Mã Phim");
+		model.addColumn("Tên Phim");
+		model.addColumn("Đạo Diễn");
+		model.addColumn("Quốc Gia");
+		model.addColumn("Thời lượng Phim");
+		model.addColumn("Loại Phim");
+		table_Phim = new JTable(model);
+		sc = new JScrollPane(table_Phim);
+		sc.setBounds(100, 480, 1180, 348);
+		table_Phim.getTableHeader().setBackground(new Color(102,51,153));
+		table_Phim.getTableHeader().setFont(new Font("Arial",Font.BOLD,20));
+		table_Phim.getTableHeader().setForeground(Color.WHITE);
+		table_Phim.addMouseListener(this);
+
+		add(sc);
+		sc.setPreferredSize(new Dimension(1180,300));
 		
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Mã Phim");
-		dtm.addColumn("Tên Phim");
-		dtm.addColumn("Thời Lượng");
-		dtm.addColumn("Quốc Gia");
-		dtm.addColumn("Ngày KC");
-		dtm.addColumn("Ngày KT");
-		jTable = new JTable(dtm);
-		jTable.setBackground(new Color(0, 0, 0));
-		
-		
-		jScrollPane = new JScrollPane(jTable);
-		jScrollPane.setPreferredSize(new Dimension(1000, 900));
-		jScrollPane.setBounds(0, 479, 1000, 352);
-		
+		Phim_DAO phim_DAO = new Phim_DAO();
+		dsPhim = phim_DAO.getDSPhim();
+		for (Phim phim : dsPhim) {
+			model.addRow(new Object[] {phim.getMaPhim(), phim.getTenPhim(), phim.getDaoDien(), phim.getQuocGia(), phim.getThoiLuongPhim(), phim.getLoaiPhim().getTenLoaiPhim()});
+		} 
+
 		this.add(jplForm);
-		this.add(jScrollPane);
+		this.add(sc);
+
+		ConnectDB.getInstance().disconnect();
 	}
 
 	@Override
@@ -293,32 +360,294 @@ public class GUI_QLPhim extends JPanel implements ActionListener{
 		Object ac = e.getSource();
 		
 		if(ac.equals(btnAdd)) {
-			
+			if(validData()) {
+				themPhim();
+			}
 		}else if(ac.equals(btnDelete)) {
-			
+			xoaPhim();
 		}else if(ac.equals(btnFix)) {
-			
+			suaPhim();
 		}else if(ac.equals(btnImg)) {
 			getImg();
 		}else if(ac.equals(btnReset)) {
-			
+			lamRong();
+		}else if(ac.equals(btnSearch)) {
+			timPhim();
+			// tìm kiếm phim
 		}
 		
 	}
-	
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		clickChonDong();
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void themPhim(){
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Phim_DAO phim_DAO = new Phim_DAO();
+		Phim phim = new Phim();
+		phim.setMaPhim(jtfMa.getText());
+		phim.setTenPhim(jtfTen.getText());
+		phim.setDaoDien(jtfDaoDien.getText());
+		phim.setQuocGia(jtfQuocGia.getText());
+		phim.setThoiLuongPhim(Integer.parseInt(jtfThoiLuong.getText()));
+		phim.setLinkPhim(jtfLinkPhim.getText());
+		phim.setLoaiPhim(dsLoaiPhim.get(jcbType.getSelectedIndex()));
+		if(phim_DAO.themPhim(phim)){
+			dsPhim.add(phim);
+			model.addRow(new Object[] {phim.getMaPhim(), phim.getTenPhim(), phim.getDaoDien(), phim.getQuocGia(), phim.getThoiLuongPhim(), phim.getLoaiPhim().getTenLoaiPhim()});
+			lamRong();
+			//System.out.println(dsLoaiPhim.get(jcbType.getSelectedIndex()));
+		}else{
+			JOptionPane.showMessageDialog(null, "Thêm phim thất bại");
+			//System.out.println(dsLoaiPhim.get(jcbType.getSelectedIndex()));
+		}
+		ConnectDB.getInstance().disconnect();
+	}
+
+	public boolean validData(){
+		if(jtfMa.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Mã phim không được để trống");
+			jtfMa.requestFocus();
+			return false;
+		}else{
+			if(!(jtfMa.getText().matches("^[A-Z]\\d{1,5}"))){
+				JOptionPane.showMessageDialog(null, "Mã phim không hợp lệ(1 Chữ cái đầu và 1-5 chữ số)");
+				jtfMa.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfTen.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Tên phim không được để trống");
+			jtfTen.requestFocus();
+			return false;
+		}else{
+			if(!(jtfTen.getText().matches("\\w{1,50}"))){
+				JOptionPane.showMessageDialog(null, "Tên phim không hợp lệ");
+				jtfTen.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfQuocGia.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Quốc gia không được để trống");
+			jtfQuocGia.requestFocus();
+			return false;
+		}else{
+			if(!(jtfQuocGia.getText().matches("\\w{1,50}"))){
+				JOptionPane.showMessageDialog(null, "Quốc gia không hợp lệ");
+				jtfQuocGia.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfDaoDien.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Đạo diễn không được để trống");
+			jtfDaoDien.requestFocus();
+			return false;
+		}else{
+			if(!(jtfDaoDien.getText().matches("\\w{1,50}"))){
+				JOptionPane.showMessageDialog(null, "Đạo diễn không hợp lệ");
+				jtfDaoDien.requestFocus();
+				return false;
+			}
+		}
+
+		if(jtfThoiLuong.getText().isEmpty()){
+			JOptionPane.showMessageDialog(null, "Thời lượng không được để trống");
+			jtfThoiLuong.requestFocus();
+			return false;
+		}else{
+			if(Integer.parseInt(jtfThoiLuong.getText()) <=0){
+				JOptionPane.showMessageDialog(null, "Thời lượng lớn hơn 0");
+				jtfThoiLuong.requestFocus();
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public void lamRong(){
+		jtfMa.setText("");
+		jtfTen.setText("");
+		jtfThoiLuong.setText("");
+		jtfQuocGia.setText("");
+		jtfDaoDien.setText("");
+		jtfLinkPhim.setText("");
+		jcbType.setSelectedIndex(0);
+		jlbImg.setIcon(null);
+		table_Phim.clearSelection();
+		jtfMa.requestFocus();
+	}
+
+	public void suaPhim(){
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Phim_DAO phim_DAO = new Phim_DAO();
+		int row = table_Phim.getSelectedRow();
+		if(row == -1){
+			JOptionPane.showMessageDialog(null, "Chọn dòng cần sửa");
+		}else{
+			Phim phim = new Phim();
+			phim.setMaPhim(jtfMa.getText());
+			phim.setTenPhim(jtfTen.getText());
+			phim.setDaoDien(jtfDaoDien.getText());
+			phim.setQuocGia(jtfQuocGia.getText());
+			phim.setThoiLuongPhim(Integer.parseInt(jtfThoiLuong.getText()));
+			phim.setLinkPhim(jtfLinkPhim.getText());
+			phim.setLoaiPhim(dsLoaiPhim.get(jcbType.getSelectedIndex()));
+			if(phim_DAO.suaPhim(phim)){
+				model.setValueAt(phim.getMaPhim(), row, 0);
+				model.setValueAt(phim.getTenPhim(), row, 1);
+				model.setValueAt(phim.getDaoDien(), row, 2);
+				model.setValueAt(phim.getQuocGia(), row, 3);
+				model.setValueAt(phim.getThoiLuongPhim(), row, 4);
+				model.setValueAt(phim.getLoaiPhim().getTenLoaiPhim(), row, 5);
+				JOptionPane.showMessageDialog(null, "Sửa thành công");
+			}else{
+				JOptionPane.showMessageDialog(null, "Sửa thất bại");
+			}
+		}
+		ConnectDB.getInstance().disconnect();
+	}
+
+	public void xoaPhim(){
+		try {
+			ConnectDB.getInstance().connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Phim_DAO phim_DAO = new Phim_DAO();
+		int row = table_Phim.getSelectedRow();
+		if(row == -1){
+			JOptionPane.showMessageDialog(null, "Chọn dòng cần xóa");
+		}else{
+			String maPhim = model.getValueAt(row, 0).toString();
+			if(phim_DAO.xoaPhim(maPhim)){
+				model.removeRow(row);
+				lamRong();
+				JOptionPane.showMessageDialog(null, "Xóa thành công");
+			}else{
+				JOptionPane.showMessageDialog(null, "Xóa thất bại");
+			}
+		}
+		ConnectDB.getInstance().disconnect();
+	}
+
+	public void clickChonDong(){
+		int row = table_Phim.getSelectedRow();
+		jtfMa.setText(model.getValueAt(row, 0).toString());
+		jtfTen.setText(model.getValueAt(row, 1).toString());
+		jtfDaoDien.setText(model.getValueAt(row, 2).toString());
+		jtfQuocGia.setText(model.getValueAt(row, 3).toString());
+		jtfThoiLuong.setText(model.getValueAt(row, 4).toString());
+		jtfLinkPhim.setText(dsPhim.get(row).getLinkPhim());
+		// xài cho bên kia chắc được
+		//jlbImg.setPreferredSize(new Dimension(125, 150));
+		jlbImg.setIcon(new ImageIcon(new ImageIcon(GUI_QLPhim.class.getResource(dsPhim.get(row).getLinkPhim())).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
+		jcbType.setSelectedItem(model.getValueAt(row, 5).toString());
+	}
+
 	public void getImg() {
 		File file;
 		JFileChooser c = new JFileChooser();
+		String chuoiFile = "";
 		
 		javax.swing.filechooser.FileFilter imgFilter = new FileNameExtensionFilter("Image files", ImageIO.getReaderFileSuffixes());
 		c.setFileFilter(imgFilter);
 		int rVal = c.showOpenDialog(new JPanel());
 		
 		if(rVal == JFileChooser.APPROVE_OPTION) {
+			//lấy file
 			file = c.getSelectedFile();
-//			System.out.println(file);
-			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.toString()).getImage().getScaledInstance(125, 150, Image.SCALE_DEFAULT));
+			chuoiFile = file.toString();
+			//lấy chuỗi từ src trở đi
+			//System.out.println(chuoiFile.substring(chuoiFile.indexOf("\\img")));
+			//chuoiFile.substring(chuoiFile.indexOf("\\img"));
+			//jlbImg.setPreferredSize(new Dimension(125, 150));
+			ImageIcon imageIcon = new ImageIcon(new ImageIcon(file.toString()).getImage()
+			.getScaledInstance(150, 150, Image.SCALE_DEFAULT));
 			jlbImg.setIcon(imageIcon);
+			
+			String chuoiDoi = chuoiFile.substring(chuoiFile.indexOf("\\img")).replace("\\", "/");
+			// revalidate();
+			jtfLinkPhim.setText(chuoiDoi);
 		}
+	}
+
+	public void timPhim() {
+		if (jtfTen.getText().isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Nhập tên phim cần tìm");
+		} else {
+			boolean found = false;
+			for (int i = 0; i < dsPhim.size(); i++) {
+				Phim phim = dsPhim.get(i);
+				if (phim.getTenPhim().toLowerCase().indexOf(jtfTen.getText().toLowerCase()) != -1) {
+					jtfMa.setText(phim.getMaPhim());
+					jtfTen.setText(phim.getTenPhim());
+					jtfDaoDien.setText(phim.getDaoDien());
+					jtfQuocGia.setText(phim.getQuocGia());
+					jtfThoiLuong.setText(String.valueOf(phim.getThoiLuongPhim()));
+					jtfLinkPhim.setText(phim.getLinkPhim());
+					jcbType.setSelectedItem(phim.getLoaiPhim().getTenLoaiPhim());
+					jlbImg.setIcon(new ImageIcon(new ImageIcon(GUI_QLPhim.class.getResource(phim.getLinkPhim())).getImage().getScaledInstance(150, 150, Image.SCALE_DEFAULT)));
+	
+					// Cuộn và bôi đen dòng tìm thấy trong JTable
+					table_Phim.setRowSelectionInterval(i, i);
+					Rectangle rect = table_Phim.getCellRect(i, 0, true);
+					table_Phim.scrollRectToVisible(rect);
+	
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				JOptionPane.showMessageDialog(null, "Không tìm thấy phim");
+			}
+		}
+	}
+
+	public ArrayList<Phim> getDSPhim() {
+		return dsPhim;
+	}
+
+	public ArrayList<LoaiPhim> getDSLoaiPhim() {
+		return dsLoaiPhim;
 	}
 }

@@ -5,6 +5,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import entity.NhanVien;
+
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -38,19 +41,7 @@ public class GUI_Main extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI_Main frame = new GUI_Main();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	public GUI_Main() {
+	public GUI_Main(NhanVien nv) {
 		//setExtendedState(MAXIMIZED_BOTH);
 		setSize(1600,900);
 		contentPane = new JPanel();
@@ -137,7 +128,7 @@ public class GUI_Main extends JFrame {
 		btn_SuatChieu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
-				GUI_XuatChieu viewXuatChieu = new GUI_XuatChieu();
+				GUI_SuatChieu viewXuatChieu = new GUI_SuatChieu();
 				panel.add(viewXuatChieu);
 				panel.repaint();
 				panel.revalidate();
@@ -350,7 +341,7 @@ public class GUI_Main extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
-				GUI_TaiKhoan viewTaiKhoan = new GUI_TaiKhoan();
+				GUI_TaiKhoan viewTaiKhoan = new GUI_TaiKhoan(nv);
 				panel.add(viewTaiKhoan);
 				panel.repaint();
 				panel.revalidate();
@@ -370,5 +361,8 @@ public class GUI_Main extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
+		GUI_Phim viewPhim = new GUI_Phim();
+		panel.add(viewPhim);
+		setVisible(true);
 	}
 }

@@ -1,5 +1,14 @@
+<<<<<<< HEAD
+/Test/
+=======
 /View/
 /Controller/
+<<<<<<< HEAD
+=======
+/Test/
+/img/
+>>>>>>> master
+>>>>>>> TDuy
 /DAO/
 /Test/
 /connectDB/

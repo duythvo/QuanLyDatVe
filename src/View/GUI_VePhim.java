@@ -161,11 +161,7 @@ txt_MaVe.setBackground(new Color(102, 51, 153));
 		} else if (o.equals(btn_TimVe)) {
 			controller_VP.timMaVe();
 		} else if (o.equals(btn_InHD)) {
-				this.removeAll();
-				GUI_Bill view_Bill = new GUI_Bill(hdto);
-				this.add(view_Bill);
-				this.repaint();
-				this.revalidate();
+				inHoaDon();
 		}
 
 	}
@@ -201,6 +197,23 @@ trangThai = model.getValueAt(row, 4).toString();
 		hdto.setTrangThai(tt);
 
 
+	}
+
+	public void inHoaDon() {
+		int row = table_VePhim.getSelectedRow();
+		if(row >= 0 ) {
+			if(model.getValueAt(row, 4).toString().equalsIgnoreCase("Chưa Thanh Toán")) {
+				JOptionPane.showMessageDialog(this, "Cần phải thanh toán mới xuất hóa đơn được");
+			} else {
+				removeAll();
+				GUI_Bill view_Bill = new GUI_Bill(hdto);
+				add(view_Bill);
+				repaint();
+				revalidate();
+			}
+		}else {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn dòng cần in hóa đơn");
+		}
 	}
 
 	@Override
