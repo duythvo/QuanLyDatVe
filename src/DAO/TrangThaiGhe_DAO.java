@@ -67,6 +67,25 @@ public class TrangThaiGhe_DAO {
         } 
         return dataList;
     }
+
+    public ArrayList<TrangThaiGhe> getDSGheBangMaVe(String maVe) {
+        ArrayList<TrangThaiGhe> dataList = new ArrayList<TrangThaiGhe>();
+        ConnectDB.getInstance();
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT * FROM dbo.TrangThaiGhe where MaVe = ?";
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, maVe);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+            	TrangThaiGhe ctVe = new TrangThaiGhe(rs);
+                dataList.add(ctVe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        return dataList;
+    }
 	
 	/**
 	 * <B>Note:</B> Tìm Chi tiet voi maVe va maSuatChieu
