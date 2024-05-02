@@ -17,7 +17,6 @@ import entity.SuatChieu;
 import entity.TrangThaiGhe;
 import entity.Ve;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
