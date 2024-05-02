@@ -96,7 +96,7 @@ public class TrangThaiGhe_DAO {
         return ttg;
     }
 
-    public boolean setTrangThaiGhe(String maGhe, String maSuatChieu,boolean trangThai) {
+    public boolean setTrangThaiGhe(String maGhe, String maSuatChieu,boolean trangThai,String maVe) {
 		TrangThaiGhe ttg = null;
         PreparedStatement statement = null;
         int n=0;
@@ -104,11 +104,12 @@ public class TrangThaiGhe_DAO {
             ConnectDB.getInstance();
             Connection conn = ConnectDB.getConnection();
 
-            String sql = "Update TrangThaiGhe set trangthai=? where MaGhe = ? and MaSuatChieu = ?";
+            String sql = "Update TrangThaiGhe set trangthai=?,MaVe = ? where MaGhe = ? and MaSuatChieu = ?";
             statement = conn.prepareStatement(sql);
             statement.setString(1, trangThai?"True":"False");
-            statement.setString(2, maGhe);
-            statement.setString(3, maSuatChieu);
+            statement.setString(2, maVe);
+            statement.setString(3, maGhe);
+            statement.setString(4, maSuatChieu);
             n=statement.executeUpdate();
             
         } catch (SQLException e) {

@@ -269,11 +269,11 @@ public class GUI_DatVe extends JPanel {
 				for(int i=0;i<24;i++){
 					if(i<21){
 						if(btns1[i].getIcon().toString().equals(btn.getIcon().toString())){
-							trangThaiGhe_DAO.setTrangThaiGhe(ghes[i].getMaGhe(),sc.getMaSuatChieu(),true);
+							trangThaiGhe_DAO.setTrangThaiGhe(ghes[i].getMaGhe(),sc.getMaSuatChieu(),true,ve.getMaVe());
 						}
 					}else{
 						if(btns2[i-20].getIcon().toString().equals(btn1.getIcon().toString())){
-							trangThaiGhe_DAO.setTrangThaiGhe(ghes[i].getMaGhe(),sc.getMaSuatChieu(),true);
+							trangThaiGhe_DAO.setTrangThaiGhe(ghes[i].getMaGhe(),sc.getMaSuatChieu(),true,ve.getMaVe());
 						}
 					}
 				}
