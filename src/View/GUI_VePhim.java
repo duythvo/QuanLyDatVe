@@ -21,10 +21,8 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
-import org.w3c.dom.events.MouseEvent;
 
 import Controller.control_VePhim;
-import Test.GUI_Bill;
 import connectDB.ConnectDB;
 import entity.HoaDonDTO;
 
@@ -34,7 +32,6 @@ public class GUI_VePhim extends JPanel implements ActionListener , MouseListener
 	private JPanel panel_Button;
     private JButton btn_CapNhat;
 	private JButton btn_ThanhToan;
-    private JButton btn_XoaHD;
 	private DefaultTableModel model;
     private JScrollPane sc;
 	private JButton btn_InHD;
@@ -74,31 +71,25 @@ public class GUI_VePhim extends JPanel implements ActionListener , MouseListener
 		btn_ThanhToan.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btn_ThanhToan.setBounds(241, 23, 193, 53);
 		panel_Button.add(btn_ThanhToan);
-		
-		btn_XoaHD = new JButton("Xóa hóa đơn");
-		btn_XoaHD.setBackground(new Color(255, 165, 0));
-		btn_XoaHD.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_XoaHD.setBounds(460, 23, 163, 53);
-		panel_Button.add(btn_XoaHD);
-		
+			
 
 		btn_TimVe = new JButton("Tìm Theo Mã Vé");
 		btn_TimVe.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btn_TimVe.setBackground(new Color(255, 165, 0));
-		btn_TimVe.setBounds(653, 23, 163, 53);
+		btn_TimVe.setBounds(460, 23, 163, 53);
 		panel_Button.add(btn_TimVe);
 		
 		txt_MaVe = new JTextField();
 		txt_MaVe.setForeground(new Color(255, 255, 255));
 txt_MaVe.setBackground(new Color(102, 51, 153));
-		txt_MaVe.setBounds(846, 53, 140, 23);
+		txt_MaVe.setBounds(653, 53, 140, 23);
 		panel_Button.add(txt_MaVe);
 		txt_MaVe.setColumns(10);
 		
 		label_MaVe = new JLabel("Nhập Mã Vé :");
 		label_MaVe.setForeground(new Color(255, 255, 255));
 		label_MaVe.setFont(new Font("Tahoma", Font.BOLD, 13));
-		label_MaVe.setBounds(846, 24, 150, 30);
+		label_MaVe.setBounds(653, 24, 150, 30);
 		panel_Button.add(label_MaVe);
 
 
@@ -128,7 +119,7 @@ txt_MaVe.setBackground(new Color(102, 51, 153));
 		btn_InHD.setBounds(936, 700, 163, 53);
 		add(btn_InHD);
 
-		controller_VP = new control_VePhim(model, table_VePhim, btn_CapNhat, btn_ThanhToan, btn_XoaHD, btn_TimVe, btn_InHD, txt_MaVe);
+		controller_VP = new control_VePhim(model, table_VePhim, btn_CapNhat, btn_ThanhToan, btn_TimVe, btn_InHD, txt_MaVe);
 		try {
 			ConnectDB.getInstance().connect();
 		} catch (SQLException e) {
@@ -141,7 +132,6 @@ txt_MaVe.setBackground(new Color(102, 51, 153));
 		//Event
 		btn_CapNhat.addActionListener(this);
 		btn_ThanhToan.addActionListener(this);
-		btn_XoaHD.addActionListener(this);
 		btn_TimVe.addActionListener(this);
 		btn_InHD.addActionListener(this);
 		table_VePhim.addMouseListener(this);
@@ -156,8 +146,6 @@ txt_MaVe.setBackground(new Color(102, 51, 153));
 			controller_VP.capNhatTrangThai();
 		} else if (o.equals(btn_ThanhToan)) {
 			controller_VP.locThanhToan();
-		} else if (o.equals(btn_XoaHD)) {
-			controller_VP.xoaHoaDon();
 		} else if (o.equals(btn_TimVe)) {
 			controller_VP.timMaVe();
 		} else if (o.equals(btn_InHD)) {

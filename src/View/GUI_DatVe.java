@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,14 +20,12 @@ import java.awt.event.*;
 
 import Controller.controlDatVe;
 import DAO.ChiTietVe_DAO;
-import DAO.Ghe_DAO;
 import DAO.HoaDon_DAO;
 import DAO.LoaiGhe_DAO;
 import DAO.PhongChieu_DAO;
 import DAO.SuatChieu_DAO;
 import DAO.TrangThaiGhe_DAO;
 import DAO.Ve_DAO;
-import Test.test;
 import connectDB.ConnectDB;
 import entity.ChiTietVe;
 import entity.Ghe;
@@ -96,7 +93,7 @@ public class GUI_DatVe extends JPanel {
     /**
 	 * Create the panel.
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({ "rawtypes", "unchecked", "static-access" })
 	public GUI_DatVe(Phim phim) {
 		try {
             ConnectDB.getInstance().connect();
@@ -327,7 +324,7 @@ public class GUI_DatVe extends JPanel {
 		lblNewLabel = new JLabel("ĐẶT VÉ");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblNewLabel.setForeground(new Color(255, 255, 255));
-		lblNewLabel.setIcon(new ImageIcon(test.class.getResource("/img/film-regular-24_1.png")));
+		lblNewLabel.setIcon(new ImageIcon(GUI_DatVe.class.getResource("/img/film-regular-24_1.png")));
 		lblNewLabel.setBounds(491, 29, 130, 51);
 		add(lblNewLabel);
 

@@ -84,6 +84,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 	private JLabel jlbLinkPhim;
 	private JTextField jtfLinkPhim;
 	private JButton btnSearch;
+    private JTextField txt_Tim;
 
 	public GUI_QLPhim() {
 		this.setBackground(new Color(25, 28, 44));
@@ -257,7 +258,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		jPanel.setBackground(new Color(32, 44, 92));
 		
 		
-		c1.add(Box.createHorizontalStrut(100));
+		c1.add(Box.createHorizontalStrut(180));
 		c1.add(jcbType);
 		
 		 jPanel.add(c1);
@@ -268,8 +269,8 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		titledBorder.setTitleColor(Color.WHITE);
 		jplCate.setBorder(titledBorder);
 
-		jplCate.setSize(340,120);
-		jplCate.setMaximumSize(new Dimension(350, 120));
+		jplCate.setSize(500,120);
+		jplCate.setMaximumSize(new Dimension(500, 120));
 		jplCate.setBackground(new Color(32, 44, 92));
 		
 		jplForm = new JPanel();
@@ -293,7 +294,10 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		btnSearch = new JButton("Tìm kiếm");
 		btnSearch.setBackground(new Color(255, 165, 0));
 		btnSearch.addActionListener(this);
-		
+	
+		txt_Tim = new JTextField(20);
+
+
 		btn = Box.createHorizontalBox();
 		btn.add(btnAdd);
 		btn.add(Box.createHorizontalStrut(8));
@@ -302,9 +306,11 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		btn.add(btnFix);
 		btn.add(Box.createHorizontalStrut(8));
 		btn.add(btnDelete);
-		btn.add(Box.createHorizontalStrut(8));
+		btn.add(Box.createHorizontalStrut(200));
 		btn.add(btnSearch);
-		btn.add(Box.createHorizontalStrut(600));
+		btn.add(Box.createHorizontalStrut(8));
+		btn.add(txt_Tim);
+
 		
 		empty1 = new JPanel();
 		empty1.setSize(1900,200);
@@ -612,13 +618,13 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 	}
 
 	public void timPhim() {
-		if (jtfTen.getText().isEmpty()) {
+		if (txt_Tim.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null, "Nhập tên phim cần tìm");
 		} else {
 			boolean found = false;
 			for (int i = 0; i < dsPhim.size(); i++) {
 				Phim phim = dsPhim.get(i);
-				if (phim.getTenPhim().toLowerCase().indexOf(jtfTen.getText().toLowerCase()) != -1) {
+				if (phim.getTenPhim().toLowerCase().indexOf(txt_Tim.getText().toLowerCase()) != -1) {
 					jtfMa.setText(phim.getMaPhim());
 					jtfTen.setText(phim.getTenPhim());
 					jtfDaoDien.setText(phim.getDaoDien());

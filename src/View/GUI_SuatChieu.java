@@ -20,7 +20,6 @@ import javax.swing.table.DefaultTableModel;
 import com.raven.event.EventTimePicker;
 import com.raven.swing.TimePicker;
 import calender.DateChooser;
-import calender.SelectedDate;
 
 import Controller.control_XuatChieu;
 import DAO.Phim_DAO;
@@ -611,7 +610,6 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 					maSC+= size + "";
 				}
 				textFieldMaSC.setText(maSC);
-				
 			}
 
 			@Override
@@ -945,7 +943,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		model.addRow(new String[]
 				{
 						suatChieu.getMaSuatChieu(), suatChieu.getNgayChieu().format(dtf), suatChieu.getGioChieu() + "",
-						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getTenPhongChieu()
+						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getMaPhongChieu()
 				});
 		System.out.println(suatChieu.toString());
 		suatChieu_DAO.themSuatChieu(suatChieu);

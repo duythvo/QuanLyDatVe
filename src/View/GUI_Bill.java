@@ -1,4 +1,4 @@
-package Test;
+package View;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -10,7 +10,6 @@ import DAO.Phim_DAO;
 import DAO.SuatChieu_DAO;
 import DAO.TrangThaiGhe_DAO;
 import DAO.Ve_DAO;
-import View.GUI_VePhim;
 import entity.HoaDonDTO;
 import entity.Phim;
 import entity.SuatChieu;
