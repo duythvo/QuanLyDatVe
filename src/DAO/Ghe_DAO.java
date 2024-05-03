@@ -98,4 +98,29 @@ public class Ghe_DAO {
 
         return n > 0;
 	}
+	
+	public ArrayList<Ghe> getDSGheTheoMaPhong(String maPhong) {
+		ArrayList<Ghe> dsGhe = new ArrayList<>();
+		
+		try {
+            ConnectDB.getInstance();
+            Connection conn = ConnectDB.getConnection();
+
+            String sql = "SELECT MaGhe FROM Ghe WHERE MaPhongChieu = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, maPhong);
+            ResultSet rs = statement.executeQuery();
+
+            if (!rs.next())
+                return null;
+
+            while(rs.next()) {
+            	Ghe ghe = new Ghe(rs);
+            	dsGhe.add(ghe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+		return dsGhe;
+	}
 }
