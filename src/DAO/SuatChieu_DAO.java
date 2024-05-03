@@ -75,6 +75,35 @@ public class SuatChieu_DAO {
         }
         return suatchieu;
     }
+
+    public ArrayList<SuatChieu> getdsSuatChieuBangMaPhim(String maPhim){
+        ArrayList<SuatChieu> dataList = new ArrayList<SuatChieu>();
+        ConnectDB.getInstance();
+        Statement stmt = null;
+        try {
+            Connection con = ConnectDB.getConnection();
+            String sql = "SELECT * FROM dbo.SuatChieu WHERE MaPhim = ?";
+
+            PreparedStatement statement = con.prepareStatement(sql);
+            statement.setString(1, maPhim);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+            	SuatChieu suatchieu = new SuatChieu(rs);
+                dataList.add(suatchieu);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+ 		        if (stmt != null) {
+ 		            stmt.close();
+ 		        }
+ 		    } catch (SQLException e) {
+ 		        e.printStackTrace();
+ 		    }
+        }
+        return dataList;
+    }
 	/**
 	 * <B>Note:</B> Thêm Suất chiếu khi truyền vào 1 đối tượng Suất Chiếu
 	 * @param SuatChieu suatchieu
@@ -87,7 +116,7 @@ public class SuatChieu_DAO {
         PreparedStatement stmt = null;
         int n = 0;
         try {
-            String sql = "insert into dbo.Phim (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)"
+            String sql = "insert into dbo.SuatChieu (MaSuatChieu, NgayChieu, GioChieu, MaPhim, MaPhongChieu)"
                     + " values (?, ?, ?, ?, ?)";
             stmt = con.prepareStatement(sql);
             stmt.setString(1, suatChieu.getMaSuatChieu());
@@ -111,6 +140,30 @@ public class SuatChieu_DAO {
         return n > 0;
 	}
 	
+	public boolean xoaSuatChieu(String maSuatChieu) {
+		ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement stmt = null;
+		int n = 0;
+		try {
+            String sql = "DELETE SuatChieu WHERE MaSuatChieu = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, maSuatChieu);
+            n = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+ 		        if (stmt != null) {
+ 		            stmt.close();
+ 		        }
+ 		    } catch (SQLException e) {
+ 		        e.printStackTrace();
+ 		    }
+        }
+        return n > 0;
+	}
+	
 	/**
 	 *<B>Note:</B> Cập nhật Suất Chiếu
 	 *@author Khoa
@@ -119,9 +172,9 @@ public class SuatChieu_DAO {
 	 *@return 
 	 * 
 	 */
-	public boolean capNhatSuatChieu(String maPhim, String tenPhim) {
-		int n = 0;
-
-        return n > 0;
+	public void capNhatSuatChieu(SuatChieu suatChieu) {
+		xoaSuatChieu(suatChieu.getMaSuatChieu());
+		themSuatChieu(suatChieu);
 	}
+
 }

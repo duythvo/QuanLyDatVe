@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import DAO.HoaDon_DAO;
-import DAO.SuatChieu_DAO;
+// import DAO.SuatChieu_DAO;
 
 
 public class HoaDon {
@@ -33,7 +33,6 @@ public class HoaDon {
 		this.nhanVien = nv;
 		this.trangThai = 0;
 		this.ngayLap = LocalDate.now();
-		// TODO Auto-generated constructor stub
 	}
 	
 	public HoaDon(ResultSet rs) throws SQLException{
@@ -110,8 +109,6 @@ public class HoaDon {
 		if (this == obj)
 			return true;
 		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
 			return false;
 		HoaDon other = (HoaDon) obj;
 		return Objects.equals(maHD, other.maHD);
