@@ -13,6 +13,7 @@ import Controller.control_ThongKe;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -20,6 +21,10 @@ import javax.swing.JTable;
 import connectDB.ConnectDB;
 import DAO.HoaDon_DAO;
 
+import com.raven.event.EventTimePicker;
+import com.raven.swing.TimePicker;
+import calender.DateChooser;
+import calender.SelectedDate;
 
 public class GUI_ThongKe extends JPanel implements ActionListener {
 
@@ -39,6 +44,12 @@ public class GUI_ThongKe extends JPanel implements ActionListener {
 	private JTextField txt_DenNgay;
 	private control_ThongKe control_tk;
 	private JButton btn_LamMoi;
+	private JButton btn_DenNgay;
+	private JButton btn_TuNgay;
+	boolean flat1 = false;
+    boolean flat2 = false;
+	DateChooser dateChooser = new DateChooser();
+
 
 	/**
 	 * Create the panel.
@@ -147,6 +158,44 @@ public void actionPerformed(ActionEvent e) {
 		btn_LamMoi.setBounds(386, 280, 91, 34);
 		panel_ThongKe.add(btn_LamMoi);
 
+		btn_TuNgay = new JButton("");
+		btn_TuNgay.setBackground(new Color(102, 51, 150));
+		btn_TuNgay.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/icons8-date-26.png")));
+		btn_TuNgay.setBounds(512, 179, 28, 28);
+		btn_TuNgay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(!flat1) { 
+					showDate(txtTuNgay);
+					flat1 = true;
+				}else {
+					dateChooser.hidePopup();
+					flat1 = false;
+				}
+			}
+		});
+		panel_ThongKe.add(btn_TuNgay);
+		
+		btn_DenNgay = new JButton("");
+		btn_DenNgay.setBackground(new Color(102, 51, 150));
+		btn_DenNgay.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/icons8-date-26.png")));
+		btn_DenNgay.setBounds(512, 226, 28, 28);
+		btn_DenNgay.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if(!flat2) { 
+					showDate(txt_DenNgay);
+					flat2 = true;
+				}else {
+					dateChooser.hidePopup();
+					flat2 = false;
+				}
+			}
+		});
+		panel_ThongKe.add(btn_DenNgay);
+
 		control_tk = new control_ThongKe( table, btn_ThongKe, btn_TimNV,btn_LamMoi, txtTuNgay, txt_DenNgay, txt_NhanVien);
 		try {
 			ConnectDB.getInstance().connect();
@@ -174,6 +223,14 @@ public void actionPerformed(ActionEvent e) {
 		}
 	}
 
-	
+	public void showDate(JTextField txt) {
+		dateChooser.showPopup(this, (getWidth() - dateChooser.getPreferredSize().width) / 2, (getHeight() - dateChooser.getPreferredSize().height) / 2);
+		if(dateChooser.isFocusable()) {
+			dateChooser.setDateFormat("yyyy/MM/dd");
+			dateChooser.setTextRefernce(txt);
+		}
+		
+	}
+
 
 }

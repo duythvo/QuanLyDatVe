@@ -38,7 +38,7 @@ public class control_ThongKe {
     }
 
     public boolean checkRegexDay(String ngay) {
-        String regex = "\\d{4}-\\d{2}-\\d{2}";
+        String regex = "\\d{4}/\\d{2}/\\d{2}";
         return ngay.matches(regex);
     }
 
@@ -55,7 +55,7 @@ public class control_ThongKe {
         DefaultTableModel dataModel = (DefaultTableModel) table.getModel();
         List<ThongKe> list = ds.thongKeDoanhThu(tuNgay,denNgay);
         if(!checkRegexDay(denNgay)||!checkRegexDay(tuNgay)) {
-            JOptionPane.showMessageDialog(btn_ThongKe, "Vui lòng nhập đúng định dạng YYYY-MM-DD");
+            JOptionPane.showMessageDialog(btn_ThongKe, "Vui lòng nhập đúng định dạng YYYY/MM/DD");
             return;
         }
         for(ThongKe tk : list) {
