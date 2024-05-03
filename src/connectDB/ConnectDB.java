@@ -8,7 +8,7 @@ public class ConnectDB {
 	        return instance;
 	    }
 
-	    public void connect() throws SQLException {
+	    public static void connect() throws SQLException {
 	        String severName = "localhost";
 	        //sua o day
 	        String databaseName = "DatVe";
@@ -27,7 +27,17 @@ public class ConnectDB {
 	            }
 	    }
 
-	    public static Connection getConnection() {
+	    // public static Connection getConnection() {
+	    //     return con;
+	    // }
+
+		public static Connection getConnection() {
+	    	try {
+				connect();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        return con;
 	    }
 }
