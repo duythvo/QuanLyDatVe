@@ -98,6 +98,7 @@ public class GUI_Phim extends JPanel {
 		JTextField jtfTimKiem = new JTextField();
 		jtfTimKiem.setFont(new Font("Arial", Font.PLAIN, 16));
 		jtfTimKiem.setBounds(850, 21, 250, 33);
+		jtfTimKiem.setBackground(new Color(102, 51, 153));
 		panel_Phim.add(jtfTimKiem);
 
 		panel_Phim.add(btnTimKiem);

@@ -21,7 +21,7 @@ public class Ghe_DAO {
 	 * @return Danh sách Ghe <ArrayList>
 	 * 
 	 */
-	public ArrayList<Ghe> getDSGhe() {
+	public ArrayList<Ghe> getDSHoaDon() {
 		ArrayList<Ghe> dataList = new ArrayList<Ghe> ();
         ConnectDB.getInstance();
         Statement stmt = null;
@@ -75,5 +75,57 @@ public class Ghe_DAO {
         }
         return ghe;
     }
+	/**
+	 * <B>Note:</B> Thêm Ghe khi truyền vào 1 đối tượng vào Ghe
+	 * @param Ghe ghe
+	 *@return true (khi thêm thành công)
+	 * Có data rồi muốn thêm thì viết
+	 */
+	public boolean themGhe() {
+		return true;
+	}
+	
+	/**
+	 *<B>Note:</B> Cập nhật Trang Thai Ghe
+	 *@author Khong biet
+	 *@param 
+	 *@param 
+	 *@return 
+	 * 
+	 */
+	public boolean capNhatTrangThaiGhe() {
+		int n = 0;
+
+        return n > 0;
+	}
+	
+	public ArrayList<Ghe> getDSGheTheoMaPhong(String maPhong) {
+		ArrayList<Ghe> dsGhe = new ArrayList<>();
+		
+		try {
+            ConnectDB.getInstance();
+            Connection conn = ConnectDB.getConnection();
+
+            String sql = "SELECT * FROM Ghe WHERE MaPhongChieu = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, maPhong);
+            ResultSet rs = statement.executeQuery();
+
+            // if (!rs.next())
+            //     return null;
+
+           // rs.beforeFirst();    
+
+            while(rs.next()) {
+            	Ghe ghe = new Ghe(rs);
+            	dsGhe.add(ghe);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+		return dsGhe;
+
+
+}
 	
 }

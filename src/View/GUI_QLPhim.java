@@ -296,6 +296,7 @@ public class GUI_QLPhim extends JPanel implements ActionListener,MouseListener{
 		btnSearch.addActionListener(this);
 	
 		txt_Tim = new JTextField(20);
+		txt_Tim.setBackground(new Color(102, 51, 153));
 
 
 		btn = Box.createHorizontalBox();
