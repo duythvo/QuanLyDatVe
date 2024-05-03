@@ -1145,8 +1145,11 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 			SuatChieu suatChieu = new SuatChieu(maSuatChieu, ngayChieu, gioChieu, phim, phongChieu);
 			sc_DAO.themSuatChieu(suatChieu);
 			listGhes = ghe_DAO.getDSGheTheoMaPhong(maPhongChieu);
+			TrangThaiGhe_DAO trangThaiGhe_DAO = new TrangThaiGhe_DAO();
 			for (Ghe ghe : listGhes) {
-				thaiGhe_DAO.setTrangThaiGhe(ghe.getMaGhe(), maSuatChieu, false,null);
+				// thaiGhe_DAO.setTrangThaiGhe(ghe.getMaGhe(), suatChieu.getMaSuatChieu(), false,null);
+				TrangThaiGhe trangThaiGhe = new TrangThaiGhe(ghe, suatChieu, null, false);
+				trangThaiGhe_DAO.themTrangThaiGhe(trangThaiGhe);
 			}
 			addToTable(suatChieu);
 			lamMoi();
@@ -1295,6 +1298,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 				int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá?");
 				if(select == JOptionPane.YES_OPTION) {
 					SuatChieu suatChieu = laySCTuTabel(i);
+					thaiGhe_DAO.xoaTrangThaiGhe(maSuatChieu);
 					suatChieu_DAO.xoaSuatChieu(maSuatChieu);
 					listSuatChieus.remove(suatChieu);
 					model.removeRow(i);

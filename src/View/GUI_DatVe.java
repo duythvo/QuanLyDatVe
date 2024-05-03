@@ -94,7 +94,7 @@ public class GUI_DatVe extends JPanel {
 	 * Create the panel.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked", "static-access" })
-	public GUI_DatVe(Phim phim) {
+	public GUI_DatVe(Phim phim,NhanVien nv) {
 		try {
             ConnectDB.getInstance().connect();
         } catch (SQLException e) {
@@ -247,7 +247,7 @@ public class GUI_DatVe extends JPanel {
 				ArrayList<HoaDon> dsHoaDon = hoaDon_DAO.getDSHoaDon();
 				int stt = dsHoaDon.size()+1;
 				String gia[] = label_TongTien.getText().split(" ");
-				HoaDon hd = new HoaDon(stt>=10?"HD"+stt:"HD0"+stt, new NhanVien("NV01"), 0, currentTime, Double.parseDouble(gia[0]));
+				HoaDon hd = new HoaDon(stt>=10?"HD"+stt:"HD0"+stt, nv, 0, currentTime, Double.parseDouble(gia[0]));
 				hoaDon_DAO.themHoaDon(hd);
 				sc = new SuatChieu(dsSuatChieu.stream().filter(i->i.getNgayChieu().toString().equals(comboBox_NgayChieu.getSelectedItem().toString()) && i.getGioChieu().toString().equals(comboBox_GioChieu.getSelectedItem().toString())).findFirst().orElse(null).getMaSuatChieu());
 				ArrayList<Ve> dsVe = ve_DAO.getDSVe();
