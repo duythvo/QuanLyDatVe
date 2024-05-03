@@ -715,12 +715,14 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				size = listSuatChieus.size();
-				size++;
+				String s = listSuatChieus.get(size-1).getMaSuatChieu().substring(2);
+				int code = Integer.valueOf(s);
+				code++;
 				String maSC = "SC";
-				if(size < 10) {
-					maSC+= "0" + size;
+				if(code < 10) {
+					maSC+= "0" + code;
 				}else {
-					maSC+= size + "";
+					maSC+= code + "";
 				}
 				textFieldMaSC.setText(maSC);
 				
@@ -1081,10 +1083,10 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		model.addRow(new String[]
 				{
 						suatChieu.getMaSuatChieu(), suatChieu.getNgayChieu().format(dtf), suatChieu.getGioChieu() + "",
-						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getTenPhongChieu()
+						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getMaPhongChieu()
 				});
 		System.out.println(suatChieu.toString());
-		suatChieu_DAO.themSuatChieu(suatChieu);
+		//suatChieu_DAO.themSuatChieu(suatChieu);
 	}
 	
 	public SuatChieu getSuatChieuJTF() {
@@ -1114,14 +1116,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	
 	public void add() {
 		if(chkRegex()) {
-			size = listSuatChieus.size();
-			size++;
-			String maSuatChieu = "SC";
-			if(size < 10) {
-				maSuatChieu+= "0" + size;
-			}else {
-				maSuatChieu+= size + "";
-			}
+			String maSuatChieu = textFieldMaSC.getText();
 			
 			LocalDate ngayChieu = LocalDate.parse(textFieldNgayChieu.getText(), dtf);
 			LocalTime gioChieu = LocalTime.parse(textFieldThoiGian.getText());
