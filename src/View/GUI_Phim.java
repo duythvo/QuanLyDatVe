@@ -24,6 +24,7 @@ import javax.swing.ScrollPaneConstants;
 
 import DAO.Phim_DAO;
 import connectDB.ConnectDB;
+import entity.NhanVien;
 import entity.Phim;
 
 import javax.swing.JButton;
@@ -39,7 +40,7 @@ public class GUI_Phim extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GUI_Phim() {
+	public GUI_Phim(NhanVien nv) {
 		setBackground(new Color(24, 28, 44));
 		setSize(1350,900);
 		setLayout(null);
@@ -98,6 +99,7 @@ public class GUI_Phim extends JPanel {
 		JTextField jtfTimKiem = new JTextField();
 		jtfTimKiem.setFont(new Font("Arial", Font.PLAIN, 16));
 		jtfTimKiem.setBounds(850, 21, 250, 33);
+		jtfTimKiem.setBackground(new Color(102, 51, 153));
 		panel_Phim.add(jtfTimKiem);
 
 		panel_Phim.add(btnTimKiem);
@@ -160,7 +162,7 @@ public class GUI_Phim extends JPanel {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					panel_Phim.removeAll();
-					GUI_DatVe viewDatVe = new GUI_DatVe(phim);
+					GUI_DatVe viewDatVe = new GUI_DatVe(phim,nv);
 					panel_Phim.add(viewDatVe);
 					panel_Phim.repaint();
 					panel_Phim.revalidate();
@@ -226,7 +228,7 @@ public class GUI_Phim extends JPanel {
 							@Override
 							public void actionPerformed(ActionEvent e) {
 								panel_Phim.removeAll();
-								GUI_DatVe viewDatVe = new GUI_DatVe(phim2);
+								GUI_DatVe viewDatVe = new GUI_DatVe(phim2,nv);
 								panel_Phim.add(viewDatVe);
 								panel_Phim.repaint();
 								panel_Phim.revalidate();

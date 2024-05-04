@@ -1,6 +1,8 @@
 package View;
 
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,7 +27,7 @@ public class GUI_Login extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField textField_1;
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private JLabel lblNewLabel_2;
@@ -89,7 +91,7 @@ public class GUI_Login extends JFrame {
 		lblNewLabel_2_1.setBounds(23, 256, 118, 22);
 		add(lblNewLabel_2_1);
 		
-		textField_1 = new JTextField();
+		textField_1 = new JPasswordField();
 		textField_1.setColumns(10);
 		textField_1.setBackground(new Color(102, 51, 153));
 		textField_1.setForeground(Color.white);

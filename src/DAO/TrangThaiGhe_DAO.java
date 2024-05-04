@@ -49,6 +49,36 @@ public class TrangThaiGhe_DAO {
         return dataList;
     }
 
+    public void themTrangThaiGhe(TrangThaiGhe ttg) {
+        ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            String sql = "insert into dbo.TrangThaiGhe (MaGhe, MaSuatChieu, TrangThai, MaVe)"
+                    + " values (?, ?, ?, ?)";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, ttg.getGhe().getMaGhe());
+            stmt.setString(2, ttg.getSuatChieu().getMaSuatChieu());
+            stmt.setBoolean(3, ttg.isTrangThai());
+            //stmt.setString(4, ttg.getVe().getMaVe());
+            if(ttg.getVe()!=null)
+                stmt.setString(4, ttg.getVe().getMaVe());
+            else
+                stmt.setNull(4, java.sql.Types.NVARCHAR);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     public ArrayList<TrangThaiGhe> getDSGheBangMaSuatChieu(String maSuatChieu) {
         ArrayList<TrangThaiGhe> dataList = new ArrayList<TrangThaiGhe>();
         ConnectDB.getInstance();
@@ -116,7 +146,6 @@ public class TrangThaiGhe_DAO {
     }
 
     public boolean setTrangThaiGhe(String maGhe, String maSuatChieu,boolean trangThai,String maVe) {
-		TrangThaiGhe ttg = null;
         PreparedStatement statement = null;
         int n=0;
         try {
@@ -143,6 +172,28 @@ public class TrangThaiGhe_DAO {
  		    }
         }
         return n>0;
+    }
+
+    public void xoaTrangThaiGhe(String maSuatChieu){
+        ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            String sql = "delete from dbo.TrangThaiGhe where MaSuatChieu = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setString(1, maSuatChieu);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 	
 }

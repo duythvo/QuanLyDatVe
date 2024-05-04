@@ -22,17 +22,15 @@ public class control_VePhim {
     private JTable table;
     private JButton btn_CapNhat;
     private JButton btn_ThanhToan;
-    private JButton btn_XoaHD;
     private JButton btn_InHD;
     private JButton btn_TimVe;
     private JTextField txt_MaVe;
 
-    public control_VePhim(DefaultTableModel model,JTable table, JButton btn_CapNhat, JButton btn_ThanhToan, JButton btn_XoaHD, JButton btn_TimVe, JButton btn_InHD, JTextField txt_MaVe) {
+    public control_VePhim(DefaultTableModel model,JTable table, JButton btn_CapNhat, JButton btn_ThanhToan, JButton btn_TimVe, JButton btn_InHD, JTextField txt_MaVe) {
         this.dataModel = model;
         this.table = table;
         this.btn_CapNhat = btn_CapNhat;
         this.btn_ThanhToan = btn_ThanhToan;
-        this.btn_XoaHD = btn_XoaHD;
         this.btn_InHD = btn_InHD;
         this.btn_TimVe = btn_TimVe;
         this.txt_MaVe = txt_MaVe;
@@ -90,21 +88,6 @@ dtm.removeRow(i);
     }
     
 
-    public void xoaHoaDon() {
-        if(table.getSelectedRow()==-1) {
-            JOptionPane.showMessageDialog(btn_XoaHD, "Vui lòng chọn dòng cần xóa");
-        } else {
-            if(JOptionPane.showConfirmDialog(btn_XoaHD, "Bạn có chắc muốn xóa dòng này?"
-            ,"Canh bao",JOptionPane.YES_NO_CANCEL_OPTION)==JOptionPane.YES_OPTION) {
-                int index = table.getSelectedRow();
-                DefaultTableModel dtm = (DefaultTableModel) table.getModel();
-                String maVe = dtm.getValueAt(index, 0).toString();
-                dsHD.xoaHoaDon(maVe);
-                dtm.removeRow(index);
-
-            }
-        }
-    }
 
 
     public void timMaVe() {

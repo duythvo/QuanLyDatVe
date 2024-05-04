@@ -175,7 +175,7 @@ public class HoaDon_DAO {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		try {
-			stmt = con.prepareStatement("SELECT hd.MaNV, nv.TenNV, SUM(ctv.SoLuongGhe) AS SoVe, SUM(hd.GiaHoaDon) AS tongTien " +
+			stmt = con.prepareStatement("SELECT hd.MaNV, nv.TenNV, COUNT(ctv.MaVe) AS SoVe, SUM(hd.GiaHoaDon) AS tongTien " +
 										"FROM NhanVien nv " +
 										"INNER JOIN HoaDon hd ON nv.MaNV = hd.MaNV " +
 										"INNER JOIN ChiTietVe ctv ON ctv.MaHD = hd.MaHD " +

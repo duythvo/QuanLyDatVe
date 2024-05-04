@@ -72,7 +72,7 @@ public class GUI_Main extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panel.removeAll();
-				GUI_Phim viewPhim = new GUI_Phim();
+				GUI_Phim viewPhim = new GUI_Phim(nv);
 				panel.add(viewPhim);
 				panel.repaint();
 				panel.revalidate();	
@@ -361,7 +361,7 @@ public class GUI_Main extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
-		GUI_Phim viewPhim = new GUI_Phim();
+		GUI_Phim viewPhim = new GUI_Phim(nv);
 		panel.add(viewPhim);
 		setVisible(true);
 	}

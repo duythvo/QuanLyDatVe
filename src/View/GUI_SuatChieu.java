@@ -19,16 +19,20 @@ import javax.swing.table.DefaultTableModel;
 
 import com.raven.event.EventTimePicker;
 import com.raven.swing.TimePicker;
-import calender.DateChooser;
-import calender.SelectedDate;
 
 import Controller.control_XuatChieu;
+import DAO.Ghe_DAO;
 import DAO.Phim_DAO;
 import DAO.PhongChieu_DAO;
 import DAO.SuatChieu_DAO;
+import DAO.TrangThaiGhe_DAO;
+import calender.DateChooser;
+import calender.SelectedDate;
+import entity.Ghe;
 import entity.Phim;
 import entity.PhongChieu;
 import entity.SuatChieu;
+import entity.TrangThaiGhe;
 
 import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
@@ -50,7 +54,7 @@ import javax.swing.JComboBox;
 public class GUI_SuatChieu extends JPanel implements MouseListener{
 	private JTextField textFieldTim;
 	private JTextField textFieldNgayChieu;
-	private JTextField textFieldPhim;
+	private JComboBox<String> cbbPhim;
 	private JTextField textFieldThoiGian;
 	private TimePicker timePicker = new TimePicker();
 	TimePicker timePicker_1 = new TimePicker();
@@ -73,6 +77,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	private JPanel panel4;
 	boolean flat1 = false;
     boolean flat2 = false;
+    boolean flat = false;
 	private DefaultTableModel model;
 	private JTable table_VePhim;
 	private JScrollPane scrollPane;
@@ -88,8 +93,38 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	private JPanel panelDay_1;
 	private JPanel panelDay_2;
 	private JPanel panelDay_3;
-	private Container panelDay_4;
+	private JPanel panelDay_4;
 	private JPanel panelDay_5;
+	private JPanel panelDay_6;
+	private JPanel panelDay_7;
+	private JPanel panel5;
+	private JPanel panel6;
+	private JLabel lblPrev;
+	private JLabel lblForw;
+	private JPanel[] arrJpanelXC = new JPanel[7];
+	static JPanel[] arrJpanelDate = new JPanel[7];
+	private JLabel[] arrLblDay = new JLabel[7];
+	private JLabel[] arrLblWeek = new JLabel[7];
+	private JPanel paneld2;
+	private ArrayList<Ghe> listGhes;
+	private Ghe_DAO ghe_DAO = new Ghe_DAO();
+	private SuatChieu_DAO sc_DAO = new SuatChieu_DAO();
+	private TrangThaiGhe trangThaiGhe;
+	private TrangThaiGhe_DAO thaiGhe_DAO = new TrangThaiGhe_DAO();
+	private JLabel lblDay_1;
+	private JLabel lblDayWeek_1;
+	private JLabel lblDay_2;
+	private JLabel lblDayWeek_2;
+	private JLabel lblDay_3;
+	private JLabel lblDayWeek_3;
+	private JLabel lblDay_4;
+	private JLabel lblDayWeek_4;
+	private JLabel lblDay_5;
+	private JLabel lblDayWeek_5;
+	private JLabel lblDay_6;
+	private JLabel lblDayWeek_6;
+	private JLabel lblDay_7;
+	private JLabel lblDayWeek_7;
 
 	/**	
 	 * Create the panel.
@@ -153,6 +188,20 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 //		scrollPane.setViewportView(panel4);
 		panel4.setLayout(new GridLayout(7, 1, 0, 0));
 		
+		panel5 = new JPanel();
+		panel5.setBackground(new Color(102, 51, 153));
+//		scrollPane.setViewportView(panel4);
+		panel5.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		panel6 = new JPanel();
+		panel6.setBackground(new Color(102, 51, 153));
+//		scrollPane.setViewportView(panel4);
+		panel6.setLayout(new GridLayout(7, 1, 0, 0));
+		
+		for(int i = 0; i < 7; i++) {
+			crePlListSC(arrJpanelXC[i]);
+		}
+		
 		//AddItem
 		ArrayList<Phim> dsPSC = getDsPhimSC();
 		ArrayList<LocalTime> gioSC = new ArrayList<>();
@@ -163,7 +212,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 			ngaySC = getDsNgayChieu(phim);
 			for (LocalDate localDate : ngaySC) {
 				gioSC = getDsGioChieu(phim, localDate);
-				System.out.println(phim.getTenPhim() + localDate + gioSC);
+//				System.out.println(phim.getTenPhim() + localDate + gioSC);
 				if(localDate.format(dtf).equals(dateCurr.format(dtf))) {
 					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel);
 				}else if(localDate.format(dtf).equals(dateCurr.plusDays(1).format(dtf))) {
@@ -174,6 +223,16 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel3);
 				}else if(localDate.format(dtf).equals(dateCurr.plusDays(4).format(dtf))) {
 					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel4);
+				}else if(localDate.format(dtf).equals(dateCurr.plusDays(5).format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel5);
+				}else if(localDate.format(dtf).equals(dateCurr.plusDays(6).format(dtf))) {
+					crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, panel6);
+				}
+				for(int i = 0; i < 7; i++) {
+					if(localDate.format(dtf).equals(dateCurr.plusDays(i + 7).format(dtf))) {
+						crePanelItem(phim.getTenPhim(), ngaySC, gioSC, co, arrJpanelDate[i]);
+						break;
+					}
 				}
 				co++;
 			}
@@ -444,7 +503,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panel_day.setBackground(new Color(255, 128, 0));
 		panel_day.setBounds(0, 0, 780, 90);
 		panel_main.add(panel_day);
-		panel_day.setLayout(new GridLayout(1, 5, 0, 0));
+		panel_day.setLayout(new GridLayout(1, 7, 0, 0));
 		
 		panelDay_1 = new JPanel();
 		panelDay_1.setBackground(new Color(128, 0, 255));
@@ -454,20 +513,21 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		
 		
 		LocalDate date = LocalDate.parse("30/04/2024", dtf);
-		JLabel lblDay_1 = new JLabel("New label");
+		lblDay_1 = new JLabel("New label");
 		lblDay_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDay_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDay_1.setForeground(new Color(255, 255, 255));
 		lblDay_1.setBackground(new Color(255, 255, 255));
-		lblDay_1.setBounds(35, 23, 87, 28);
+		lblDay_1.setBounds(10, 23, 87, 28);
 		lblDay_1.setText(date.getDayOfMonth() + "/" + date.getMonthValue());
 		panelDay_1.add(lblDay_1);
 		
-		JLabel lblDayWeek_1 = new JLabel("Hôm nay");
+		lblDayWeek_1 = new JLabel("Hôm nay");
+		lblDayWeek_1.setText(getDayWeeks(date.getDayOfWeek() + ""));
 		lblDayWeek_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDayWeek_1.setForeground(new Color(255, 255, 255));
 		lblDayWeek_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDayWeek_1.setBounds(45, 54, 64, 26);
+		lblDayWeek_1.setBounds(20, 54, 64, 26);
 		panelDay_1.add(lblDayWeek_1);
 		
 		panelDay_2 = new JPanel();
@@ -477,21 +537,21 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panelDay_2.addMouseListener(this);
 		panel_day.add(panelDay_2);
 		
-		JLabel lblDay_2 = new JLabel("New label");
+		lblDay_2 = new JLabel("New label");
 		lblDay_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDay_2.setForeground(new Color(0, 0, 0));
 		lblDay_2.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDay_2.setBackground(Color.WHITE);
-		lblDay_2.setBounds(35, 23, 87, 28);
+		lblDay_2.setBounds(14, 27, 87, 28);
 		lblDay_2.setText(date.plusDays(1).getDayOfMonth() + "/" + date.plusDays(1).getMonthValue());
 		panelDay_2.add(lblDay_2);
 		
-		JLabel lblDayWeek_2 = new JLabel("");
+		lblDayWeek_2 = new JLabel("");
 		lblDayWeek_2.setText(getDayWeeks(date.plusDays(1).getDayOfWeek() + ""));
 		lblDayWeek_2.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDayWeek_2.setForeground(new Color(0, 0, 0));
 		lblDayWeek_2.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDayWeek_2.setBounds(45, 54, 77, 26);
+		lblDayWeek_2.setBounds(14, 54, 77, 26);
 		panelDay_2.add(lblDayWeek_2);
 		
 		panelDay_3 = new JPanel();
@@ -500,21 +560,21 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panelDay_3.addMouseListener(this);
 		panel_day.add(panelDay_3);
 		
-		JLabel lblDay_3 = new JLabel("New label");
+		lblDay_3 = new JLabel("New label");
 		lblDay_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDay_3.setForeground(new Color(0, 0, 0));
 		lblDay_3.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDay_3.setBackground(Color.WHITE);
-		lblDay_3.setBounds(35, 23, 87, 28);
+		lblDay_3.setBounds(14, 23, 87, 28);
 		lblDay_3.setText(date.plusDays(2).getDayOfMonth() + "/" + date.plusDays(2).getMonthValue());
 		panelDay_3.add(lblDay_3);
 		
-		JLabel lblDayWeek_3 = new JLabel("Hôm nay");
+		lblDayWeek_3 = new JLabel("Hôm nay");
 		lblDayWeek_3.setText(getDayWeeks(date.plusDays(2).getDayOfWeek() + ""));
 		lblDayWeek_3.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDayWeek_3.setForeground(new Color(0, 0, 0));
 		lblDayWeek_3.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDayWeek_3.setBounds(45, 54, 64, 26);
+		lblDayWeek_3.setBounds(24, 54, 64, 26);
 		panelDay_3.add(lblDayWeek_3);
 		
 		panelDay_4 = new JPanel();
@@ -523,21 +583,21 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panelDay_4.addMouseListener(this);
 		panel_day.add(panelDay_4);
 		
-		JLabel lblDay_4 = new JLabel("New label");
+		lblDay_4 = new JLabel("New label");
 		lblDay_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDay_4.setForeground(new Color(0, 0, 0));
 		lblDay_4.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDay_4.setBackground(Color.WHITE);
-		lblDay_4.setBounds(35, 23, 87, 28);
+		lblDay_4.setBounds(14, 23, 87, 28);
 		lblDay_4.setText(date.plusDays(3).getDayOfMonth() + "/" + date.plusDays(3).getMonthValue());
 		panelDay_4.add(lblDay_4);
 		
-		JLabel lblDayWeek_4 = new JLabel("Hôm nay");
+		lblDayWeek_4 = new JLabel("Hôm nay");
 		lblDayWeek_4.setText(getDayWeeks(date.plusDays(3).getDayOfWeek() + ""));
 		lblDayWeek_4.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDayWeek_4.setForeground(new Color(0, 0, 0));
 		lblDayWeek_4.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDayWeek_4.setBounds(45, 54, 64, 26);
+		lblDayWeek_4.setBounds(24, 54, 64, 26);
 		panelDay_4.add(lblDayWeek_4);
 		
 		panelDay_5 = new JPanel();
@@ -546,22 +606,68 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panelDay_5.addMouseListener(this);
 		panel_day.add(panelDay_5);
 		
-		JLabel lblDay_5 = new JLabel("New label");
+		lblDay_5 = new JLabel("New label");
 		lblDay_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDay_5.setForeground(new Color(0, 0, 0));
 		lblDay_5.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		lblDay_5.setBackground(Color.WHITE);
-		lblDay_5.setBounds(35, 23, 87, 28);
+		lblDay_5.setBounds(14, 23, 87, 28);
 		lblDay_5.setText(date.plusDays(4).getDayOfMonth() + "/" + date.plusDays(4).getMonthValue());
 		panelDay_5.add(lblDay_5);
 		
-		JLabel lblDayWeek_5 = new JLabel("Hôm nay");
+		lblDayWeek_5 = new JLabel("Hôm nay");
 		lblDayWeek_5.setText(getDayWeeks(date.plusDays(4).getDayOfWeek() + ""));
 		lblDayWeek_5.setHorizontalAlignment(SwingConstants.CENTER);
 		lblDayWeek_5.setForeground(new Color(0, 0, 0));
 		lblDayWeek_5.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblDayWeek_5.setBounds(45, 54, 64, 26);
+		lblDayWeek_5.setBounds(24, 54, 64, 26);
 		panelDay_5.add(lblDayWeek_5);
+		
+		panelDay_6 = new JPanel();
+		panelDay_6.setLayout(null);
+		panelDay_6.setBackground(new Color(255, 255, 255));
+		panelDay_6.addMouseListener(this);
+		panel_day.add(panelDay_6);
+		
+		lblDay_6 = new JLabel("New label");
+		lblDay_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDay_6.setForeground(new Color(0, 0, 0));
+		lblDay_6.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDay_6.setBackground(Color.WHITE);
+		lblDay_6.setBounds(10, 22, 87, 28);
+		lblDay_6.setText(date.plusDays(5).getDayOfMonth() + "/" + date.plusDays(5).getMonthValue());
+		panelDay_6.add(lblDay_6);
+		
+		lblDayWeek_6 = new JLabel("Hôm nay");
+		lblDayWeek_6.setText(getDayWeeks(date.plusDays(5).getDayOfWeek() + ""));
+		lblDayWeek_6.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDayWeek_6.setForeground(new Color(0, 0, 0));
+		lblDayWeek_6.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDayWeek_6.setBounds(20, 54, 64, 26);
+		panelDay_6.add(lblDayWeek_6);
+		
+		panelDay_7 = new JPanel();
+		panelDay_7.setLayout(null);
+		panelDay_7.setBackground(new Color(255, 255, 255));
+		panelDay_7.addMouseListener(this);
+		panel_day.add(panelDay_7);
+		
+		lblDay_7 = new JLabel("New label");
+		lblDay_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDay_7.setForeground(new Color(0, 0, 0));
+		lblDay_7.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDay_7.setBackground(Color.WHITE);
+		lblDay_7.setBounds(10, 23, 87, 28);
+		lblDay_7.setText(date.plusDays(6).getDayOfMonth() + "/" + date.plusDays(6).getMonthValue());
+		panelDay_7.add(lblDay_7);
+		
+		lblDayWeek_7 = new JLabel("Hôm nay");
+		lblDayWeek_7.setText(getDayWeeks(date.plusDays(6).getDayOfWeek() + ""));
+		lblDayWeek_7.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDayWeek_7.setForeground(new Color(0, 0, 0));
+		lblDayWeek_7.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDayWeek_7.setBounds(20, 54, 64, 26);
+		panelDay_7.add(lblDayWeek_7);
 		
 		panel_form = new JPanel();
 		panel_form.setBackground(new Color(102, 51, 153));
@@ -595,20 +701,28 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panel_form.add(textFieldNgayChieu);
 		textFieldNgayChieu.setColumns(10);
 		
-		textFieldPhim = new JTextField();
-		textFieldPhim.setColumns(10);
-		textFieldPhim.setBounds(164, 131, 223, 30);
-		textFieldPhim.addMouseListener(new MouseListener() {
+		cbbPhim = new JComboBox<>();
+		cbbPhim.setBounds(164, 131, 223, 30);
+		
+		cbbPhim.addItem("");
+		
+		for (Phim phim : listPhims) {
+			cbbPhim.addItem(phim.getTenPhim());
+		}
+		
+		cbbPhim.addMouseListener(new MouseListener() {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				size = listSuatChieus.size();
-				size++;
+				String s = listSuatChieus.get(size-1).getMaSuatChieu().substring(2);
+				int code = Integer.valueOf(s);
+				code++;
 				String maSC = "SC";
-				if(size < 10) {
-					maSC+= "0" + size;
+				if(code < 10) {
+					maSC+= "0" + code;
 				}else {
-					maSC+= size + "";
+					maSC+= code + "";
 				}
 				textFieldMaSC.setText(maSC);
 				
@@ -639,7 +753,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 			}
 			
 		});
-		panel_form.add(textFieldPhim);
+		panel_form.add(cbbPhim);
 		
 		textFieldThoiGian = new JTextField();
 		textFieldThoiGian.setColumns(10);
@@ -809,12 +923,43 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		panelMode.add(rdbtnChinhSua);
 		btnGroup.add(rdbtnChinhSua);
 		
+		lblPrev = new JLabel("");
+		lblPrev.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/previous.png")));
+		lblPrev.setBounds(36, 159, 13, 13);
+		lblPrev.addMouseListener(this);
+		add(lblPrev);
+		
+		lblForw = new JLabel("");
+		lblForw.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/forward.png")));
+		lblForw.setBounds(839, 159, 23, 20);
+		lblForw.addMouseListener(this);
+		add(lblForw);
+		
 		panel_day.setVisible(true);
 		panel_form.setVisible(false);
 		
+		paneld2 = new JPanel();
+		paneld2.setBackground(new Color(255, 128, 0));
+		paneld2.setBounds(0, 0, 780, 90);
+		panel_main.add(paneld2);
+		paneld2.setLayout(new GridLayout(1, 7, 0, 0));
+		for(int i = 0; i < 7; i++) {
+			arrJpanelDate[i] = new JPanel();
+			arrJpanelDate[i].setForeground(new Color(0, 0, 0));
+			arrJpanelDate[i].setLayout(null);
+			if(i%2==0) {
+				arrJpanelDate[i].setBackground(new Color(250, 250, 250));
+			}else {
+				arrJpanelDate[i].setBackground(new Color(255, 255, 255));
+			}
+			arrJpanelDate[i].addMouseListener(this);
+			paneld2.add(arrJpanelDate[i]);
+			crePanelDate(arrJpanelDate[i], i + 7, arrLblDay[i], arrLblWeek[i]);
+		}
+		paneld2.setVisible(false);
 		
 	}
-	
+
 	public String getDayWeeks(String day) {
 		String s = "Thứ ";
 		if(day.equalsIgnoreCase("Monday")) {
@@ -888,16 +1033,9 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	public boolean chkRegex() {
 		
 		//Check phim
-		if(textFieldPhim.getText().equals("")) {
-			textFieldPhim.requestFocusInWindow();
-			JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
+		if(cbbPhim.getSelectedIndex() <= 0) {
+			JOptionPane.showMessageDialog(this, "Vui lòng chọn phòng chiếu");
 			return false;
-		}else {
-			if(!checkPhim(textFieldPhim.getText())) {
-				JOptionPane.showMessageDialog(this, "Phim không tồn tại");
-				textFieldPhim.requestFocusInWindow();
-				return false;
-			}
 		}
 		
 		//check ngay
@@ -945,10 +1083,10 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		model.addRow(new String[]
 				{
 						suatChieu.getMaSuatChieu(), suatChieu.getNgayChieu().format(dtf), suatChieu.getGioChieu() + "",
-						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getTenPhongChieu()
+						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getMaPhongChieu()
 				});
 		System.out.println(suatChieu.toString());
-		suatChieu_DAO.themSuatChieu(suatChieu);
+		//suatChieu_DAO.themSuatChieu(suatChieu);
 	}
 	
 	public SuatChieu getSuatChieuJTF() {
@@ -956,7 +1094,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		LocalDate ngayChieu = LocalDate.parse(textFieldNgayChieu.getText(), dtf);
 		System.out.println(ngayChieu);
 		LocalTime gioChieu = LocalTime.parse(textFieldThoiGian.getText());
-		String tenPhim = textFieldPhim.getText();
+		String tenPhim = cbbPhim.getSelectedItem().toString();
 		Phim phim = null;
 		for (Phim p : listPhims) {
 			if(p.getTenPhim().endsWith(tenPhim)) {
@@ -978,18 +1116,11 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	
 	public void add() {
 		if(chkRegex()) {
-			size = listSuatChieus.size();
-			size++;
-			String maSuatChieu = "SC";
-			if(size < 10) {
-				maSuatChieu+= "0" + size;
-			}else {
-				maSuatChieu+= size + "";
-			}
+			String maSuatChieu = textFieldMaSC.getText();
 			
 			LocalDate ngayChieu = LocalDate.parse(textFieldNgayChieu.getText(), dtf);
 			LocalTime gioChieu = LocalTime.parse(textFieldThoiGian.getText());
-			String tenPhim = textFieldPhim.getText();
+			String tenPhim = cbbPhim.getSelectedItem().toString();
 			Phim phim = null;
 			for (Phim p : listPhims) {
 				if(p.getTenPhim().endsWith(tenPhim)) {
@@ -998,6 +1129,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 				}
 			}
 			String maPhongChieu = comboBoxPhongChieu.getSelectedItem().toString();
+			//System.out.println(maPhongChieu);
 			PhongChieu phongChieu = null;
 			for (PhongChieu phChieu : listPhongChieus) {
 				if(phChieu.getMaPhongChieu().equals(maPhongChieu)) {
@@ -1006,6 +1138,14 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 				}
 			}
 			SuatChieu suatChieu = new SuatChieu(maSuatChieu, ngayChieu, gioChieu, phim, phongChieu);
+			sc_DAO.themSuatChieu(suatChieu);
+			listGhes = ghe_DAO.getDSGheTheoMaPhong(maPhongChieu);
+			TrangThaiGhe_DAO trangThaiGhe_DAO = new TrangThaiGhe_DAO();
+			for (Ghe ghe : listGhes) {
+				// thaiGhe_DAO.setTrangThaiGhe(ghe.getMaGhe(), suatChieu.getMaSuatChieu(), false,null);
+				TrangThaiGhe trangThaiGhe = new TrangThaiGhe(ghe, suatChieu, null, false);
+				trangThaiGhe_DAO.themTrangThaiGhe(trangThaiGhe);
+			}
 			addToTable(suatChieu);
 			lamMoi();
 		}
@@ -1050,7 +1190,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 				}
 			}else {
 				for (SuatChieu suatChieu : listSuatChieus) {
-					if(suatChieu.getPhim().getTenPhim().equalsIgnoreCase(textFieldTim.getText())) {
+					if(suatChieu.getPhim().getTenPhim().contains(textFieldTim.getText())) {
 						Phim phim = suatChieu.getPhim();
 						ArrayList<LocalDate> localDate = getDsNgayChieu(phim);
 						for (LocalDate localDate2 : localDate) {
@@ -1153,6 +1293,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 				int select = JOptionPane.showConfirmDialog(this, "Bạn có chắc chắn muốn xoá?");
 				if(select == JOptionPane.YES_OPTION) {
 					SuatChieu suatChieu = laySCTuTabel(i);
+					thaiGhe_DAO.xoaTrangThaiGhe(maSuatChieu);
 					suatChieu_DAO.xoaSuatChieu(maSuatChieu);
 					listSuatChieus.remove(suatChieu);
 					model.removeRow(i);
@@ -1178,7 +1319,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	
 	public void lamMoi() {
 		textFieldMaSC.setText("");
-		textFieldPhim.setText("");
+		cbbPhim.setSelectedIndex(-1);
 		textFieldNgayChieu.setText("");
 		textFieldThoiGian.setText("");
 		comboBoxPhongChieu.setSelectedIndex(-1);
@@ -1255,11 +1396,14 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	}
 	
 	public ArrayList<Phim> getDsPhimSC() {
-		ArrayList<Phim> dsPhim = listPhims;
+		ArrayList<Phim> dsPhim = new ArrayList<>();
+		for (Phim phim : listPhims) {
+			dsPhim.add(phim);
+		}
 		ArrayList<Phim> dsP = new ArrayList<>();
 //		dsP.add(listSuatChieus.get(0).getPhim());
 		for (SuatChieu suatChieu : listSuatChieus) {
-			System.out.println("size: " + dsP.size());
+//			System.out.println("size: " + dsP.size());
 			for (Phim phim : dsPhim) {
 				if(phim.equals(suatChieu.getPhim())) {
 					dsP.add(phim);
@@ -1306,22 +1450,67 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Object ac = e.getSource();
+		
 		if(ac.equals(panelDay_1)) {
 			scrollPane.setViewportView(panel);
+			setColorEV(panelDay_1, lblDay_1, lblDayWeek_1);
 		}else if(ac.equals(panelDay_2)) {
 			scrollPane.setViewportView(panel1);
+			setColorEV(panelDay_2, lblDay_2, lblDayWeek_2);
 		}else if(ac.equals(panelDay_3)) {
 			scrollPane.setViewportView(panel2);
+			setColorEV(panelDay_3, lblDay_3, lblDayWeek_3);
 		}else if(ac.equals(panelDay_4)) {
 			scrollPane.setViewportView(panel3);
+			setColorEV(panelDay_4, lblDay_4, lblDayWeek_4);
 		}else if(ac.equals(panelDay_5)) {
 			scrollPane.setViewportView(panel4);
+			setColorEV(panelDay_5, lblDay_5, lblDayWeek_5);
+		}else if(ac.equals(panelDay_6)) {
+			scrollPane.setViewportView(panel5);
+			setColorEV(panelDay_6, lblDay_6, lblDayWeek_6);
+		}else if(ac.equals(panelDay_7)) {
+			scrollPane.setViewportView(panel6);
+			setColorEV(panelDay_7, lblDay_7, lblDayWeek_7);
+		}else if(ac.equals(arrJpanelDate[0])) {
+			scrollPane.setViewportView(arrJpanelXC[0]);
+			setColorEV2(arrJpanelDate[0]);
+		}else if(ac.equals(arrJpanelDate[1])) {
+			scrollPane.setViewportView(arrJpanelXC[1]);
+			setColorEV2(arrJpanelDate[1]);
+		}else if(ac.equals(arrJpanelDate[2])) {
+			scrollPane.setViewportView(arrJpanelXC[2]);
+			setColorEV2(arrJpanelDate[2]);
+		}else if(ac.equals(arrJpanelDate[3])) {
+			scrollPane.setViewportView(arrJpanelXC[3]);
+			setColorEV2(arrJpanelDate[3]);
+		}else if(ac.equals(arrJpanelDate[4])) {
+			scrollPane.setViewportView(arrJpanelXC[4]);
+			setColorEV2(arrJpanelDate[4]);
+		}else if(ac.equals(arrJpanelDate[5])) {
+			scrollPane.setViewportView(arrJpanelXC[5]);
+			setColorEV2(arrJpanelDate[5]);
+		}else if(ac.equals(arrJpanelDate[6])) {
+			scrollPane.setViewportView(arrJpanelXC[6]);
+			setColorEV2(arrJpanelDate[6]);
+		}else if(ac.equals(lblPrev)) {
+			if(flat == true) {
+				paneld2.setVisible(false);
+				panel_day.setVisible(true);
+				flat = false;
+			}
+		}else if(ac.equals(lblForw)) {
+			if(flat == false) {
+				panel_day.setVisible(false);
+				paneld2.setVisible(true);
+				flat = true;
+			}
 		}else {
 			int i_row = table_VePhim.getSelectedRow();
 			textFieldMaSC.setText(model.getValueAt(i_row, 0) + "");
 			textFieldNgayChieu.setText(model.getValueAt(i_row, 1) + "");
 			textFieldThoiGian.setText(model.getValueAt(i_row, 2) + "");
-			textFieldPhim.setText(model.getValueAt(i_row, 3) + "");
+			cbbPhim.setSelectedItem(model.getValueAt(i_row, 3));
 			comboBoxPhongChieu.setSelectedItem(model.getValueAt(i_row, 4));
 		}
 		
@@ -1349,6 +1538,107 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void crePanelDate(JPanel panelDay ,int plus, JLabel lblDay, JLabel lblDayWeek) {
+		LocalDate localDate = LocalDate.parse("30/04/2024", dtf);
+		
+		lblDay = new JLabel("New label");
+		lblDay.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDay.setForeground(new Color(0, 0, 0));
+		lblDay.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		lblDay.setBackground(Color.WHITE);
+		lblDay.setBounds(14, 27, 87, 28);
+		lblDay.setText(localDate.plusDays(plus).getDayOfMonth() + "/" + localDate.plusDays(plus).getMonthValue());
+		panelDay.add(lblDay);
+		
+		lblDayWeek = new JLabel("");
+		lblDayWeek.setText(getDayWeeks(localDate.plusDays(plus).getDayOfWeek() + ""));
+		lblDayWeek.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDayWeek.setForeground(new Color(0, 0, 0));
+		lblDayWeek.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblDayWeek.setBounds(14, 54, 77, 26);
+		panelDay.add(lblDayWeek);
+	}
+	
+	public void crePlListSC(JPanel panelXC) {
+		panelXC = new JPanel();
+		panelXC.setBackground(new Color(255, 255, 255));
+//		scrollPane.setViewportView(panel4);
+		panelXC.setLayout(new GridLayout(7, 1, 0, 0));
+		
+	}
+	
+	public void setColorEV(JPanel jPanel, JLabel jlbDay, JLabel jlbWeek) {
+		panelDay_1.setBackground(new Color(250, 250, 250));
+		lblDay_1.setForeground(new Color(0, 0, 0));
+		lblDayWeek_1.setForeground(new Color(0, 0, 0));
+		panelDay_2.setBackground(new Color(250, 250, 250));
+		lblDay_2.setForeground(new Color(0, 0, 0));
+		lblDayWeek_2.setForeground(new Color(0, 0, 0));
+		panelDay_3.setBackground(new Color(250, 250, 250));
+		lblDay_3.setForeground(new Color(0, 0, 0));
+		lblDayWeek_3.setForeground(new Color(0, 0, 0));
+		panelDay_4.setBackground(new Color(250, 250, 250));
+		lblDay_4.setForeground(new Color(0, 0, 0));
+		lblDayWeek_4.setForeground(new Color(0, 0, 0));
+		panelDay_5.setBackground(new Color(250, 250, 250));
+		lblDay_5.setForeground(new Color(0, 0, 0));
+		lblDayWeek_5.setForeground(new Color(0, 0, 0));
+		panelDay_6.setBackground(new Color(250, 250, 250));
+		lblDay_6.setForeground(new Color(0, 0, 0));
+		lblDayWeek_6.setForeground(new Color(0, 0, 0));
+		panelDay_7.setBackground(new Color(250, 250, 250));
+		lblDay_7.setForeground(new Color(0, 0, 0));
+		lblDayWeek_7.setForeground(new Color(0, 0, 0));
+		for(int i = 0; i < 7; i++) {
+			if(i%2==0) {
+				arrJpanelDate[i].setBackground(new Color(250, 250, 250));
+			}else {
+				arrJpanelDate[i].setBackground(new Color(255, 255, 255));
+				arrJpanelDate[i].setForeground(new Color(0, 0, 0));
+			}
+//			arrLblDay[i].setForeground(new Color(0, 0, 0));
+//			arrLblWeek[i].setForeground(new Color(0, 0, 0));
+		}
+		jPanel.setBackground(new Color(128, 0, 255));
+		jlbDay.setForeground(new Color(255, 255, 255));
+		jlbWeek.setForeground(new Color(255, 255, 255));
+	}
+	
+	public void setColorEV2(JPanel jPanel) {
+		panelDay_1.setBackground(new Color(250, 250, 250));
+		lblDayWeek_1.setForeground(new Color(0, 0, 0));
+		lblDayWeek_1.setForeground(new Color(0, 0, 0));
+		panelDay_2.setBackground(new Color(250, 250, 250));
+		lblDayWeek_2.setForeground(new Color(0, 0, 0));
+		lblDayWeek_2.setForeground(new Color(0, 0, 0));
+		panelDay_3.setBackground(new Color(250, 250, 250));
+		lblDayWeek_3.setForeground(new Color(0, 0, 0));
+		lblDayWeek_3.setForeground(new Color(0, 0, 0));
+		panelDay_4.setBackground(new Color(250, 250, 250));
+		lblDayWeek_4.setForeground(new Color(0, 0, 0));
+		lblDayWeek_4.setForeground(new Color(0, 0, 0));
+		panelDay_5.setBackground(new Color(250, 250, 250));
+		lblDayWeek_5.setForeground(new Color(0, 0, 0));
+		lblDayWeek_5.setForeground(new Color(0, 0, 0));
+		panelDay_6.setBackground(new Color(250, 250, 250));
+		lblDayWeek_6.setForeground(new Color(0, 0, 0));
+		lblDayWeek_6.setForeground(new Color(0, 0, 0));
+		panelDay_7.setBackground(new Color(250, 250, 250));
+		lblDayWeek_7.setForeground(new Color(0, 0, 0));
+		lblDayWeek_7.setForeground(new Color(0, 0, 0));
+		for(int i = 0; i < 7; i++) {
+			if(i%2==0) {
+				arrJpanelDate[i].setBackground(new Color(250, 250, 250));
+			}else {
+				arrJpanelDate[i].setBackground(new Color(255, 255, 255));
+				arrJpanelDate[i].setForeground(new Color(0, 0, 0));
+			}
+//			arrLblDay[i].setForeground(new Color(0, 0, 0));
+//			arrLblWeek[i].setForeground(new Color(0, 0, 0));
+		}
+		jPanel.setBackground(new Color(128, 0, 255));
 	}
 }
 
