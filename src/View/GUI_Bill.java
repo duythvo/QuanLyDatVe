@@ -98,9 +98,9 @@ public class GUI_Bill extends JPanel {
 		});
 
 		text_MaVe = hDonDTO.getMaVe();
-		System.out.println(text_MaVe);
+		//System.out.println(text_MaVe);
 		Ve ve = ve_DAO.getVeBangMa(text_MaVe);
-		System.out.println(ve);
+		//System.out.println(ve);
 		
 		SuatChieu sc = suatChieu_DAO.getSuatChieuBangMa(ve.getSuatChieu().getMaSuatChieu());
 		text_ThoiGianChieu = sc.getNgayChieu().toString()+" " + sc.getGioChieu().toString();

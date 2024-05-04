@@ -172,9 +172,32 @@ public class SuatChieu_DAO {
 	 *@return 
 	 * 
 	 */
-	public void capNhatSuatChieu(SuatChieu suatChieu) {
-		xoaSuatChieu(suatChieu.getMaSuatChieu());
-		themSuatChieu(suatChieu);
+	public boolean capNhatSuatChieu(SuatChieu suatChieu) {
+		ConnectDB.getInstance();
+        Connection con = ConnectDB.getConnection();
+        PreparedStatement stmt = null;
+		int n = 0;
+		try {
+            String sql = "UPDATE SuatChieu SET NgayChieu = ?, GioChieu = ?, MaPhim = ?, MaPhongChieu = ? WHERE MaSuatChieu = ?";
+            stmt = con.prepareStatement(sql);
+            stmt.setDate(1, java.sql.Date.valueOf(suatChieu.getNgayChieu()));
+            stmt.setTime(2, java.sql.Time.valueOf(suatChieu.getGioChieu()));
+            stmt.setString(3, suatChieu.getPhim().getMaPhim());
+            stmt.setString(4, suatChieu.getPhongChieu().getMaPhongChieu());
+            stmt.setString(5, suatChieu.getMaSuatChieu());
+            n = stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        	try {
+ 		        if (stmt != null) {
+ 		            stmt.close();
+ 		        }
+ 		    } catch (SQLException e) {
+ 		        e.printStackTrace();
+ 		    }
+        }
+        return n > 0;
 	}
 
 }

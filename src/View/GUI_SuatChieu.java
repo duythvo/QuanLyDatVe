@@ -826,14 +826,13 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 						suatChieu.getMaSuatChieu(), suatChieu.getNgayChieu().format(dtf), suatChieu.getGioChieu() + "",
 						suatChieu.getPhim().getTenPhim(), suatChieu.getPhongChieu().getMaPhongChieu()
 				});
-		System.out.println(suatChieu.toString());
 		//suatChieu_DAO.themSuatChieu(suatChieu);
 	}
 	
 	public SuatChieu getSuatChieuJTF() {
 		String maSuatChieu = textFieldMaSC.getText();
 		LocalDate ngayChieu = LocalDate.parse(textFieldNgayChieu.getText(), dtf);
-		System.out.println(ngayChieu);
+		//System.out.println(ngayChieu);
 		LocalTime gioChieu = LocalTime.parse(textFieldThoiGian.getText());
 		String tenPhim = cbbPhim.getSelectedItem().toString();
 		Phim phim = null;
@@ -921,7 +920,7 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 				int length_row = model.getRowCount();
 				for(int i = 0; i < length_row; i++) {
 					String tenPhim = model.getValueAt(i, 3) + "";
-					System.out.println(tenPhim + i);
+					//System.out.println(tenPhim + i);
 					if(!tenPhim.equalsIgnoreCase(textFieldTim.getText())) {
 						model.removeRow(i);
 						i--;

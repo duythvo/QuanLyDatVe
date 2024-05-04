@@ -333,9 +333,6 @@ public class GUI_DatVe extends JPanel {
 					label_Time.setText("Ngày/Giờ: "+comboBox_NgayChieu.getSelectedItem().toString() + " " + comboBox_GioChieu.getSelectedItem().toString());
 					setPhongChieu(dsSuatChieu);
 					setGhe();
-					for(int i=0;i<24;i++){
-						System.out.println(ghes[i].getMaGhe());
-					}
 				}
 			}
 		});
@@ -445,9 +442,8 @@ public class GUI_DatVe extends JPanel {
 				panel_5.add(btns2[i-20]);
 			}
 
-			System.out.println(checkGhe(ghes[1].getMaGhe()));
-			for(int i=0;i<24;i++){
-				System.out.println(checkGhe(ghes[i].getMaGhe()));		
+			//System.out.println(checkGhe(ghes[1].getMaGhe()));
+			for(int i=0;i<24;i++){	
 				if(checkGhe(ghes[i].getMaGhe())){
 					if(i<21){
 						
