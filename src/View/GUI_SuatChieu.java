@@ -668,13 +668,13 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		lblPrev.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/previous.png")));
 		lblPrev.setBounds(36, 159, 13, 13);
 		lblPrev.addMouseListener(this);
-		add(lblPrev);
+		// add(lblPrev);
 		
 		lblForw = new JLabel("");
 		lblForw.setIcon(new ImageIcon(GUI_SuatChieu.class.getResource("/img/forward.png")));
 		lblForw.setBounds(839, 159, 23, 20);
 		lblForw.addMouseListener(this);
-		add(lblForw);
+		// add(lblForw);
 		
 		panel_day.setVisible(true);
 		panel_form.setVisible(false);
@@ -1135,8 +1135,8 @@ public class GUI_SuatChieu extends JPanel implements MouseListener{
 		scrollPane.setViewportView(panel);
 		panel_day.setVisible(true);
 		panel_form.setVisible(false);
-		lblPrev.setVisible(true);
-		lblForw.setVisible(true);
+		lblPrev.setVisible(false);
+		lblForw.setVisible(false);
 	}
 	
 	public ArrayList<Phim> getDsPhimSC() {
