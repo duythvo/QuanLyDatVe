@@ -9,7 +9,7 @@ public class Main {
         GUI_SplashScreen sc = new GUI_SplashScreen();
         try {
             for(int i=0;i<=100;i++){
-                Thread.sleep(30)
+                Thread.sleep(30);
                 sc.lblNewLabel_1.setText(Integer.toString(i)+"%");
                 sc.progressBar.setValue(i);
                 if(i==100){

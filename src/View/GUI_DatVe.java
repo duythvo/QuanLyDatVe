@@ -232,7 +232,7 @@ public class GUI_DatVe extends JPanel {
 		label_TongTien1.setBounds(40, 405, 89, 22);
 		panel_2.add(label_TongTien1);
 		
-		label_TongTien = new JLabel("Tổng tiền:");
+		label_TongTien = new JLabel("");
 		label_TongTien.setFont(new Font("Tahoma", Font.PLAIN, 18));
 		label_TongTien.setBounds(145, 405, 197, 22);
 		panel_2.add(label_TongTien);
@@ -289,21 +289,10 @@ public class GUI_DatVe extends JPanel {
 		button_Huy.setBounds(209, 469, 131, 44);
 		button_Huy.addActionListener(ac);
 		panel_2.add(button_Huy);
-		
-		lblNewLabel_2_1_1_1 = new JLabel("Phương thức thanh toán");
-		lblNewLabel_2_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		lblNewLabel_2_1_1_1.setBounds(40, 284, 235, 31);
-		panel_2.add(lblNewLabel_2_1_1_1);
-
-		String [] phuongThucThanhToan = {"Thanh Toán Bằng Thẻ","Thanh Toán Bằng Ví Điện Tử","Thanh Toán Bằng Tiền Mặt"};
-		
-		comboBox_PhuongThucTT = new JComboBox(phuongThucThanhToan);
-		comboBox_PhuongThucTT.setBounds(40, 348, 312, 31);
-		panel_2.add(comboBox_PhuongThucTT);
 
 		JLabel label_TenPhim_1 = new JLabel("Mã Phim:");
 		label_TenPhim_1.setFont(new Font("Tahoma", Font.PLAIN, 18));
-		label_TenPhim_1.setBounds(29, 34, 89, 22);
+		label_TenPhim_1.setBounds(29, 28, 89, 22);
 		panel_2.add(label_TenPhim_1);
 		
 		label_MaPhim = new JLabel(phim.getMaPhim());
